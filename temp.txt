@@ -1,2 +1,2 @@
- M auto_push.bat
+ M admin/finance.php
  M temp.txt

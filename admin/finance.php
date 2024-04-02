@@ -392,7 +392,7 @@
                                 <div class="col">
                                     <div>
                                         <label for="" class="form-label">Payment Method</label>
-                                        <select name="" id="" class="form-select form-select-sm">
+                                        <select name="" id="payment_method" class="form-select form-select-sm">
                                             <option value="Gcash">Gcash</option>
                                             <option value="Maya">Maya</option>
                                             <option value="Paypal">Paypal</option>
@@ -436,6 +436,11 @@
                                 // till date
                                 $('#till_date').change(function() {
                                     setUrlParam('till_date', $(this).val())
+                                })
+
+                                // till date
+                                $('#payment_method').change(function() {
+                                    setUrlParam('payment_method', $(this).val())
                                 })
                             })
                             </script>
