@@ -422,6 +422,9 @@
                                             <option
                                                 <?= ($_GET['payment_method'] ?? null) == 'Others' ? 'selected' : null ?>
                                                 value="Others">Others</option>
+                                                <option
+                                                <?= ($_GET['payment_method'] ?? null) == 'All' ? 'selected' : null ?>
+                                                value="All">All</option>
                                         </select>
                                     </div>
                                 </div>
@@ -515,8 +518,22 @@
                                         return $filteredData;
                                     }
                                     function paymentMethodFilter($payment_method, $data): array {
-                                        if(!isset($payment_method)) return $data;
+                                        if(!isset($payment_method) || $payment_method == 'All') return $data;
                                         $filteredData = [];
+
+                                        if($payment_method == 'Others') {
+                                            foreach ($data as $row) {
+                                                $pm = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
+                                                if (!in_array($pm, ['Gcash', 'Maya', 'Paypal', 'Cash', 'All'])) {
+                                                    $filteredData[] = $row;
+                                                }
+                                            }
+
+                                            return $filteredData;
+                                        }
+
+                                        
+                                        
                                         foreach ($data as $row) {
                                             $pm = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
                                             if ($pm == $payment_method) {
