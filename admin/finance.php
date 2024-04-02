@@ -502,8 +502,6 @@
                                     $offset = ($current_page - 1) * $itemsPerPage;
 
                                     $user_package = array_slice($data, $offset, $itemsPerPage);
-
-
                                     function createdByFilter($account_no, $data): array {
                                         if(!isset($account_no)) return $data;
 
@@ -516,7 +514,6 @@
 
                                         return $filteredData;
                                     }
-
                                     function paymentMethodFilter($payment_method, $data): array {
                                         if(!isset($payment_method)) return $data;
                                         $filteredData = [];
@@ -527,13 +524,7 @@
                                         }
                                         return $filteredData;
                                     }
-
-
-                                    
-
-
-                                    function filterDataByDateRange($data, $fromDate = null, $tillDate = null): array
-                                    {
+                                    function filterDataByDateRange($data, $fromDate = null, $tillDate = null): array {
                                         $filteredData = [];
 
                                         foreach ($data as $row) {
@@ -548,6 +539,11 @@
 
                                         return $filteredData;
                                     }
+
+
+                                    $get = validate_post_data($_GET);
+
+                                    $user_package = filterDataByDateRange(paymentMethodFilter($get['payment_method'] ?? null, createdByFilter($get['created_by'] ?? null, $user_package)), $get['from_date'] ?? null, $get['till_date'] ?? null);
 
 
                                     $i = 1;
