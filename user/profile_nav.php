@@ -17,7 +17,7 @@
         <img id="profile" alt="Profile"
             src="<?= $user[ 'profile' ] ?? 'https://www.oneeducation.org.uk/wp-content/uploads/2020/06/cool-profile-icons-69.png'  ?>"
             class="rounded-circle"
-            style="position: absolute; right: 7px; height: 50px; width: 50px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+            style="position: absolute; right: 7px; height: 50px; width: 50px; top: 50%; transform: translateY(-50%); cursor: pointer; object-fit: cover;">
         <input type="file" accept="image/*" class="d-none" id="chooseFile">
     </div>
 </div>

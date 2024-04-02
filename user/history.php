@@ -280,6 +280,7 @@
                     <?php
                         if(isset($_GET['view_user'])) {
                             $account_no = base64_decode($_GET['view_user']);
+                            $invoice = base64_decode($_GET['invoice']);
 
                             $userRow = getRows("account_no='$account_no'", "accounts")[0];
                            
@@ -330,19 +331,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sqlQuery = "SELECT up.id, ac.firstname, ac.lastname, ac.account_no, ac.email, ac.phone, up.status, ac.address, up.total, up.coverage, up.package, up.process_status
-                                        FROM accounts AS ac
-                                        JOIN user_package AS up ON ac.account_no = up.account_no  
-                                        WHERE ac.account_no = '$account_no' AND up.process_status = 'Done'";
-
-
-                                        $result = $conn->query( $sqlQuery );
-                                        $data = [];
-                                        if ( $result && $result->num_rows>0 ) {
-                                            while( $row = $result->fetch_assoc() ) {
-                                                $data[] = $row;
-                                            }
-                                        }
+                                        $data = getRows("account_no='$account_no' AND invoice='$invoice'", "user_package");
 
 
                                         // Pagination parameters
@@ -476,7 +465,7 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a href="?view_user=<?= base64_encode($row['account_no']  ?? null ) ?>" class="btn text-warning p-0 mx-2">
+                                        <a href="?view_user=<?= base64_encode($row['account_no']  ?? null ) ?>&invoice=<?= base64_encode($row['invoice']  ?? null ) ?>" class="btn text-warning p-0 mx-2">
                                             <i class="fas fa-lock"></i>
                                         </a>
                                     </td>
@@ -619,7 +608,7 @@
                                             <?= $row['period'] ?>
                                         </h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                            aria-label="Close" id="btn_close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
@@ -651,8 +640,9 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="history.php" style="border-radius: 17px;"
-                                            class="btn btn-dark">Cancel</a>
+                                        <button style="border-radius: 17px;"
+                                            class="btn btn-dark" id="btn_close" data-bs-dismiss="modal"
+                                            aria-label="Close">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -661,6 +651,14 @@
                         <script>
                         $(document).ready(function() {
                             $('#historyModal').modal('show');
+                            document.querySelectorAll('#btn_close').forEach(btn => {
+                                btn.addEventListener('click', () => {
+                                    setTimeout(() => {
+                                        window.location.href = "history.php";
+                                    }, 800)
+                                })
+                            })
+                            
                         });
                         </script>
 
