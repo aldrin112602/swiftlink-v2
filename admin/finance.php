@@ -529,18 +529,25 @@
                                     }
 
 
-                                    function fromDateFilter($date, $data): array {
-                                        if(!isset($date)) return $data;
+                                    
+
+
+                                    function filterDataByDateRange($data, $fromDate = null, $tillDate = null): array
+                                    {
                                         $filteredData = [];
+
                                         foreach ($data as $row) {
-                                            if ($row['payment_method'] == $payment_method) {
+                                            $rowDate = explode(" ", $row['date'])[0];
+                                            if (
+                                                (!$fromDate || $rowDate >= $fromDate) &&
+                                                (!$tillDate || $rowDate <= $tillDate)
+                                            ) {
                                                 $filteredData[] = $row;
                                             }
                                         }
+
                                         return $filteredData;
                                     }
-
-                                    
 
 
                                     $i = 1;
