@@ -337,7 +337,7 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a href="" class="btn text-warning p-0 mx-2">
+                                        <a href="?view_user=<?= base64_encode($row['account_no']  ?? null ) ?>" class="btn text-warning p-0 mx-2">
                                             <i class="fas fa-lock"></i>
                                         </a>
                                     </td>
@@ -348,6 +348,8 @@
                                 ?>
                             </tbody>
                         </table>
+
+                        
 
                         <br>
                         <br>
@@ -397,7 +399,9 @@
                                                 onclick="viewTicketHistory('<?= $row['ticket_no'] ?? null ?>')">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button onclick="deleteConfirmation(`ticket_no='<?= ($row['ticket_no'] ?? null) ?>'`, 'customer_ticket')" class="btn btn-sm p-0 text-danger mx-2">
+                                            <button
+                                                onclick="deleteConfirmation(`ticket_no='<?= ($row['ticket_no'] ?? null) ?>'`, 'customer_ticket')"
+                                                class="btn btn-sm p-0 text-danger mx-2">
                                                 <i class="fas fa-trash-can"></i>
                                             </button>
                                         </td>
@@ -415,7 +419,8 @@
                                     .then(res => res.json())
                                     .then(data => {
                                         const formatData = (data) => {
-                                            let formattedData = '<div class="d-block" style="text-align: left !important;">';
+                                            let formattedData =
+                                                '<div class="d-block" style="text-align: left !important;">';
                                             for (const key in data) {
                                                 if (!['id', 'document'].includes(key)) {
                                                     formattedData +=
@@ -783,7 +788,7 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        
+
                         if (response.status === "success") {
                             Swal.fire({
                                 title: "Deleted!",
