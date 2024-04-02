@@ -504,7 +504,6 @@
                         </div>
                         <?php
                         }
-
                         ?>
 
                         <?php if(isset($_GET['update_package'])) {?>

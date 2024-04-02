@@ -272,6 +272,165 @@
                     <!-- ============================================================== -->
                     <!-- history -->
 
+
+
+
+                    <!-- view user -->
+                    
+                    <?php
+                        if(isset($_GET['view_user']) && !isset($_GET['update_package'])) {
+                            $account_no = base64_decode(mysqli_real_escape_string($conn, trim($_GET['view_user'])));
+
+                            $userRow = getRows("account_no='$account_no'", "accounts")[0];
+                           
+                            ?>
+                        <div class="bg-white p-2 p-md-3 py-2" style="border-radius: 40px;">
+                            <!-- view user data -->
+                            <div class="d-flex align-items-center justify-content-start">
+                                <div class="col-4 col-lg-1">
+                                    <img id="profile_pic" title="Update profile picture?"
+                                        style="cursor: pointer; object-fit: cover;"
+                                        class="img-fluid rounded-circle hover"
+                                        src="<?= isset($userRow['profile']) ? '../user/' . $userRow['profile'] : 'https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg' ?>"
+                                        height="90px" width="90px"
+                                        alt="Profile picture of <?= $userRow['firstname'] ?? '' ?> <?= $userRow['middle_initial'] ?? '' ?> <?= $userRow['lastname'] ?? '' ?>">
+                                    <input id="file_upload" type="file" accept="image/*" class="d-none">
+                                    
+                                </div>
+                                <div class="col p-3">
+                                    <small class="fw-bold fs-6">
+                                        <?= $userRow['firstname'] ?? '' ?>
+                                        <?= $userRow['middle_initial'] ?? '' ?>
+                                        <?= $userRow['lastname'] ?? '' ?>
+                                    </small><br>
+                                    <small><i class="fa-solid fa-location-dot mx-2"></i><?= $userRow['address'] ?>,
+                                        <?= $userRow['town'] ?>, <?= $userRow['city'] ?>,
+                                        <?= $userRow['province'] ?></small><br>
+                                    <small><a href="tel:<?= $userRow['phone'] ?>"><i class="fa-solid fa-phone mx-2"></i>
+                                            <?= $userRow['phone'] ?></a></small><br>
+                                    <small><a href="mailto:<?= $userRow['email'] ?>"><i
+                                                class="fa-solid fa-envelope mx-2"></i>
+                                            <?= $userRow['email'] ?></a></small>
+                                </div>
+                            </div>
+
+
+
+                            <div class="table-responsive">
+                                <table class="table table-white table-striped table-hover" style="min-width: 60vw;">
+                                    <thead>
+                                        <tr>
+                                            <th class="ellipsis-text" scope="col">Account no.</th>
+                                            <th class="ellipsis-text" scope="col">Status</th>
+                                            <th class="ellipsis-text" scope="col">Bill / Month</th>
+                                            <th class="ellipsis-text" scope="col">Coverage</th>
+                                            <th class="ellipsis-text" scope="col">Package</th>
+                                            <!-- <th class="ellipsis-text" scope="col">Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $sqlQuery = "SELECT up.id, ac.firstname, ac.lastname, ac.account_no, ac.email, ac.phone, up.status, ac.address, up.total, up.coverage, up.package, up.process_status
+                                        FROM accounts AS ac
+                                        JOIN user_package AS up ON ac.account_no = up.account_no  
+                                        WHERE ac.account_no = '$account_no' AND up.process_status = 'Done'";
+
+
+                                        $result = $conn->query( $sqlQuery );
+                                        $data = [];
+                                        if ( $result && $result->num_rows>0 ) {
+                                            while( $row = $result->fetch_assoc() ) {
+                                                $data[] = $row;
+                                            }
+                                        }
+
+
+                                        // Pagination parameters
+                                        $totalItems = count($data);
+                                        $itemsPerPage = 5;
+                                        $totalPages = ceil($totalItems / $itemsPerPage);
+                                        $current_page = isset($_GET['page2']) ? $_GET['page2'] : 1;
+                                        $current_page = max(1, min($totalPages, intval($current_page)));
+                                        $offset = ($current_page - 1) * $itemsPerPage;
+
+                                        $dataToDisplay = array_slice($data, $offset, $itemsPerPage);
+
+                                        $no = 1;
+
+                                        foreach ($dataToDisplay as $row) {
+                                            ?>
+                                        <tr>
+                                            <td class="ellipsis-text"><?= $row['account_no'] ?? null ?></td>
+                                            <td class="ellipsis-text"><?= $row['status'] ?></td>
+                                            <td class="ellipsis-text"><?= $row['total'] ?></td>
+                                            <td class="ellipsis-text"><?= $row['coverage'] ?></td>
+                                            <td class="ellipsis-text"><?= $row['package'] ?></td>
+                                            <!-- <td class="ellipsis-text">
+                                                <a href="?update_package=<?= $row['id'] ?>">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </a>
+
+                                                <button class="fa-regular fa-trash-can text-danger btn btn-sm"
+                                                    onclick="deleteConfirmation(<?= $row['id'] ?>, 'user_package')"></button>
+
+                                            </td> -->
+                                        </tr>
+                                        <?php
+                                        $no++;
+                                        }
+                                        ?>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <!-- Bootstrap Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <!-- Previous page link -->
+                                    <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
+                                        <a class="page-link" onclick="setPage(<?= ($current_page - 1) ?>)"
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+
+                                    <!-- Page links -->
+                                    <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                                    <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
+                                        <a class="page-link" onclick="setPage(<?= $i ?>)"><?= $i ?></a>
+                                    </li>
+                                    <?php } ?>
+
+                                    <!-- Next page link -->
+                                    <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
+                                        <a class="page-link" onclick="setPage(<?= ($current_page + 1) ?>)"
+                                            aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <script>
+                            function setPage(page) {
+                                let url = new URLSearchParams(location.href)
+                                if (url.has('page2')) {
+                                    url.set('page2', page)
+                                    location.href = url;
+                                } else {
+                                    location.href = `?page2=${page}`;
+                                }
+                            }
+                            </script>
+                        </div>
+                        <?php
+                        }
+                        ?>
+
+                    <!-- end view user -->
+
                     <div class="col col-lg-3">
                         <div class="form-group">
                             <label for=""></label>
