@@ -296,6 +296,71 @@
                                         height="90px" width="90px"
                                         alt="Profile picture of <?= $userRow['firstname'] ?? '' ?> <?= $userRow['middle_initial'] ?? '' ?> <?= $userRow['lastname'] ?? '' ?>">
                                     <input id="file_upload" type="file" accept="image/*" class="d-none">
+
+                                    <script>
+                                    $(() => {
+
+                                        $('#profile_pic').on('click', () => {
+                                            $('#file_upload').click();
+                                        })
+
+                                        $('#file_upload').change(function(ev) {
+                                            let reader = new FileReader()
+                                            let file = $(this).prop('files')[0]
+
+                                            reader.onload = (e) => {
+                                                $('#profile_pic').attr('src', e.target.result)
+                                            }
+                                            reader.readAsDataURL(file);
+
+                                            const formdata = new FormData();
+                                            formdata.append('profileImage', file);
+                                            formdata.append('account_no',
+                                                '<?= $userRow['account_no'] ?>');
+
+
+                                            $('#loader-container').css('display', 'flex');
+                                            fetch('./update_user_profile.php', {
+                                                    method: 'POST',
+                                                    body: formdata
+                                                }).then(res => res.json())
+                                                .then(data => {
+                                                    const {
+                                                        status,
+                                                        message
+                                                    } = data;
+                                                    setTimeout(() => {
+                                                        $('#loader-container').css(
+                                                            'display', 'none');
+
+
+
+                                                        if (status == 'success') {
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: 'Success',
+                                                                text: message
+                                                            });
+                                                        } else {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Error',
+                                                                text: message
+                                                            })
+                                                        }
+
+
+                                                    }, 2000);
+
+
+                                                })
+                                                .catch(err => {
+                                                    console.log(err)
+                                                });
+
+                                        })
+                                    })
+                                    </script>
                                     
                                 </div>
                                 <div class="col p-3">
