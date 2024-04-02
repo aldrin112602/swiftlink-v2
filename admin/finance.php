@@ -422,7 +422,7 @@
                                             <option
                                                 <?= ($_GET['payment_method'] ?? null) == 'Others' ? 'selected' : null ?>
                                                 value="Others">Others</option>
-                                                <option
+                                            <option
                                                 <?= ($_GET['payment_method'] ?? null) == 'All' ? 'selected' : null ?>
                                                 value="All">All</option>
                                         </select>
@@ -454,8 +454,6 @@
                                 }
 
                                 location.href = '?' + url.toString();
-
-
                             }
                             $(() => {
                                 // from date
