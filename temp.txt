@@ -1,2 +1,2 @@
- M admin/finance.php
+ M .gitignore
  M temp.txt
