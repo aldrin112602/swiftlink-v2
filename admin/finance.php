@@ -503,7 +503,7 @@
 
                                     $user_package = array_slice($data, $offset, $itemsPerPage);
                                     function createdByFilter($account_no, $data): array {
-                                        if(!isset($account_no)) return $data;
+                                        if(!isset($account_no)) return [];
 
                                         $filteredData = [];
                                         foreach ($data as $row) {
@@ -518,7 +518,8 @@
                                         if(!isset($payment_method)) return $data;
                                         $filteredData = [];
                                         foreach ($data as $row) {
-                                            if ($row['payment_method'] == $payment_method) {
+                                            $pm = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
+                                            if ($pm == $payment_method) {
                                                 $filteredData[] = $row;
                                             }
                                         }
@@ -547,7 +548,7 @@
 
 
                                     $i = 1;
-                                    $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0] ?? [];
+                                    // $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0] ?? [];
 
 
 
