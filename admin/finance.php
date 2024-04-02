@@ -389,14 +389,16 @@
                                             <?php
                                             $accouts = getRows("status='Active' AND role='user'", "accounts");
 
-                                            $account_no = validate_post_data($_GET)['created_by'] ?? null;
+                                            $account_no = $_GET['created_by'] ?? null;
 
                                             foreach ($accouts as $row) {
-                                                echo '<option value="' . $row['account_no'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . '</option>';
+                                                echo '<option '. ($account_no == $row['account_no'] ? 'selected' : '') .' value="' . $row['account_no'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . '</option>';
                                             }
 
                                             ?>
                                         </select>
+
+                                        
                                     </div>
                                 </div>
                                 <div class="col">
@@ -456,7 +458,7 @@
 
                                 // created by
                                 $('#created_by').change(function() {
-                                    setUrlParam('created_by', window.btoa($(this).val()))
+                                    setUrlParam('created_by', $(this).val())
                                 })
                             })
                             </script>
