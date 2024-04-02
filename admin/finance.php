@@ -384,8 +384,18 @@
                                 <div class="col">
                                     <div>
                                         <label for="" class="form-label">Created by</label>
-                                        <select name="" id="" class="form-select form-select-sm">
+                                        <select name="" id="created_by" class="form-select form-select-sm">
+                                        <option value="" selected class="d-none" disabled>-- Select one --</option>
+                                            <?php
+                                            $accouts = getRows("status='Active' AND role='user'", "accounts");
 
+                                            $account_no = validate_post_data($_GET)['created_by'] ?? null;
+
+                                            foreach ($accouts as $row) {
+                                                echo '<option value="' . $row['account_no'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . '</option>';
+                                            }
+
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -393,6 +403,7 @@
                                     <div>
                                         <label for="" class="form-label">Payment Method</label>
                                         <select name="" id="payment_method" class="form-select form-select-sm">
+                                            <option value="" selected class="d-none" disabled>-- Select one --</option>
                                             <option value="Gcash">Gcash</option>
                                             <option value="Maya">Maya</option>
                                             <option value="Paypal">Paypal</option>
@@ -441,6 +452,11 @@
                                 // till date
                                 $('#payment_method').change(function() {
                                     setUrlParam('payment_method', $(this).val())
+                                })
+
+                                // created by
+                                $('#created_by').change(function() {
+                                    setUrlParam('created_by', window.btoa($(this).val()))
                                 })
                             })
                             </script>
