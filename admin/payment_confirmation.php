@@ -450,6 +450,7 @@
                                 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                                 // Pagination parameters
+                                
                                 $totalItems = count($data);
                                 $itemsPerPage = 5;
                                 $totalPages = ceil($totalItems / $itemsPerPage);

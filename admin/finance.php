@@ -385,7 +385,7 @@
                                     <div>
                                         <label for="" class="form-label">Created by</label>
                                         <select name="" id="created_by" class="form-select form-select-sm">
-                                        <option value="" selected class="d-none" disabled>-- Select one --</option>
+                                            <option value="" selected class="d-none" disabled>-- Select one --</option>
                                             <?php
                                             $accouts = getRows("status='Active' AND role='user'", "accounts");
 
@@ -398,7 +398,7 @@
                                             ?>
                                         </select>
 
-                                        
+
 
                                     </div>
                                 </div>
@@ -407,24 +407,36 @@
                                         <label for="" class="form-label">Payment Method</label>
                                         <select name="" id="payment_method" class="form-select form-select-sm">
                                             <option value="" selected class="d-none" disabled>-- Select one --</option>
-                                            <option <?= ($_GET['payment_method'] ?? null) == 'Gcash' ? 'selected' : null ?> value="Gcash">Gcash</option>
-                                            <option <?= ($_GET['payment_method'] ?? null) == 'Maya' ? 'selected' : null ?> value="Maya">Maya</option>
-                                            <option <?= ($_GET['payment_method'] ?? null) == 'Paypal' ? 'selected' : null ?> value="Paypal">Paypal</option>
-                                            <option <?= ($_GET['payment_method'] ?? null) == 'Cash' ? 'selected' : null ?> value="Cash">Cash</option>
-                                            <option <?= ($_GET['payment_method'] ?? null) == 'Others' ? 'selected' : null ?> value="Others">Others</option>
+                                            <option
+                                                <?= ($_GET['payment_method'] ?? null) == 'Gcash' ? 'selected' : null ?>
+                                                value="Gcash">Gcash</option>
+                                            <option
+                                                <?= ($_GET['payment_method'] ?? null) == 'Maya' ? 'selected' : null ?>
+                                                value="Maya">Maya</option>
+                                            <option
+                                                <?= ($_GET['payment_method'] ?? null) == 'Paypal' ? 'selected' : null ?>
+                                                value="Paypal">Paypal</option>
+                                            <option
+                                                <?= ($_GET['payment_method'] ?? null) == 'Cash' ? 'selected' : null ?>
+                                                value="Cash">Cash</option>
+                                            <option
+                                                <?= ($_GET['payment_method'] ?? null) == 'Others' ? 'selected' : null ?>
+                                                value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div>
                                         <label for="" class="form-label">From Date</label>
-                                        <input value="<?= $_GET['from_date'] ?? null ?>" type="date" name="" id="from_date" class="form-control form-control-sm">
+                                        <input value="<?= $_GET['from_date'] ?? null ?>" type="date" name=""
+                                            id="from_date" class="form-control form-control-sm">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div>
                                         <label for="" class="form-label">Till Date</label>
-                                        <input value="<?= $_GET['till_date'] ?? null ?>" type="date" name="" id="till_date" class="form-control form-control-sm">
+                                        <input value="<?= $_GET['till_date'] ?? null ?>" type="date" name=""
+                                            id="till_date" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div>
@@ -439,8 +451,8 @@
                                 }
 
                                 location.href = '?' + url.toString();
-                               
-                                
+
+
                             }
                             $(() => {
                                 // from date
@@ -463,7 +475,7 @@
                                 })
                             })
                             </script>
-                            <div class="table-responsive mt-3" style="min-height: 300px;">
+                            <div class="table-responsive mt-3" style="min-height: 100px;">
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
@@ -477,10 +489,65 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                    $user_package = getRows("status='Paid'", "user_package");
+                                        <?php
+                                    $data = getRows("status='Paid'", "user_package");
+
+
+                                    // Pagination parameters
+                                    $totalItems = count($data);
+                                    $itemsPerPage = 5;
+                                    $totalPages = ceil($totalItems / $itemsPerPage);
+                                    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                    $current_page = max(1, min($totalPages, intval($current_page)));
+                                    $offset = ($current_page - 1) * $itemsPerPage;
+
+                                    $user_package = array_slice($data, $offset, $itemsPerPage);
+
+
+                                    function createdByFilter($account_no, $data): array {
+                                        if(!isset($account_no)) return $data;
+
+                                        $filteredData = [];
+                                        foreach ($data as $row) {
+                                            if ($row['account_no'] == $account_no) {
+                                                $filteredData[] = $row;
+                                            }
+                                        }
+
+                                        return $filteredData;
+                                    }
+
+                                    function paymentMethodFilter($payment_method, $data): array {
+                                        if(!isset($payment_method)) return $data;
+                                        $filteredData = [];
+                                        foreach ($data as $row) {
+                                            if ($row['payment_method'] == $payment_method) {
+                                                $filteredData[] = $row;
+                                            }
+                                        }
+                                        return $filteredData;
+                                    }
+
+
+                                    function fromDateFilter($date, $data): array {
+                                        if(!isset($date)) return $data;
+                                        $filteredData = [];
+                                        foreach ($data as $row) {
+                                            if ($row['payment_method'] == $payment_method) {
+                                                $filteredData[] = $row;
+                                            }
+                                        }
+                                        return $filteredData;
+                                    }
+
+                                    
+
+
                                     $i = 1;
-                                    $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0];
+                                    $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0] ?? [];
+
+
+
 
                                     foreach($user_package as $row) {
                                         $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
@@ -499,6 +566,34 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!-- Bootstrap Pagination -->
+                            <br>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <!-- Previous page link -->
+                                    <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
+                                        <a class="page-link" href="?page=<?= ($current_page - 1) ?>"
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+
+                                    <!-- Page links -->
+                                    <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                                    <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
+                                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
+                                    <?php } ?>
+
+                                    <!-- Next page link -->
+                                    <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
+                                        <a class="page-link" href="?page=<?= ($current_page + 1) ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
 
