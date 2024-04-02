@@ -406,11 +406,11 @@
                                         <label for="" class="form-label">Payment Method</label>
                                         <select name="" id="payment_method" class="form-select form-select-sm">
                                             <option value="" selected class="d-none" disabled>-- Select one --</option>
-                                            <option value="Gcash">Gcash</option>
-                                            <option value="Maya">Maya</option>
-                                            <option value="Paypal">Paypal</option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="Others">Others</option>
+                                            <option <?= ($_GET['payment_method'] ?? null) == 'Gcash' ? 'selected' : null ?> value="Gcash">Gcash</option>
+                                            <option <?= ($_GET['payment_method'] ?? null) == 'Maya' ? 'selected' : null ?> value="Maya">Maya</option>
+                                            <option <?= ($_GET['payment_method'] ?? null) == 'Paypal' ? 'selected' : null ?> value="Paypal">Paypal</option>
+                                            <option <?= ($_GET['payment_method'] ?? null) == 'Cash' ? 'selected' : null ?> value="Cash">Cash</option>
+                                            <option <?= ($_GET['payment_method'] ?? null) == 'Others' ? 'selected' : null ?> value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
