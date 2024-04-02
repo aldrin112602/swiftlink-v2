@@ -399,7 +399,7 @@
                                         </select>
 
                                         
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col">
@@ -473,11 +473,29 @@
                                             <th>Name</th>
                                             <th>Payment Method</th>
                                             <th>Amount</th>
-                                            <th>Created by</th>
+                                            <!-- <th>Created by</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php
+                                    $user_package = getRows("status='Paid'", "user_package");
+                                    $i = 1;
+                                    $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0];
 
+                                    foreach($user_package as $row) {
+                                        $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
+                                        echo "<tr>
+                                            <td>$i</td>
+                                            <td>{$row['account_no']}</td>
+                                            <td>{$row['date']}</td>
+                                            <td>{$user['firstname']} {$user['middle_initial']} {$user['lastname']}</td>
+                                            <td>$payment_method</td>
+                                            <td>{$row['total']} PHP</td>
+                                        </tr>";
+
+                                        $i++;
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>
