@@ -1,0 +1,15 @@
+{
+  "name": "swiftlink",
+  "description": "swiftlink",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aldrin E. Caballero",
+      "email": "caballeroaldrin02@gmail.com"
+    }
+  ],
+  "require": {
+    "phpmailer/phpmailer": "^6.8"
+  }
+}
