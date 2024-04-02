@@ -1,1 +1,2 @@
+ M auto_push.bat
  M temp.txt

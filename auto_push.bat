@@ -6,7 +6,7 @@ set /p changes=<temp.txt
 if not defined changes goto pause
 
 git add .
-git commit -a -m "Automatic push"
+git commit -a -m "Auto commit via batch file"
 
 git push
 
