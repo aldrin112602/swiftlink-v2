@@ -278,8 +278,8 @@
                     <!-- view user -->
                     
                     <?php
-                        if(isset($_GET['view_user']) && !isset($_GET['update_package'])) {
-                            $account_no = base64_decode(mysqli_real_escape_string($conn, trim($_GET['view_user'])));
+                        if(isset($_GET['view_user'])) {
+                            $account_no = base64_decode($_GET['view_user']);
 
                             $userRow = getRows("account_no='$account_no'", "accounts")[0];
                            
@@ -365,15 +365,6 @@
                                             <td class="ellipsis-text"><?= $row['total'] ?></td>
                                             <td class="ellipsis-text"><?= $row['coverage'] ?></td>
                                             <td class="ellipsis-text"><?= $row['package'] ?></td>
-                                            <!-- <td class="ellipsis-text">
-                                                <a href="?update_package=<?= $row['id'] ?>">
-                                                    <i class="fa-regular fa-pen-to-square"></i>
-                                                </a>
-
-                                                <button class="fa-regular fa-trash-can text-danger btn btn-sm"
-                                                    onclick="deleteConfirmation(<?= $row['id'] ?>, 'user_package')"></button>
-
-                                            </td> -->
                                         </tr>
                                         <?php
                                         $no++;
@@ -413,17 +404,6 @@
                                 </ul>
                             </nav>
 
-                            <script>
-                            function setPage(page) {
-                                let url = new URLSearchParams(location.href)
-                                if (url.has('page2')) {
-                                    url.set('page2', page)
-                                    location.href = url;
-                                } else {
-                                    location.href = `?page2=${page}`;
-                                }
-                            }
-                            </script>
                         </div>
                         <?php
                         }
@@ -434,7 +414,7 @@
                     <div class="col col-lg-3">
                         <div class="form-group">
                             <label for=""></label>
-                            <select class="form-select" name="" id="history_select">
+                            <select class="form-select <?= isset($_GET['view_user']) ? 'd-none' : 'none' ?>" name="" id="history_select">
                                 <option value="All" <?= ($_GET['selected'] ?? null) == 'All' ? 'selected' : null ?>>All
                                 </option>
                                 <option value="History"
@@ -454,7 +434,7 @@
                         })
                         </script>
                     </div>
-                    <div class="ecommerse-widget bg-white <?= isset($_GET['payment_confirmation']) ? 'd-none' : '' ?>">
+                    <div class="ecommerse-widget bg-white <?= isset($_GET['payment_confirmation']) || isset($_GET['view_user']) ? 'd-none' : '' ?>">
                         <table
                             class="table table-striped table-hover table-white <?= ($_GET['selected'] ?? null) == 'Ticket History' ? 'd-none' : null ?>">
                             <thead>
