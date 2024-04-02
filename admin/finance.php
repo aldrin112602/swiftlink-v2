@@ -393,7 +393,11 @@
                                     <div>
                                         <label for="" class="form-label">Payment Method</label>
                                         <select name="" id="" class="form-select form-select-sm">
-
+                                            <option value="Gcash">Gcash</option>
+                                            <option value="Maya">Maya</option>
+                                            <option value="Paypal">Paypal</option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
