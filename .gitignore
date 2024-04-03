@@ -1,2 +1,7 @@
 temp.txt
 # auto_commit.bat
+user/profile/*
+admin/profile/*
+user/proof_of_payment/*
+user/uploads/*
+uploads/*
