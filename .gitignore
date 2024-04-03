@@ -1,7 +1,18 @@
 temp.txt
 # auto_commit.bat
 user/profile/*
+!user/profile/robots.txt
+
+
 admin/profile/*
+!admin/profile/robots.txt
+
+
 user/proof_of_payment/*
+!user/proof_of_payment/robots.txt
+
 user/uploads/*
+!user/uploads/robots.txt
+
 uploads/*
+!uploads/robots.txt
