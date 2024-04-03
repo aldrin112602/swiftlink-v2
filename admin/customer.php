@@ -672,14 +672,8 @@
                                         // Define variables
                                         
 
-                                        $result = $conn->query( $sqlQuery );
-                                        $data = [];
-                                        if ( $result && $result->num_rows>0 ) {
-                                            while( $row = $result->fetch_assoc() ) {
-                                                $data[] = $row;
-                                            }
-                                        }
-
+                                        $data = getRows("role='user'", "accounts");
+                                        
 
                                         // Pagination parameters
                                         $totalItems = count($data);
