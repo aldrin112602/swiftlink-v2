@@ -839,10 +839,10 @@
                                         required>
                                 </div>
                             </div>
-                            <div class="mb-3 px-2 col">
+                            <!-- <div class="mb-3 px-2 col">
                                 <label for="payment" class="form-label">Payment</label>
                                 <input type="number" name="payment" id="payment" class="form-control input" required>
-                            </div>
+                            </div> -->
                             <div class="mb-3 px-2 col" id="package_and_coverage" style="display: none;"></div>
                             <div class="col-12 mt-5">
                                 <button type="submit" class="btn btn-primary btn-lg px-5 text-white"
