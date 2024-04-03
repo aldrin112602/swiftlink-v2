@@ -510,7 +510,12 @@
                             </div>
                             </div>
                         </div>
-
+                        <?php
+                        $sql = "SELECT MAX(total) AS highest_bill FROM user_package";
+                        $result = $conn->query($sql);
+                        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                        $highest_bill = $row[0]['highest_bill'];
+                        ?>
                         <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const ctx = document.getElementById('myChart');
@@ -520,7 +525,7 @@
                             const NUMBER_CFG = {
                                 count: DATA_COUNT,
                                 min: 0,
-                                max: 100
+                                max: parseInt(<?= $highest_bill ?>)
                             };
 
                             // Generate random labels for months
@@ -540,16 +545,6 @@
                                         borderColor: 'red',
                                         backgroundColor: 'rgba(255, 0, 0, 0.5)',
                                         tension: 0.4,
-                                    },
-                                    {
-                                        label: 'Dataset 2',
-                                        data: Array.from({
-                                            length: DATA_COUNT
-                                        }, () => Math.floor(Math.random() * (NUMBER_CFG.max -
-                                            NUMBER_CFG.min + 1)) + NUMBER_CFG.min),
-                                        borderColor: 'blue',
-                                        backgroundColor: 'rgba(0, 0, 255, 0.5)',
-                                        tension: 0.2,
                                     }
                                 ]
                             };
