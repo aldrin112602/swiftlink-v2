@@ -563,18 +563,21 @@
 
 
                                     $i = 1;
-                                    // $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0] ?? [];
+                                    $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0] ?? [];
 
 
 
 
                                     foreach($user_package as $row) {
                                         $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
+
+                                        $user_ = getRows("account_no='{$row['account_no']}'", "accounts")[0];
+                                        
                                         echo "<tr>
                                             <td>$i</td>
                                             <td>{$row['account_no']}</td>
                                             <td>{$row['date']}</td>
-                                            <td>{$user['firstname']} {$user['middle_initial']} {$user['lastname']}</td>
+                                            <td>{$user_['firstname']} {$user_['middle_initial']} {$user_['lastname']}</td>
                                             <td>$payment_method</td>
                                             <td>{$row['total']} PHP</td>
                                         </tr>";
