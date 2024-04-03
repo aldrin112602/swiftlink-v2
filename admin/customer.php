@@ -663,19 +663,14 @@
                                             <th class="ellipsis-text" scope="col">Phone</th>
                                             <th class="ellipsis-text" scope="col">Status</th>
                                             <th class="ellipsis-text" scope="col">Address</th>
-                                            <th class="ellipsis-text" scope="col">Bill / Month</th>
+                                            
                                             <th class="ellipsis-text" scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         // Define variables
-                                        $statusCondition = in_array($status, ['Active', 'Inactive', 'Approved', 'Pending']) ? "ac.status = '$status' AND ac.role = 'user'" : "ac.role = 'user'";
-                                        $sqlQuery = "SELECT ac.id, ac.firstname, ac.lastname, ac.account_no, ac.email, ac.phone, ac.status, ac.address, up.total
-                                        FROM accounts AS ac
-                                        JOIN user_package AS up ON ac.account_no = up.account_no  
-                                        WHERE $statusCondition";
-
+                                        
 
                                         $result = $conn->query( $sqlQuery );
                                         $data = [];
@@ -713,7 +708,7 @@
                                             <td class="ellipsis-text"><?= $row['phone'] ?></td>
                                             <td class="ellipsis-text"><?= $row['status'] ?></td>
                                             <td class="ellipsis-text"><?= $row['address'] ?></td>
-                                            <td class="ellipsis-text"><?= $row['total'] ?></td>
+                                            
                                             <td class="ellipsis-text">
                                                 <a href="?update=<?= $row['id'] ?>">
                                                     <i class="fa-regular fa-pen-to-square"></i>
