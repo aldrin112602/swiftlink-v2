@@ -440,133 +440,133 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                $sql = "SELECT pc.invoice, pc.payment_method, pc.date_payment, pc.image_path, pc.status, pc.id, ac.account_no, ac.firstname, ac.lastname, uc.period, uc.invoice, uc.account_no
-                                FROM payment_confirmation AS pc
-                                JOIN user_package AS uc ON pc.invoice = uc.invoice
-                                JOIN accounts AS ac ON ac.account_no = uc.account_no";
+                                    <?php
+                                    $sql = "SELECT pc.invoice, pc.payment_method, pc.date_payment, pc.image_path, pc.status, pc.id, ac.account_no, ac.firstname, ac.lastname, uc.period, uc.invoice, uc.account_no
+                                    FROM payment_confirmation AS pc
+                                    JOIN user_package AS uc ON pc.invoice = uc.invoice
+                                    JOIN accounts AS ac ON ac.account_no = uc.account_no";
 
-                                $result = $conn->query($sql);
-                                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                    $result = $conn->query($sql);
+                                    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-                                // Pagination parameters
-                                
-                                $totalItems = count($data);
-                                $itemsPerPage = 5;
-                                $totalPages = ceil($totalItems / $itemsPerPage);
-                                $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-                                $current_page = max(1, min($totalPages, intval($current_page)));
-                                $offset = ($current_page - 1) * $itemsPerPage;
-
-                                $dataToDisplay = array_slice($data, $offset, $itemsPerPage);
-
-                                // filter by month only
-                                function filterByMonth($month, $data): array {
-                                    if($month == 'All') {
-                                        return $data;
-                                    }
-                                    $months = [
-                                        'January' => '01',
-                                        'February' => '02',
-                                        'March' => '03',
-                                        'April' => '04',
-                                        'May' => '05',
-                                        'June' => '06',
-                                        'July' => '07',
-                                        'August' => '08',
-                                        'September' => '09',
-                                        'October' => '10',
-                                        'November' => '11',
-                                        'December' => '12'
-                                    ];
-                                    $filteredData = [];
-                                    foreach ($data as $item) {
-                                        $datePayment = $item['date_payment'];
-                                        $paymentMonth = date('m', strtotime($datePayment));
-                                        
-                                        if (trim($paymentMonth) == $months[trim($month)]) {
-                                            $filteredData[] = $item;
-                                        }
-                                    }
-                                    return $filteredData;
-                                }
-
-
-
-                                // filter by year only
-                                function filterByYear($year, $data): array {
-                                    if($year == 'All') {
-                                        return $data;
-                                    }
-                                    $filteredData = [];
-                                    foreach ($data as $item) {
-                                        $datePayment = $item['date_payment'];
-                                        $paymentYear = date('Y', strtotime($datePayment));
-                                        if (trim($paymentYear) == trim($year)) {
-                                            $filteredData[] = $item;
-                                        }
-                                    }
-                                    return $filteredData;
-                                }
-
-
-                                 // filter by year only
-                                function filterByStatus($status, $data): array {
-                                    if($status == 'All') {
-                                        return $data;
-                                    }
-                                    $filteredData = [];
-                                    foreach ($data as $item) {
-                                        if ($item['status'] == trim($status)) {
-                                            $filteredData[] = $item;
-                                        }
-                                    }
-                                    return $filteredData;
-                                }
-
-
-                                function filterDate($month, $year, $status, $data): array {
-                                    // Filter by month only
-                                    if (isset($month) && !isset($year) && !isset($status)) {
-                                        return filterByMonth($month, $data);
-                                    } 
-                                    // Filter by year only
-                                    elseif (!isset($month) && isset($year) && !isset($status)) {
-                                        return filterByYear($year, $data);
-                                    }
-
-                                    // Filter by status only
-                                    elseif (!isset($month) && !isset($year) && isset($status)) {
-                                        return filterByStatus($status, $data);
-                                    } 
+                                    // Pagination parameters
                                     
-                                    // Filter by month and year only
-                                    elseif (isset($month) && isset($year) && !isset($status)) {
-                                        return filterByYear($year, filterByMonth($month, $data));
+                                    $totalItems = count($data);
+                                    $itemsPerPage = 5;
+                                    $totalPages = ceil($totalItems / $itemsPerPage);
+                                    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                    $current_page = max(1, min($totalPages, intval($current_page)));
+                                    $offset = ($current_page - 1) * $itemsPerPage;
+
+                                    $dataToDisplay = array_slice($data, $offset, $itemsPerPage);
+
+                                    // filter by month only
+                                    function filterByMonth($month, $data): array {
+                                        if($month == 'All') {
+                                            return $data;
+                                        }
+                                        $months = [
+                                            'January' => '01',
+                                            'February' => '02',
+                                            'March' => '03',
+                                            'April' => '04',
+                                            'May' => '05',
+                                            'June' => '06',
+                                            'July' => '07',
+                                            'August' => '08',
+                                            'September' => '09',
+                                            'October' => '10',
+                                            'November' => '11',
+                                            'December' => '12'
+                                        ];
+                                        $filteredData = [];
+                                        foreach ($data as $item) {
+                                            $datePayment = $item['date_payment'];
+                                            $paymentMonth = date('m', strtotime($datePayment));
+                                            
+                                            if (trim($paymentMonth) == $months[trim($month)]) {
+                                                $filteredData[] = $item;
+                                            }
+                                        }
+                                        return $filteredData;
                                     }
 
-                                    // Filter by month and status only
-                                    elseif (isset($month) && !isset($year) && isset($status)) {
-                                        return filterByStatus($status, filterByMonth($month, $data));
 
-                                    } elseif (isset($month) && isset($year) && isset($status)) {
-                                        return filterByStatus($status, filterByYear($year, filterByMonth($month, $data)));
-                                    } else {
-                                        return [];
+
+                                    // filter by year only
+                                    function filterByYear($year, $data): array {
+                                        if($year == 'All') {
+                                            return $data;
+                                        }
+                                        $filteredData = [];
+                                        foreach ($data as $item) {
+                                            $datePayment = $item['date_payment'];
+                                            $paymentYear = date('Y', strtotime($datePayment));
+                                            if (trim($paymentYear) == trim($year)) {
+                                                $filteredData[] = $item;
+                                            }
+                                        }
+                                        return $filteredData;
                                     }
-                                }
-
-                                // Extract the month parameter from the URL query string
-                                $month = isset($_GET['month']) ? $_GET['month'] : null;
-                                $year = isset($_GET['year']) ? $_GET['year'] : null;
-                                $status = isset($_GET['status']) ? $_GET['status'] : null;
-                               
-
-                                $dataToDisplay = filterDate($month, $year, $status, $dataToDisplay);
 
 
-                                $count = 1;
-                                foreach ($dataToDisplay as $row) {
+                                    // filter by year only
+                                    function filterByStatus($status, $data): array {
+                                        if($status == 'All') {
+                                            return $data;
+                                        }
+                                        $filteredData = [];
+                                        foreach ($data as $item) {
+                                            if ($item['status'] == trim($status)) {
+                                                $filteredData[] = $item;
+                                            }
+                                        }
+                                        return $filteredData;
+                                    }
+
+
+                                    function filterDate($month, $year, $status, $data): array {
+                                        // Filter by month only
+                                        if (isset($month) && !isset($year) && !isset($status)) {
+                                            return filterByMonth($month, $data);
+                                        } 
+                                        // Filter by year only
+                                        elseif (!isset($month) && isset($year) && !isset($status)) {
+                                            return filterByYear($year, $data);
+                                        }
+
+                                        // Filter by status only
+                                        elseif (!isset($month) && !isset($year) && isset($status)) {
+                                            return filterByStatus($status, $data);
+                                        } 
+                                        
+                                        // Filter by month and year only
+                                        elseif (isset($month) && isset($year) && !isset($status)) {
+                                            return filterByYear($year, filterByMonth($month, $data));
+                                        }
+
+                                        // Filter by month and status only
+                                        elseif (isset($month) && !isset($year) && isset($status)) {
+                                            return filterByStatus($status, filterByMonth($month, $data));
+
+                                        } elseif (isset($month) && isset($year) && isset($status)) {
+                                            return filterByStatus($status, filterByYear($year, filterByMonth($month, $data)));
+                                        } else {
+                                            return [];
+                                        }
+                                    }
+
+                                    // Extract the month parameter from the URL query string
+                                    $month = isset($_GET['month']) ? $_GET['month'] : null;
+                                    $year = isset($_GET['year']) ? $_GET['year'] : null;
+                                    $status = isset($_GET['status']) ? $_GET['status'] : null;
+                                
+
+                                    $dataToDisplay = filterDate($month, $year, $status, $dataToDisplay);
+
+
+                                    $count = 1;
+                                    foreach ($dataToDisplay as $row) {
                                 ?>
                                         <tr class="py-0">
                                             <td><?= $count ?></td>

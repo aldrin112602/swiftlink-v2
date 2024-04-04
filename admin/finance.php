@@ -126,6 +126,23 @@
         cursor: grab;
 
     }
+
+    @media print {
+        #tablePreview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* #tablePreview th:last-child,
+        #tablePreview td:last-child {
+            display: none;
+        } */
+    }
     </style>
 </head>
 
@@ -378,7 +395,14 @@
                                 <div class="col">
                                     <div>
                                         <br>
-                                        <button class="btn btn-sm form-control mt-2">Print</button>
+                                        <button id="printBtn" class="btn btn-sm form-control mt-2">Print</button>
+                                        <script>
+                                        $(() => {
+                                            $('#printBtn').click(() => {
+                                                window.print();
+                                            })
+                                        })
+                                        </script>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -477,7 +501,7 @@
                             })
                             </script>
                             <div class="table-responsive mt-3" style="min-height: 100px;">
-                                <table class="table table-striped table-hover">
+                                <table id="tablePreview" class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th>No</th>
