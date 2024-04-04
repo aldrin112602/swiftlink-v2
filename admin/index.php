@@ -511,10 +511,17 @@
                             </div>
                         </div>
                         <?php
-                        $sql = "SELECT MAX(total) AS highest_bill FROM user_package";
+                        $sql = "SELECT SUM(total) AS total FROM user_package WHERE status='Paid'";
                         $result = $conn->query($sql);
                         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                        $highest_bill = $row[0]['highest_bill'];
+                        $total = (int)$row[0]['total'];
+
+
+                        $data = getRows("status='Paid'", "user_package");
+                        $months = ['Jan' => '1', 'Feb' => '2', 'Mar' => '3', 'Apr' => '4', 'May' => '5', 'Jun' => '6', 'Jul' => '7', 'Aug' => '8', 'Sep' => '9', 'Oct' => '10', 'Nov' => '11', 'Dec' => '12'];
+                        foreach($months as $month => $equivalent_number) {
+                            
+                        }
                         ?>
                         <script>
                         document.addEventListener('DOMContentLoaded', function() {
