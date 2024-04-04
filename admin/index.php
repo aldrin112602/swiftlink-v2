@@ -435,7 +435,7 @@
                                     </table>
                                 </div>
 
-                               <br>
+                                <br>
 
                                 <!-- Bootstrap Pagination -->
                                 <nav aria-label="Page navigation">
@@ -466,94 +466,102 @@
                                 </nav>
                             </div>
                             <div class="col col-lg-3 shadow bg-white p-3" style="border-radius: 15px;">
-                            <div class="my-3 p-3 bg-white shadow" style="border-radius: 15px;">
-                                <div>
-                                    <!-- icon -->
-                                </div>
-                                <div>
-                                    <small>Pending ticket</small><br>
-                                    <h3>
-                                        <?php
+                                <div class="my-3 p-3 bg-white shadow" style="border-radius: 15px;">
+                                    <div>
+                                        <!-- icon -->
+                                    </div>
+                                    <div>
+                                        <small>Pending ticket</small><br>
+                                        <h3>
+                                            <?php
                                         $pending_ticket =getRows("status='Pending'", "customer_ticket");
                                         echo count($pending_ticket);
                                         ?>
-                                    </h3>
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="my-3 p-3 bg-white shadow" style="border-radius: 15px;">
-                                <div>
-                                    <!-- icon -->
-                                </div>
-                                <div>
-                                    <small>Pending Payment</small><br>
-                                    <h3>
-                                    <?php
+                                <div class="my-3 p-3 bg-white shadow" style="border-radius: 15px;">
+                                    <div>
+                                        <!-- icon -->
+                                    </div>
+                                    <div>
+                                        <small>Pending Payment</small><br>
+                                        <h3>
+                                            <?php
                                         $pending_payment =getRows("status='Pending'", "payment_confirmation");
                                         echo count($pending_payment);
                                     ?>
-                                    </h3>
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="my-3 p-3 bg-white shadow" style="border-radius: 15px;">
-                                <div>
-                                    <!-- icon -->
-                                </div>
-                                <div>
-                                    <small>Closed Ticket</small><br>
-                                    <h3>
-                                    <?php
+                                <div class="my-3 p-3 bg-white shadow" style="border-radius: 15px;">
+                                    <div>
+                                        <!-- icon -->
+                                    </div>
+                                    <div>
+                                        <small>Closed Ticket</small><br>
+                                        <h3>
+                                            <?php
                                         $closed_ticket =getRows("status='Closed'", "customer_ticket");
                                         echo count($closed_ticket);
                                     ?>
-                                    </h3>
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <?php
+                        // Fetching total sum of 'total' where status is 'Paid'
                         $sql = "SELECT SUM(total) AS total FROM user_package WHERE status='Paid'";
                         $result = $conn->query($sql);
-                        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                        $total = (int)$row[0]['total'];
+                        $row = $result->fetch_assoc();
+                        $total = (int)$row['total'];
 
-
+                        // Fetching data for status 'Paid'
                         $data = getRows("status='Paid'", "user_package");
-                        $months = ['Jan' => '1', 'Feb' => '2', 'Mar' => '3', 'Apr' => '4', 'May' => '5', 'Jun' => '6', 'Jul' => '7', 'Aug' => '8', 'Sep' => '9', 'Oct' => '10', 'Nov' => '11', 'Dec' => '12'];
-                        foreach($months as $month => $equivalent_number) {
-                            
+
+                        // Initializing data set for monthly totals
+                        $months = ['Jan' => '01', 'Feb' => '02', 'Mar' => '03', 'Apr' => '04', 'May' => '05', 'Jun' => '06', 'Jul' => '07', 'Aug' => '08', 'Sep' => '09', 'Oct' => '10', 'Nov' => '11', 'Dec' => '12'];
+                        $data_set = array_fill_keys(array_keys($months), 0);
+
+                        // Calculating monthly totals
+                        foreach ($data as $row) {
+                            $month = date('M', strtotime($row['date'])); // Get month abbreviation from date
+                            $total = (int)$row['total'];
+                            $data_set[$month] += $total; // Accumulate total for each month
                         }
+
+                        
                         ?>
+
                         <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const ctx = document.getElementById('myChart');
-
-                            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                            const DATASET = <?= json_encode($data_set) ?>;
+                            console.log(DATASET)
+                            const months = Object.keys(DATASET);
                             const DATA_COUNT = months.length;
                             const NUMBER_CFG = {
                                 count: DATA_COUNT,
-                                min: 0,
-                                max: parseInt(<?= $highest_bill ?>)
+                                min: Math.min(...Object.values(DATASET)),
+                                max: Math.max(...Object.values(DATASET))
                             };
 
-                            // Generate random labels for months
                             const labels = Array.from({
                                 length: DATA_COUNT
                             }, (_, i) => months[i]);
 
-                            // Generate random data for datasets
+                            const datasetData = Object.values(DATASET); 
+
                             const data = {
                                 labels: labels,
                                 datasets: [{
-                                        label: 'Dataset 1',
-                                        data: Array.from({
-                                            length: DATA_COUNT
-                                        }, () => Math.floor(Math.random() * (NUMBER_CFG.max -
-                                            NUMBER_CFG.min + 1)) + NUMBER_CFG.min),
-                                        borderColor: 'red',
-                                        backgroundColor: 'rgba(255, 0, 0, 0.5)',
-                                        tension: 0.4,
-                                    }
-                                ]
+                                    label: 'Dataset 1',
+                                    data: datasetData,
+                                    borderColor: 'red',
+                                    backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                                    tension: 0.4,
+                                }]
                             };
 
                             const config = {
