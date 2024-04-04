@@ -511,24 +511,20 @@
                             </div>
                         </div>
                         <?php
-                        // Fetching total sum of 'total' where status is 'Paid'
                         $sql = "SELECT SUM(total) AS total FROM user_package WHERE status='Paid'";
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
                         $total = (int)$row['total'];
 
-                        // Fetching data for status 'Paid'
                         $data = getRows("status='Paid'", "user_package");
-
-                        // Initializing data set for monthly totals
                         $months = ['Jan' => '01', 'Feb' => '02', 'Mar' => '03', 'Apr' => '04', 'May' => '05', 'Jun' => '06', 'Jul' => '07', 'Aug' => '08', 'Sep' => '09', 'Oct' => '10', 'Nov' => '11', 'Dec' => '12'];
                         $data_set = array_fill_keys(array_keys($months), 0);
 
-                        // Calculating monthly totals
+                        
                         foreach ($data as $row) {
-                            $month = date('M', strtotime($row['date'])); // Get month abbreviation from date
+                            $month = date('M', strtotime($row['date']));
                             $total = (int)$row['total'];
-                            $data_set[$month] += $total; // Accumulate total for each month
+                            $data_set[$month] += $total;
                         }
 
                         
@@ -551,7 +547,7 @@
                                 length: DATA_COUNT
                             }, (_, i) => months[i]);
 
-                            const datasetData = Object.values(DATASET); 
+                            const datasetData = Object.values(DATASET);
 
                             const data = {
                                 labels: labels,
@@ -601,7 +597,6 @@
                         $paid_total_sum = 0;
                         $unpaid_total_sum = 0;
 
-                        // Calculate total sums
                         foreach($unpaid as $row) {
                             $all_total_sum += (int)$row['total'];
                             $unpaid_total_sum += (int)$row['total'];
@@ -611,7 +606,6 @@
                             $paid_total_sum += (int)$row['total'];
                         }
 
-                        // Calculate percentages
                         $paid_percentage = ($paid_total_sum / $all_total_sum) * 100;
                         $unpaid_percentage = ($unpaid_total_sum / $all_total_sum) * 100;
                     ?>
