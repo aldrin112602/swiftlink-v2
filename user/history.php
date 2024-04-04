@@ -276,7 +276,7 @@
 
 
                     <!-- view user -->
-                    
+
                     <?php
                         if(isset($_GET['view_user'])) {
                             $account_no = base64_decode($_GET['view_user']);
@@ -285,224 +285,275 @@
                             $userRow = getRows("account_no='$account_no'", "accounts")[0];
                            
                             ?>
-                        <div class="bg-white p-2 p-md-3 py-2" style="border-radius: 40px;">
-                            <!-- view user data -->
-                            <div class="d-flex align-items-center justify-content-start">
-                                <div class="col-4 col-lg-1">
-                                    <img id="profile_pic" title="Update profile picture?"
-                                        style="cursor: pointer; object-fit: cover;"
-                                        class="img-fluid rounded-circle hover"
-                                        src="<?= isset($userRow['profile']) ? '../user/' . $userRow['profile'] : 'https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg' ?>"
-                                        height="90px" width="90px"
-                                        alt="Profile picture of <?= $userRow['firstname'] ?? '' ?> <?= $userRow['middle_initial'] ?? '' ?> <?= $userRow['lastname'] ?? '' ?>">
-                                    <input id="file_upload" type="file" accept="image/*" class="d-none">
+                    <div class="bg-white p-2 p-md-3 py-2" style="border-radius: 40px;">
+                        <!-- preview invoice -->
+                        <div class="bg-white p-5 py-3" style="border-radius: 15px;" id="preview_invoice">
+                            <h3 class="fw-bold">Swiftlink</h3>
+                            <div class="row">
+                                <div class="col">
+                                    <b><i>Address: #184 Purok 3, Ithan, Binangonan, Rizal</i></b><br>
+                                    <b>Phone: +639279972636</b><br>
+                                    <b>Email: swiftlinkitsolutions@gmail.com</b>
+                                </div>
+                                <div class="col d-flex alig-items-center justify-content-end">
+                                    <img src="../src/img/swLogo.png" alt="Logo" width="200px">
+                                </div>
+                            </div>
+                            <hr>
 
-                                    <script>
-                                    $(() => {
+                            <div id="btns">
+                                <button onclick="downLoadAsPdf()" class="btn btn-white btn-sm border">Print</button>
+                                <button onclick="handleDownloadPDF()"
+                                    class="btn btn-white btn-sm border">Download</button>
+                            </div>
+                            <h2 class="fw-bold text-primary" style="text-align: right !important; font-family: serif">
+                                INVOICE</h2>
+                            <?php
+                            // get account no
+                            $get = validate_post_data($_GET);
+                            $view = base64_decode($get['invoice']);
+                            $account_no = base64_decode($get['view_user']);
+                            $user_account = getRows("account_no='$account_no'", "accounts")[0];
+                            $invoice = getRows("invoice='$view'", "user_package")[0];
+                            ?>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="my-2">To:</span><br>
+                                    <strong class="fw-bold my-2">
+                                        <?= $user_account['firstname'] . ' ' . $user_account['middle_initial'] . ' ' . $user_account['lastname']?>
+                                    </strong><br>
+                                    <span class="my-2">
+                                        <?= $user_account['phone'] ?>
+                                    </span><br>
+                                    <span class="my-2">
+                                        <?= $user_account['address'] ?>,
+                                        <?= $user_account['town'] ?>,
+                                        <?= $user_account['city'] ?>,
+                                        <?= $user_account['province'] ?>
+                                    </span>
+                                </div>
+                                <div class="col">
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td align="right" class="py-1">
+                                                    <b>Account No:</b>
+                                                </td>
+                                                <td align="right" class="py-1">
+                                                    <?= $account_no ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="py-1">
+                                                    <b>Invoice:</b>
+                                                </td>
+                                                <td align="right" class="py-1">
+                                                    <?= $view ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="py-1">
+                                                    <b>Date Invoice:</b>
+                                                </td>
+                                                <td align="right" class="py-1">
+                                                    <?php
+                                                    $date = explode(" ", $invoice['date'])[0];
+                                                    echo $date;
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="py-1">
+                                                    <b>Due Date:</b>
+                                                </td>
+                                                <td align="right" class="py-1">
+                                                    <?= $invoice['due_date'] ?>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                                        $('#profile_pic').on('click', () => {
-                                            $('#file_upload').click();
-                                        })
+                            <div class="d-flex mt-3 align-items-center justify-content-between">
+                                <span>Period
+                                    <?= $invoice['period'] ?>
+                                </span>
+                                <span class="fw-bold text-danger">
+                                    <?= strtoupper($invoice['status']) ?>
+                                </span>
+                            </div>
 
-                                        $('#file_upload').change(function(ev) {
-                                            let reader = new FileReader()
-                                            let file = $(this).prop('files')[0]
-
-                                            reader.onload = (e) => {
-                                                $('#profile_pic').attr('src', e.target.result)
-                                            }
-                                            reader.readAsDataURL(file);
-
-                                            const formdata = new FormData();
-                                            formdata.append('profileImage', file);
-                                            formdata.append('account_no',
-                                                '<?= $userRow['account_no'] ?>');
-
-
-                                            $('#loader-container').css('display', 'flex');
-                                            fetch('./update_user_profile.php', {
-                                                    method: 'POST',
-                                                    body: formdata
-                                                }).then(res => res.json())
-                                                .then(data => {
-                                                    const {
-                                                        status,
-                                                        message
-                                                    } = data;
-                                                    setTimeout(() => {
-                                                        $('#loader-container').css(
-                                                            'display', 'none');
-
-
-
-                                                        if (status == 'success') {
-                                                            Swal.fire({
-                                                                icon: 'success',
-                                                                title: 'Success',
-                                                                text: message
-                                                            });
-                                                        } else {
-                                                            Swal.fire({
-                                                                icon: 'error',
-                                                                title: 'Error',
-                                                                text: message
-                                                            })
-                                                        }
-
-
-                                                    }, 2000);
-
-
-                                                })
-                                                .catch(err => {
-                                                    console.log(err)
-                                                });
-
-                                        })
-                                    })
-                                    </script>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Items</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <!-- <th>Discount</th> -->
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><?= $invoice['package'] ?></td>
+                                        <td>1</td>
+                                        <td><?= $invoice['total'] ?></td>
+                                        <td><?= $invoice['total'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex mt-3 align-items-center justify-content-end gap-4">
+                                <strong>Total</strong>
+                                <strong><?= $invoice['total'] ?></strong>
+                            </div>
+                            <?php
+                                function numberToWords($num) {
+                                    $ones = array(
+                                        0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six',
+                                        7 => 'seven', 8 => 'eight', 9 => 'nine', 10 => 'ten', 11 => 'eleven', 12 => 'twelve',
+                                        13 => 'thirteen', 14 => 'fourteen', 15 => 'fifteen', 16 => 'sixteen', 17 => 'seventeen',
+                                        18 => 'eighteen', 19 => 'nineteen'
+                                    );
                                     
-                                </div>
-                                <div class="col p-3">
-                                    <small class="fw-bold fs-6">
-                                        <?= $userRow['firstname'] ?? '' ?>
-                                        <?= $userRow['middle_initial'] ?? '' ?>
-                                        <?= $userRow['lastname'] ?? '' ?>
-                                    </small><br>
-                                    <small><i class="fa-solid fa-location-dot mx-2"></i><?= $userRow['address'] ?>,
-                                        <?= $userRow['town'] ?>, <?= $userRow['city'] ?>,
-                                        <?= $userRow['province'] ?></small><br>
-                                    <small><a href="tel:<?= $userRow['phone'] ?>"><i class="fa-solid fa-phone mx-2"></i>
-                                            <?= $userRow['phone'] ?></a></small><br>
-                                    <small><a href="mailto:<?= $userRow['email'] ?>"><i
-                                                class="fa-solid fa-envelope mx-2"></i>
-                                            <?= $userRow['email'] ?></a></small>
-                                </div>
-                            </div>
+                                    $tens = array(
+                                        0 => '', 1 => '', 2 => 'twenty', 3 => 'thirty', 4 => 'forty', 5 => 'fifty', 6 => 'sixty',
+                                        7 => 'seventy', 8 => 'eighty', 9 => 'ninety'
+                                    );
+                                    
+                                    if ($num < 20) {
+                                        return $ones[$num];
+                                    }
+                                    
+                                    if ($num < 100) {
+                                        return $tens[floor($num / 10)] . (($num % 10 !== 0) ? ' ' . $ones[$num % 10] : '');
+                                    }
+                                    
+                                    if ($num < 1000) {
+                                        return $ones[floor($num / 100)] . ' hundred' . (($num % 100 !== 0) ? ' and ' . numberToWords($num % 100) : '');
+                                    }
+                                    
+                                    if ($num < 1000000) {
+                                        return numberToWords(floor($num / 1000)) . ' thousand' . (($num % 1000 !== 0) ? ' ' . numberToWords($num % 1000) : '');
+                                    }
+                                    
+                                    return 'number is too large to handle';
+                                }
 
+                            ?>
+                            <p>
+                                <i>
+                                    * Count: <?= numberToWords((int)$invoice['total']) ?>
+                                </i>
+                            </p>
+                            <strong class="d-block">
+                                Bank Transfer:
+                            </strong>
+                            <p>
+                                GCASH: 09279972636 A/N JOHN GODWIN DITABLAN <br>
+                                BDO: 0912090091653 A/N JOHN GODWIN DITABLAN <br>
+                                MAYA: 09279972636 A/N JOHN GODWIN DITABLAN
+                            </p>
 
-
-                            <div class="table-responsive">
-                                <table class="table table-white table-striped table-hover" style="min-width: 60vw;">
-                                    <thead>
-                                        <tr>
-                                            <th class="ellipsis-text" scope="col">Account no.</th>
-                                            <th class="ellipsis-text" scope="col">Status</th>
-                                            <th class="ellipsis-text" scope="col">Bill / Month</th>
-                                            <th class="ellipsis-text" scope="col">Coverage</th>
-                                            <th class="ellipsis-text" scope="col">Package</th>
-                                            <!-- <th class="ellipsis-text" scope="col">Action</th> -->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $data = getRows("account_no='$account_no' AND invoice='$invoice'", "user_package");
-
-
-                                        // Pagination parameters
-                                        $totalItems = count($data);
-                                        $itemsPerPage = 5;
-                                        $totalPages = ceil($totalItems / $itemsPerPage);
-                                        $current_page = isset($_GET['page2']) ? $_GET['page2'] : 1;
-                                        $current_page = max(1, min($totalPages, intval($current_page)));
-                                        $offset = ($current_page - 1) * $itemsPerPage;
-
-                                        $dataToDisplay = array_slice($data, $offset, $itemsPerPage);
-
-                                        $no = 1;
-
-                                        foreach ($dataToDisplay as $row) {
-                                            ?>
-                                        <tr>
-                                            <td class="ellipsis-text"><?= $row['account_no'] ?? null ?></td>
-                                            <td class="ellipsis-text"><?= $row['status'] ?></td>
-                                            <td class="ellipsis-text"><?= $row['total'] ?></td>
-                                            <td class="ellipsis-text"><?= $row['coverage'] ?></td>
-                                            <td class="ellipsis-text"><?= $row['package'] ?></td>
-                                        </tr>
-                                        <?php
-                                        $no++;
-                                        }
-                                        ?>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <br>
-                            <!-- Bootstrap Pagination -->
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <!-- Previous page link -->
-                                    <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
-                                        <a class="page-link" onclick="setPage(<?= ($current_page - 1) ?>)"
-                                            aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-
-                                    <!-- Page links -->
-                                    <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                                    <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
-                                        <a class="page-link" onclick="setPage(<?= $i ?>)"><?= $i ?></a>
-                                    </li>
-                                    <?php } ?>
-
-                                    <!-- Next page link -->
-                                    <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
-                                        <a class="page-link" onclick="setPage(<?= ($current_page + 1) ?>)"
-                                            aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-
+                            <strong class="d-block mt-3">
+                                Payment Confirmation:
+                            </strong>
+                            <p>
+                                EMAIL: swiftlinkitsolutions@gmail.com<br>
+                                CONTACT: 09279972636
+                            </p>
                         </div>
-                        <?php
+
+
+
+                        <script>
+                        function downLoadAsPdf() {
+                            $('#btns').hide();
+                            var divContents = $("#preview_invoice");
+                            var printWindow = window.open('', '',
+                                `height=${divContents.prop('offsetHeight')},width=${divContents.prop('offsetWidth')}`
+                            );
+                            printWindow.document.write('<html><head><title>Invoice Contents</title>');
+                            printWindow.document.write('</head><body>');
+                            printWindow.document.write(divContents.html());
+                            printWindow.document.write('</body></html>');
+                            printWindow.document.close();
+                            printWindow.print();
+
+                            setTimeout(() => {
+                                $('#btns').show();
+                            }, 100)
+                        }
+
+
+                        const handleDownloadPDF = () => {
+                            $('#btns').hide();
+                            const domElement = document.getElementById('preview_invoice');
+                            if (domElement) {
+                                html2canvas(domElement).then((canvas) => {
+                                    const imgData = canvas.toDataURL('image/png');
+
+                                    const pdf = new jspdf.jsPDF();
+                                    pdf.addImage(imgData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(),
+                                        pdf.internal.pageSize.getHeight());
+                                    pdf.save(`${new Date().toISOString()}.pdf`);
+                                });
+                            }
+
+                            setTimeout(() => {
+                                $('#btns').show();
+                            }, 100)
+                        };
+                        </script>
+                    </div>
+                </div>
+                <?php
                         }
                         ?>
 
-                    <!-- end view user -->
+                <!-- end view user -->
 
-                    <div class="col col-lg-3">
-                        <div class="form-group">
-                            <label for=""></label>
-                            <select class="form-select <?= isset($_GET['view_user']) ? 'd-none' : 'none' ?>" name="" id="history_select">
-                                <option value="All" <?= ($_GET['selected'] ?? null) == 'All' ? 'selected' : null ?>>All
-                                </option>
-                                <option value="History"
-                                    <?= ($_GET['selected'] ?? null) == 'History' ? 'selected' : null ?>>
-                                    History</option>
-                                <option value="Ticket History"
-                                    <?= ($_GET['selected'] ?? null) == 'Ticket History' ? 'selected' : null ?>>Ticket
-                                    History
-                                </option>
-                            </select>
-                        </div>
-                        <script>
-                        $(() => {
-                            $('#history_select').on('change', () => {
-                                location.href = `?selected=${$('#history_select').val()}`;
-                            })
-                        })
-                        </script>
+                <div class="col col-lg-3">
+                    <div class="form-group">
+                        <label for=""></label>
+                        <select class="form-select <?= isset($_GET['view_user']) ? 'd-none' : 'none' ?>" name=""
+                            id="history_select">
+                            <option value="All" <?= ($_GET['selected'] ?? null) == 'All' ? 'selected' : null ?>>All
+                            </option>
+                            <option value="History" <?= ($_GET['selected'] ?? null) == 'History' ? 'selected' : null ?>>
+                                History</option>
+                            <option value="Ticket History"
+                                <?= ($_GET['selected'] ?? null) == 'Ticket History' ? 'selected' : null ?>>Ticket
+                                History
+                            </option>
+                        </select>
                     </div>
-                    <div class="ecommerse-widget bg-white <?= isset($_GET['payment_confirmation']) || isset($_GET['view_user']) ? 'd-none' : '' ?>">
-                        <table
-                            class="table table-striped table-hover table-white <?= ($_GET['selected'] ?? null) == 'Ticket History' ? 'd-none' : null ?>">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Account no.</th>
-                                    <th scope="col">Period</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+                    <script>
+                    $(() => {
+                        $('#history_select').on('change', () => {
+                            location.href = `?selected=${$('#history_select').val()}`;
+                        })
+                    })
+                    </script>
+                </div>
+                <div
+                    class="ecommerse-widget bg-white <?= isset($_GET['payment_confirmation']) || isset($_GET['view_user']) ? 'd-none' : '' ?>">
+                    <table
+                        class="table table-striped table-hover table-white <?= ($_GET['selected'] ?? null) == 'Ticket History' ? 'd-none' : null ?>">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Account no.</th>
+                                <th scope="col">Period</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                                 $data = getRows("account_no = '{$_SESSION['account_no']}'", "user_package");
 
                                 // Pagination parameters
@@ -518,53 +569,54 @@
                                 $count = 1;
                                 foreach ($dataToDisplay as $row) {
                                 ?>
-                                <tr>
-                                    <td><?= $count ?></td>
-                                    <td><?= $row['account_no'] ?? null ?></td>
-                                    <td><?= $row['period'] ?? null ?></td>
-                                    <td><?= $row['total'] ?? null ?></td>
-                                    <td class="<?= $row['status'] == 'Unpaid' ? 'text-danger' : 'text-success' ?>">
-                                        <?= $row['status'] ?? null ?></td>
-                                    <td>
-                                        <a href="?view=<?= $row['invoice'] ?? null ?>" class="btn p-0">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                            <tr>
+                                <td><?= $count ?></td>
+                                <td><?= $row['account_no'] ?? null ?></td>
+                                <td><?= $row['period'] ?? null ?></td>
+                                <td><?= $row['total'] ?? null ?></td>
+                                <td class="<?= $row['status'] == 'Unpaid' ? 'text-danger' : 'text-success' ?>">
+                                    <?= $row['status'] ?? null ?></td>
+                                <td>
+                                    <a href="?view=<?= $row['invoice'] ?? null ?>" class="btn p-0">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
 
-                                        <a href="?view_user=<?= base64_encode($row['account_no']  ?? null ) ?>&invoice=<?= base64_encode($row['invoice']  ?? null ) ?>" class="btn text-warning p-0 mx-2">
-                                            <i class="fas fa-lock"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <?php
+                                    <a href="?view_user=<?= base64_encode($row['account_no']  ?? null ) ?>&invoice=<?= base64_encode($row['invoice']  ?? null ) ?>"
+                                        class="btn text-warning p-0 mx-2">
+                                        <i class="fas fa-lock"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
                                 $count++;
                                 }
                                 ?>
-                            </tbody>
-                        </table>
-
-                        
-
-                        <br>
-                        <br>
-                        <br>
+                        </tbody>
+                    </table>
 
 
-                        <div class="table-responsive <?= ($_GET['selected'] ?? null) == 'History' ? 'd-none' : null ?>">
-                            <h3 class="fw-bold">Ticket History</h3>
-                            <table class="table table-striped table-hover table-white">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Account no.</th>
-                                        <th scope="col">Ticket no.</th>
-                                        <th scope="col">Report</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
+
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <div class="table-responsive <?= ($_GET['selected'] ?? null) == 'History' ? 'd-none' : null ?>">
+                        <h3 class="fw-bold">Ticket History</h3>
+                        <table class="table table-striped table-hover table-white">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Account no.</th>
+                                    <th scope="col">Ticket no.</th>
+                                    <th scope="col">Report</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
                                 $data = getRows("account_no = '{$_SESSION['account_no']}'", "customer_ticket");
 
                                 // Pagination parameters
@@ -580,75 +632,75 @@
                                 $count = 1;
                                 foreach ($dataToDisplay as $row) {
                                 ?>
-                                    <tr>
-                                        <td><?= $count ?></td>
-                                        <td><?= $row['account_no'] ?? null ?></td>
-                                        <td><?= $row['ticket_no'] ?? null ?></td>
-                                        <td><?= $row['report'] ?? null ?></td>
-                                        <td><?= $row['date'] ?? null ?></td>
-                                        <td><?= $row['status'] ?? null ?></td>
-                                        <td>
-                                            <button class="btn btn-sm p-0 text-success"
-                                                onclick="viewTicketHistory('<?= $row['ticket_no'] ?? null ?>')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button
-                                                onclick="deleteConfirmation(`ticket_no='<?= ($row['ticket_no'] ?? null) ?>'`, 'customer_ticket')"
-                                                class="btn btn-sm p-0 text-danger mx-2">
-                                                <i class="fas fa-trash-can"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php
+                                <tr>
+                                    <td><?= $count ?></td>
+                                    <td><?= $row['account_no'] ?? null ?></td>
+                                    <td><?= $row['ticket_no'] ?? null ?></td>
+                                    <td><?= $row['report'] ?? null ?></td>
+                                    <td><?= $row['date'] ?? null ?></td>
+                                    <td><?= $row['status'] ?? null ?></td>
+                                    <td>
+                                        <button class="btn btn-sm p-0 text-success"
+                                            onclick="viewTicketHistory('<?= $row['ticket_no'] ?? null ?>')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button
+                                            onclick="deleteConfirmation(`ticket_no='<?= ($row['ticket_no'] ?? null) ?>'`, 'customer_ticket')"
+                                            class="btn btn-sm p-0 text-danger mx-2">
+                                            <i class="fas fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php
                                 $count++;
                                 }
                                 ?>
-                                </tbody>
-                            </table>
-                            <script>
-                            function viewTicketHistory(ticket_no) {
-                                const condition = `ticket_no='${ticket_no}'`;
-                                fetch(`./get_data.php?table=customer_ticket&condition=${btoa(condition)}`)
-                                    .then(res => res.json())
-                                    .then(data => {
-                                        const formatData = (data) => {
-                                            let formattedData =
-                                                '<div class="d-block" style="text-align: left !important;">';
-                                            for (const key in data) {
-                                                if (!['id', 'document'].includes(key)) {
-                                                    formattedData +=
-                                                        `<label class="form-label my-0" for="${key}">${key.replace(/_/g, ' ')}</label>
+                            </tbody>
+                        </table>
+                        <script>
+                        function viewTicketHistory(ticket_no) {
+                            const condition = `ticket_no='${ticket_no}'`;
+                            fetch(`./get_data.php?table=customer_ticket&condition=${btoa(condition)}`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    const formatData = (data) => {
+                                        let formattedData =
+                                            '<div class="d-block" style="text-align: left !important;">';
+                                        for (const key in data) {
+                                            if (!['id', 'document'].includes(key)) {
+                                                formattedData +=
+                                                    `<label class="form-label my-0" for="${key}">${key.replace(/_/g, ' ')}</label>
                                                         <input id="${key}" type="text" readonly class="form-control form-control-sm py-0 my-0" value="${data[key]}">
                                                         <br>`;
-                                                }
                                             }
-                                            return formattedData + '</div>';
-                                        };
+                                        }
+                                        return formattedData + '</div>';
+                                    };
 
-                                        const showData = () => {
-                                            Swal.fire({
-                                                title: 'Ticket',
-                                                html: formatData(data[0]),
-                                                icon: 'info',
-                                                confirmButtonText: 'Close'
-                                            });
-                                        };
+                                    const showData = () => {
+                                        Swal.fire({
+                                            title: 'Ticket',
+                                            html: formatData(data[0]),
+                                            icon: 'info',
+                                            confirmButtonText: 'Close'
+                                        });
+                                    };
 
-                                        showData();
-                                    })
-                                    .catch(err => {
-                                        alert(err.message)
-                                    });
-
-
-
-                            }
-                            </script>
-                        </div>
+                                    showData();
+                                })
+                                .catch(err => {
+                                    alert(err.message)
+                                });
 
 
 
-                        <?php
+                        }
+                        </script>
+                    </div>
+
+
+
+                    <?php
                         if(isset($_GET['view'])) {
 
                             $invoice = mysqli_real_escape_string($conn, trim($_GET['view']));
@@ -662,78 +714,76 @@
                             }
                         ?>
 
-                        <!-- Modal -->
-                        <div class="modal fade border-0" id="historyModal" data-bs-backdrop="static"
-                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="historyModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg border-0">
-                                <div class="modal-content" style="border-radius: 40px; border: 0;">
-                                    <div class="modal-header px-5 mt-1">
-                                        <h1 class="modal-title fs-3 fw-bold" id="historyModalLabel">
-                                            <?= $row['period'] ?>
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close" id="btn_close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col text-center">
-                                                <h3 class="text-muted">Account No</h3>
-                                                <h3>
-                                                    <?= $row['account_no'] ?>
-                                                </h3>
-                                            </div>
-                                            <div class="col text-center">
-                                                <h3 class="text-muted">Status</h3>
-                                                <h3
-                                                    class="<?= $row['status'] == 'Unpaid' ? 'text-danger' : 'text-success' ?>">
-                                                    <?= strtoupper($row['status']) ?>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3 class="text-muted">Amount</h3>
-                                            <h1 class="fw-bold mt-3"><?= $row['total'] ?></h1>
-
-                                            <h3 class="fw-bold mt-3">
-                                                <?= $row['package'] ?>
+                    <!-- Modal -->
+                    <div class="modal fade border-0" id="historyModal" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg border-0">
+                            <div class="modal-content" style="border-radius: 40px; border: 0;">
+                                <div class="modal-header px-5 mt-1">
+                                    <h1 class="modal-title fs-3 fw-bold" id="historyModalLabel">
+                                        <?= $row['period'] ?>
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                        id="btn_close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <h3 class="text-muted">Account No</h3>
+                                            <h3>
+                                                <?= $row['account_no'] ?>
                                             </h3>
-
-                                            <a href="?payment_confirmation=<?= $row['invoice'] ?>"
-                                                class="btn btn-danger text-white px-5"
-                                                style="border-radius: 17px;">Payment Confirmation</a>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h3 class="text-muted">Status</h3>
+                                            <h3
+                                                class="<?= $row['status'] == 'Unpaid' ? 'text-danger' : 'text-success' ?>">
+                                                <?= strtoupper($row['status']) ?>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button style="border-radius: 17px;"
-                                            class="btn btn-dark" id="btn_close" data-bs-dismiss="modal"
-                                            aria-label="Close">Cancel</button>
+                                    <div class="text-center">
+                                        <h3 class="text-muted">Amount</h3>
+                                        <h1 class="fw-bold mt-3"><?= $row['total'] ?></h1>
+
+                                        <h3 class="fw-bold mt-3">
+                                            <?= $row['package'] ?>
+                                        </h3>
+
+                                        <a href="?payment_confirmation=<?= $row['invoice'] ?>"
+                                            class="btn btn-danger text-white px-5" style="border-radius: 17px;">Payment
+                                            Confirmation</a>
                                     </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button style="border-radius: 17px;" class="btn btn-dark" id="btn_close"
+                                        data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                                 </div>
                             </div>
                         </div>
-
-                        <script>
-                        $(document).ready(function() {
-                            $('#historyModal').modal('show');
-                            document.querySelectorAll('#btn_close').forEach(btn => {
-                                btn.addEventListener('click', () => {
-                                    setTimeout(() => {
-                                        window.location.href = "history.php";
-                                    }, 800)
-                                })
-                            })
-                            
-                        });
-                        </script>
-
-                        <?php
-                        }
-                        ?>
                     </div>
 
-                    <div class="ecommerse-widget <?= isset($_GET['payment_confirmation']) ? '' : 'd-none' ?>">
-                        <?php 
+                    <script>
+                    $(document).ready(function() {
+                        $('#historyModal').modal('show');
+                        document.querySelectorAll('#btn_close').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                setTimeout(() => {
+                                    window.location.href = "history.php";
+                                }, 800)
+                            })
+                        })
+
+                    });
+                    </script>
+
+                    <?php
+                        }
+                        ?>
+                </div>
+
+                <div class="ecommerse-widget <?= isset($_GET['payment_confirmation']) ? '' : 'd-none' ?>">
+                    <?php 
                     if(isset($_GET['payment_confirmation'])) {  
                         $invoice = mysqli_real_escape_string($conn, trim($_GET['payment_confirmation']));
                         $row = getRows("invoice='$invoice'", "user_package");
@@ -782,135 +832,133 @@
                         }
                     }
                     ?>
-                        <div class="row bg-white p-5" style="border-radius: 50px;">
-                            <div class="col-12 col-lg-6">
-                                <form action="" method="post" class="" enctype="multipart/form-data">
-                                    <h3 class="fw-bold">Payment</h3>
-                                    <div class="alert alert-warning alert-dismissible fade show <?= (!$already_submitted || $is_payment_approved) ? 'd-none': '' ?>"
-                                        role="alert">
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                        Thank you for submitting your payment confirmation. We will notify you once your
-                                        payment has been verified. <br> Thank you for your patience.
-                                    </div>
-
-                                    <div class="alert alert-primary alert-dismissible fade show <?= !$is_payment_approved ? 'd-none': '' ?>"
-                                        role="alert">
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                        Thank you for submitting your payment confirmation. Your payment confirmation
-                                        has been approved.
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="invoice_no" class="form-label">Invoice No</label>
-                                        <input readonly value="<?= $row['invoice'] ?>" type="text" class="form-control"
-                                            name="invoice_no" id="invoice_no">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input readonly value="<?= $_SESSION['name'] ?>" type="text"
-                                            class="form-control" name="name" id="name">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="account_no" class="form-label">Account No</label>
-                                        <input readonly value="<?= $row['account_no'] ?>" type="number"
-                                            class="form-control" name="account_no" id="account_no">
-                                    </div>
-                                    <div class="row justify-content-center align-items-center">
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label for="amount" class="form-label">Amount</label>
-                                                <input readonly value="<?= $row['total'] ?>" type="number"
-                                                    class="form-control" name="amount" id="amount">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label for="period" class="form-label">Period</label>
-                                                <input readonly value="<?= $row['period'] ?>" type="text"
-                                                    class="form-control" name="period" id="period">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 <?= $already_submitted ? 'd-none': '' ?>">
-                                        <label for="payment_method" class="form-label">Payment method</label>
-                                        <select required class="form-select" name="payment_method" id="payment_method">
-                                            <option selected value="" disabled class="d-none">-- Select Payment Method
-                                                --</option>
-                                            <option value="Gcash">Gcash</option>
-                                            <option value="Paypal">Maya</option>
-                                            <option value="Paypal">Paypal</option>
-                                        </select>
-
-
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="date_payment" class="form-label">Date Payment</label>
-                                        <input readonly value="<?= date('Y-m-d') ?>" type="text" class="form-control"
-                                            name="date_payment" id="date_payment">
-                                    </div>
-                                    <div class="mb-3">
-                                        <a href="history.php" class="btn btn-danger px-5 btn-lg"
-                                            style="border-radius: 15px;">Cancel</a>
-
-                                        <button id="insertFileBtn" type="button"
-                                            class="btn btn-primary px-5 btn-lg mx-2 <?= $already_submitted ? 'd-none' : null ?>"
-                                            style="border-radius: 15px;">Insert
-                                            image</button>
-                                        <input accept="image/*" id="file" type="file" name="file" class="d-none"
-                                            required>
-                                        <script>
-                                        $(document).ready(function() {
-                                            $('#insertFileBtn').on('click', function() {
-                                                if ($(this).attr('type') == 'button') {
-                                                    $('#file').click();
-                                                }
-                                            })
-
-
-                                            $('#closeImg').on('click', function() {
-                                                $('#preview').attr('src', null);
-                                                $('#insertFileBtn').html('Insert image').removeClass(
-                                                    'btn-success').addClass('btn-primary').attr(
-                                                    'type', 'button');
-                                                $(this).hide()
-                                            });
-
-                                            $('#file').on('change', function(ev) {
-                                                let reader = new FileReader();
-                                                reader.onload = e => {
-                                                    $('#preview').attr('src', e.target.result);
-                                                    $('#insertFileBtn').html('Submit').toggleClass(
-                                                        'btn-success').attr('type', 'submit');
-                                                    $('#closeImg').show()
-                                                }
-
-                                                reader.readAsDataURL($(this).prop('files')[0]);
-                                            })
-                                        })
-                                        </script>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-12 col-lg-6 p-4 d-flex align-items-center justify-content-start">
-
-                                <div class="position-relative container-fluid p-0">
-                                    <img id="preview" <?= $already_submitted ? 'src="' . $image_path . '"': null ?>
-                                        alt=""
-                                        style="height: 600px; width: 100%; border-radius: 50px; border: 4px dashed rgba(0,0,0,0.3);">
-                                    <i title="Change picture?" id="closeImg"
-                                        class="fas fa-close position-absolute text-dark fs-3"
-                                        style="top: 30px; right: 30px;cursor: pointer; display: none"></i>
+                    <div class="row bg-white p-5" style="border-radius: 50px;">
+                        <div class="col-12 col-lg-6">
+                            <form action="" method="post" class="" enctype="multipart/form-data">
+                                <h3 class="fw-bold">Payment</h3>
+                                <div class="alert alert-warning alert-dismissible fade show <?= (!$already_submitted || $is_payment_approved) ? 'd-none': '' ?>"
+                                    role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                    Thank you for submitting your payment confirmation. We will notify you once your
+                                    payment has been verified. <br> Thank you for your patience.
                                 </div>
 
+                                <div class="alert alert-primary alert-dismissible fade show <?= !$is_payment_approved ? 'd-none': '' ?>"
+                                    role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                    Thank you for submitting your payment confirmation. Your payment confirmation
+                                    has been approved.
+                                </div>
 
+                                <div class="mb-3">
+                                    <label for="invoice_no" class="form-label">Invoice No</label>
+                                    <input readonly value="<?= $row['invoice'] ?>" type="text" class="form-control"
+                                        name="invoice_no" id="invoice_no">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input readonly value="<?= $_SESSION['name'] ?>" type="text" class="form-control"
+                                        name="name" id="name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="account_no" class="form-label">Account No</label>
+                                    <input readonly value="<?= $row['account_no'] ?>" type="number" class="form-control"
+                                        name="account_no" id="account_no">
+                                </div>
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="amount" class="form-label">Amount</label>
+                                            <input readonly value="<?= $row['total'] ?>" type="number"
+                                                class="form-control" name="amount" id="amount">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="period" class="form-label">Period</label>
+                                            <input readonly value="<?= $row['period'] ?>" type="text"
+                                                class="form-control" name="period" id="period">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 <?= $already_submitted ? 'd-none': '' ?>">
+                                    <label for="payment_method" class="form-label">Payment method</label>
+                                    <select required class="form-select" name="payment_method" id="payment_method">
+                                        <option selected value="" disabled class="d-none">-- Select Payment Method
+                                            --</option>
+                                        <option value="Gcash">Gcash</option>
+                                        <option value="Paypal">Maya</option>
+                                        <option value="Paypal">Paypal</option>
+                                    </select>
+
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="date_payment" class="form-label">Date Payment</label>
+                                    <input readonly value="<?= date('Y-m-d') ?>" type="text" class="form-control"
+                                        name="date_payment" id="date_payment">
+                                </div>
+                                <div class="mb-3">
+                                    <a href="history.php" class="btn btn-danger px-5 btn-lg"
+                                        style="border-radius: 15px;">Cancel</a>
+
+                                    <button id="insertFileBtn" type="button"
+                                        class="btn btn-primary px-5 btn-lg mx-2 <?= $already_submitted ? 'd-none' : null ?>"
+                                        style="border-radius: 15px;">Insert
+                                        image</button>
+                                    <input accept="image/*" id="file" type="file" name="file" class="d-none" required>
+                                    <script>
+                                    $(document).ready(function() {
+                                        $('#insertFileBtn').on('click', function() {
+                                            if ($(this).attr('type') == 'button') {
+                                                $('#file').click();
+                                            }
+                                        })
+
+
+                                        $('#closeImg').on('click', function() {
+                                            $('#preview').attr('src', null);
+                                            $('#insertFileBtn').html('Insert image').removeClass(
+                                                'btn-success').addClass('btn-primary').attr(
+                                                'type', 'button');
+                                            $(this).hide()
+                                        });
+
+                                        $('#file').on('change', function(ev) {
+                                            let reader = new FileReader();
+                                            reader.onload = e => {
+                                                $('#preview').attr('src', e.target.result);
+                                                $('#insertFileBtn').html('Submit').toggleClass(
+                                                    'btn-success').attr('type', 'submit');
+                                                $('#closeImg').show()
+                                            }
+
+                                            reader.readAsDataURL($(this).prop('files')[0]);
+                                        })
+                                    })
+                                    </script>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 col-lg-6 p-4 d-flex align-items-center justify-content-start">
+
+                            <div class="position-relative container-fluid p-0">
+                                <img id="preview" <?= $already_submitted ? 'src="' . $image_path . '"': null ?> alt=""
+                                    style="height: 600px; width: 100%; border-radius: 50px; border: 4px dashed rgba(0,0,0,0.3);">
+                                <i title="Change picture?" id="closeImg"
+                                    class="fas fa-close position-absolute text-dark fs-3"
+                                    style="top: 30px; right: 30px;cursor: pointer; display: none"></i>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
     <!-- ============================================================== -->
