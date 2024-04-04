@@ -563,8 +563,6 @@
 
 
                                     $i = 1;
-                                    $user = getRows("account_no='{$user_package[0]['account_no']}'", "accounts")[0] ?? [];
-
 
 
 
