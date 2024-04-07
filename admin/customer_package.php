@@ -352,7 +352,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                    $data = getRows(null, "user_package");
+                                    $data = getRows("variant='false'", "user_package");
 
                                     $filterData = $data;
 

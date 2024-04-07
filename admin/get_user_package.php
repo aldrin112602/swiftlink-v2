@@ -9,6 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     
     header("Content-Type: application/json");
-    $data = getRows("account_no=$account_no", $tablename);
+    $data = getRows("account_no=$account_no AND variant='false'", $tablename);
     echo json_encode($data);
 }

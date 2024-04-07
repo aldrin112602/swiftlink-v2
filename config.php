@@ -74,6 +74,7 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS user_package (
     total DECIMAL(10,2),
     category VARCHAR(255) DEFAULT 'Fiber',
     period VARCHAR(255),
+    variant VARCHAR(255) DEFAULT 'false',
     due_date VARCHAR(255),
     status VARCHAR(255) DEFAULT 'Unpaid',
     process_status VARCHAR(255) DEFAULT 'Pending',
