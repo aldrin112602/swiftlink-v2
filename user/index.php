@@ -250,7 +250,7 @@
                                 <div class="container-fluid p-0 position-relative">
                                     <h1 class="text-primary">
                                         <?php
-                                        echo count(getRows("account_no = '{$_SESSION['account_no']}' AND process_status='done'", 'user_package'));
+                                        echo count(getRows("account_no = '{$_SESSION['account_no']}' AND process_status='done' AND variant='false'", 'user_package'));
                                         ?>
                                     </h1>
                                     <div style="height: 50px; width: 50px; position: absolute; top: 50%; right: 10px; transform: translateY(-50%);"

@@ -285,7 +285,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $data = getRows("account_no = '{$_SESSION['account_no']}'", "user_package");
+                                            $data = getRows("account_no = '{$_SESSION['account_no']}' AND variant='false'", "user_package");
 
                                             // Pagination parameters
                                             $totalItems = count($data);
