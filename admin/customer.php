@@ -407,19 +407,21 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sqlQuery = "SELECT up.id, ac.firstname, ac.lastname, ac.account_no, ac.email, ac.phone, up.status, ac.address, up.total, up.coverage, up.package, up.process_status
-                                        FROM accounts AS ac
-                                        JOIN user_package AS up ON ac.account_no = up.account_no  
-                                        WHERE ac.account_no = '$account_no' AND up.process_status = 'Done'";
+                                        // $sqlQuery = "SELECT up.id, ac.firstname, ac.lastname, ac.account_no, ac.email, ac.phone, up.status, ac.address, up.total, up.coverage, up.package, up.process_status
+                                        // FROM accounts AS ac
+                                        // JOIN user_package AS up ON ac.account_no = up.account_no  
+                                        // WHERE ac.account_no = '$account_no' AND up.process_status = 'Done'";
 
 
-                                        $result = $conn->query( $sqlQuery );
-                                        $data = [];
-                                        if ( $result && $result->num_rows>0 ) {
-                                            while( $row = $result->fetch_assoc() ) {
-                                                $data[] = $row;
-                                            }
-                                        }
+                                        // $result = $conn->query( $sqlQuery );
+                                        // $data = [];
+                                        // if ( $result && $result->num_rows>0 ) {
+                                        //     while( $row = $result->fetch_assoc() ) {
+                                        //         $data[] = $row;
+                                        //     }
+                                        // }
+
+                                        $data = getRows("account_no = '$account_no' AND process_status = 'Done' AND variant='false'", "user_package");
 
 
                                         // Pagination parameters
@@ -438,7 +440,7 @@
                                             ?>
                                         <tr>
                                             <td class="ellipsis-text"><?= $row['account_no'] ?? null ?></td>
-                                            <td class="ellipsis-text"><?= $row['status'] ?></td>
+                                            <td class="ellipsis-text"><?= $row['is_active'] == 'true' ? 'Active' : "Inactive" ?></td>
                                             <td class="ellipsis-text"><?= $row['total'] ?></td>
                                             <td class="ellipsis-text"><?= $row['coverage'] ?></td>
                                             <td class="ellipsis-text"><?= $row['package'] ?></td>
