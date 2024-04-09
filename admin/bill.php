@@ -60,6 +60,7 @@ $email = $row['email'] ?? null;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
+
     <!-- custom styles -->
     <style>
         * {
@@ -887,6 +888,8 @@ $email = $row['email'] ?? null;
                 Toast.fire({
                     icon: "error",
                     title: "<?php echo $err_msg ?>"
+                }).then(() => {
+                    location.href = 'bill.php';
                 });
             <?php
             }
@@ -899,7 +902,7 @@ $email = $row['email'] ?? null;
                     icon: "success",
                     title: "<?php echo $success_msg ?>"
                 }).then(() => {
-                    location.href = 'package.php';
+                    location.href = 'bill.php';
                 });
             <?php
             }

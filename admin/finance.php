@@ -410,6 +410,7 @@
                                         <label for="" class="form-label">Created by</label>
                                         <select name="" id="created_by" class="form-select form-select-sm">
                                             <option value="" selected class="d-none" disabled>-- Select one --</option>
+                                            <option value="All" <?= ($_GET['created_by'] ?? null ) == 'All' ? 'selected' : '' ?>>All</option>
                                             <?php
                                             $accouts = getRows("status='Active' AND role='user'", "accounts");
 
@@ -529,7 +530,7 @@
                                     $user_package = array_slice($data, $offset, $itemsPerPage);
                                     function createdByFilter($account_no, $data): array {
                                         if(!isset($account_no)) return [];
-
+                                        if($account_no == 'All') return $data;
                                         $filteredData = [];
                                         foreach ($data as $row) {
                                             if ($row['account_no'] == $account_no) {
@@ -591,7 +592,7 @@
 
 
                                     foreach($user_package as $row) {
-                                        $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? null;
+                                        $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? 'Others';
 
                                         $user_ = getRows("account_no='{$row['account_no']}'", "accounts")[0];
                                         
