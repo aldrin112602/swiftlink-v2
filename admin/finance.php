@@ -138,10 +138,10 @@ $email = $row['email'] ?? null;
                 display: block !important;
             }
 
-            /* #tablePreview th:last-child,
-        #tablePreview td:last-child {
-            display: none;
-        } */
+            #tablePreview table tr td:first-child,
+            #tablePreview table tr th:first-child {
+                display: none !important;
+            }
         }
     </style>
 </head>
