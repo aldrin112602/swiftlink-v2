@@ -569,7 +569,7 @@ $email = $row['email'] ?? null;
                                         foreach ($dataToDisplay as $row) {
                                         ?>
                                             <tr class="py-0">
-                                                <td><?= $count ?></td>
+                                                <td><?= $row['id'] ?? null ?></td>
                                                 <td><?= $row['invoice'] ?? null ?></td>
                                                 <td><?= $row['period'] ?? null ?></td>
                                                 <td><?= $row['account_no'] ?? null ?></td>
