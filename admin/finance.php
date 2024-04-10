@@ -516,9 +516,10 @@ $email = $row['email'] ?? null;
                                             $offset = ($current_page - 1) * $itemsPerPage;
 
                                             $user_package = array_slice($data, $offset, $itemsPerPage);
+
                                             function createdByFilter($account_no, $data): array
                                             {
-                                                if (!isset($account_no)) return [];
+                                                if (!isset($account_no)) return $data;
                                                 if ($account_no == 'All') return $data;
                                                 $filteredData = [];
                                                 foreach ($data as $row) {
@@ -559,6 +560,8 @@ $email = $row['email'] ?? null;
                                             {
                                                 $filteredData = [];
 
+                                                if(!isset($fromDate) || !isset($tillDate)) return $data;
+
                                                 foreach ($data as $row) {
                                                     $rowDate = explode(" ", $row['date'])[0];
                                                     if (
@@ -585,13 +588,13 @@ $email = $row['email'] ?? null;
                                             foreach ($user_package as $row) {
                                                 $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? 'Others';
 
-                                                $user_ = getRows("account_no='{$row['account_no']}'", "accounts")[0];
+                                                $user_ = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
 
                                                 echo "<tr>
                                             <td>{$row['id']}</td>
                                             <td>{$row['account_no']}</td>
                                             <td>{$row['date']}</td>
-                                            <td>{$user_['firstname']} {$user_['middle_initial']} {$user_['lastname']}</td>
+                                            <td>" . ($user_['firstname'] ?? null) . " " . ($user_['middle_initial'] ?? null) . " " . ($user_['lastname'] ?? null) . "</td>
                                             <td>$payment_method</td>
                                             <td>{$row['total']} PHP</td>
                                         </tr>";
