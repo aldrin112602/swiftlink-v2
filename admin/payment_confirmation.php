@@ -460,7 +460,7 @@ $email = $row['email'] ?? null;
                                         // filter by month only
                                         function filterByMonth($month, $data): array
                                         {
-                                            if ($month == 'All') {
+                                            if ($month == 'All' || !isset($month)) {
                                                 return $data;
                                             }
                                             $months = [
@@ -494,7 +494,7 @@ $email = $row['email'] ?? null;
                                         // filter by year only
                                         function filterByYear($year, $data): array
                                         {
-                                            if ($year == 'All') {
+                                            if ($year == 'All' || !isset($year)) {
                                                 return $data;
                                             }
                                             $filteredData = [];
@@ -512,7 +512,7 @@ $email = $row['email'] ?? null;
                                         // filter by year only
                                         function filterByStatus($status, $data): array
                                         {
-                                            if ($status == 'All') {
+                                            if ($status == 'All' || !isset($status)) {
                                                 return $data;
                                             }
                                             $filteredData = [];
@@ -552,7 +552,7 @@ $email = $row['email'] ?? null;
                                             } elseif (isset($month) && isset($year) && isset($status)) {
                                                 return filterByStatus($status, filterByYear($year, filterByMonth($month, $data)));
                                             } else {
-                                                return [];
+                                                return $data;
                                             }
                                         }
 
@@ -563,6 +563,8 @@ $email = $row['email'] ?? null;
 
 
                                         $dataToDisplay = filterDate($month, $year, $status, $dataToDisplay);
+
+                                        // var_dump($dataToDisplay);
 
 
                                         $count = 1;
