@@ -598,7 +598,7 @@ $email = $row['email'] ?? null;
                                     // filter by year only
                                     function filterByYear($year, $data): array
                                     {
-                                        if ($year == "All") return $data;
+                                        if ($year == "All" || !isset($year)) return $data;
                                         $filteredData = [];
                                         foreach ($data as $item) {
                                             $date_time = new DateTime($item['date']);
@@ -616,7 +616,7 @@ $email = $row['email'] ?? null;
                                     // filter by year only
                                     function filterByStatus($status, $data): array
                                     {
-                                        if ($status == "All") return $data;
+                                        if ($status == "All" || !isset($status)) return $data;
                                         $filteredData = [];
                                         foreach ($data as $item) {
                                             if ($item['status'] == trim($status)) {
@@ -654,7 +654,7 @@ $email = $row['email'] ?? null;
                                         } elseif (isset($month) && isset($year) && isset($status)) {
                                             return filterByStatus($status, filterByYear($year, filterByMonth($month, $data)));
                                         } else {
-                                            return [];
+                                            return $data;
                                         }
                                     }
 
@@ -700,14 +700,14 @@ $email = $row['email'] ?? null;
                                                 foreach ($dataToDisplay as $row) {
                                                     $date_time = new DateTime($row['date']);
                                                     $formatted_date = $date_time->format('M d Y');
-                                                    $getUser = getRows("role='user' AND account_no='{$row['account_no']}'", 'accounts')[0];
+                                                    $getUser = getRows("role='user' AND account_no='{$row['account_no']}'", 'accounts')[0] ?? [];
 
                                                 ?>
                                                     <tr class="py-0">
                                                         <td><?= $count ?></td>
                                                         <td><?= $formatted_date ?? null ?></td>
                                                         <td><?= $row['ticket_no'] ?? null ?></td>
-                                                        <td><?= $getUser['firstname'] . ' ' . $getUser['lastname'] ?></td>
+                                                        <td><?= ($getUser['firstname'] ?? null) . ' ' . ($getUser['lastname'] ?? null) ?></td>
                                                         <td><?= $row['account_no'] ?? null ?></td>
                                                         <td><?= $row['report'] ?? null ?></td>
                                                         <td><?= $row['status'] ?? null ?></td>
