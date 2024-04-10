@@ -693,7 +693,7 @@
                                             ?>
                                         <tr>
                                             <td class="ellipsis-text">
-                                                <span align="right"><?= $no ?></span>
+                                                <span align="right"><?= $row['id'] ?? null ?></span>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;<input data-email="<?= $row['email'] ?? null ?>"
                                                     id="item" value="<?= $row['id'] ?? null ?>" type="checkbox">
                                             </td>
