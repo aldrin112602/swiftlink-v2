@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         "<br>
                         ";
                     if ($mail->send()) {
-                        $sql = "UPDATE accounts SET verified = 'true' WHERE email = '$email'";
+                        $sql = "UPDATE accounts SET verified = 'true', status = 'true' WHERE email = '$email'";
                         $conn->query($sql);
                     }
                 } catch (Exception $e) {
