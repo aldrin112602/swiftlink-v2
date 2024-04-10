@@ -132,10 +132,23 @@ $email = $row['email'] ?? null;
                 height: 100vh;
             }
 
-            #tablePreview th:last-child,
-            #tablePreview td:last-child {
-                display: none;
+            #tablePreview ._header {
+                display: block !important;
             }
+
+            #tablePreview h2 {
+                display: block !important;
+            }
+
+            #tablePreview table tr td:first-child,
+            #tablePreview table tr th:first-child {
+                display: none !important;
+            }
+
+            #tablePreview table tr input[type="checkbox"]:not(:checked)+.ellipsis-text {
+                display: none !important;
+            }
+
         }
 
         ::-webkit-scrollbar {
@@ -569,6 +582,21 @@ $email = $row['email'] ?? null;
                                 </div>
 
                                 <div class="table-responsive" id="tablePreview">
+                                <div class="d-none _header">
+                                        <h3 class="fw-bold">Swiftlink</h3>
+                                        <div class="row">
+                                            <div class="col">
+                                                <b><i>Address: #184 Purok 3, Ithan, Binangonan, Rizal</i></b><br>
+                                                <b>Phone: +639279972636</b><br>
+                                                <b>Email: swiftlinkitsolutions@gmail.com</b>
+                                            </div>
+                                            <div class="col d-flex alig-items-center justify-content-end">
+                                                <img src="../src/img/swLogo.png" alt="Logo" width="200px">
+                                            </div>
+                                        </div>
+
+                                        <h2 class="fs-5"><I>Customer Bills</I></h2>
+                                    </div>
                                     <table class="table table-white table-striped table-hover">
                                         <thead>
                                             <tr>
