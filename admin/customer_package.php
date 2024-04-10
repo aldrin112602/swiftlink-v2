@@ -405,9 +405,11 @@
                                                 <select onchange="packageAction(<?= $row['id'] ?>, this)">
                                                     <option value="" selected disabled class="d-none">Choose one
                                                     </option>
-                                                    <option value="Process">Process</option>
-                                                    <option value="Done">Done</option>
+                                                    <option value="Process" <?= $row['process_status'] == 'Process' ? 'disabled' : null ?>>Process</option>
+                                                    <option value="Done" <?= $row['process_status'] == 'Done' ? 'disabled' : null ?>>Done</option>
                                                     <option value="Delete">Delete</option>
+                                                    <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
+                                                    <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option>
                                                 </select>
                                             </td>
                                         </tr>

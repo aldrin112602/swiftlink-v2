@@ -103,6 +103,80 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 ];
             }
         break;
+
+
+        case 'active':
+            $sql = "UPDATE $tablename SET is_active='true' WHERE id='$id'";
+            $response = [
+                'message' => 'Customer package updated successfully',
+                'status' => 'success'
+            ];
+
+            $account_no = getRows("id='$id'", $tablename)[0]['account_no'];
+            $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
+
+            
+            $subject = "Customer Package Update: Active";
+            $bodytemplate = "<p style=\"font-size: 20px;\"> Dear " . $email . ",<br><br>We are pleased to inform you that your package is now <strong>Active</strong>.<br><br>If you have any further inquiries or require assistance, please feel free to contact us.<br><br>Thank you for choosing our services.<br><br>Best regards, <br>Swiftlink </p>";
+
+
+            if(SendMail($email, $bodytemplate, $subject)) {
+                setLog('admin', [
+                    'account_no' => $_SESSION['account_no'],
+                    'category' => 'Activity',
+                    'remark' => 'Updated data'
+                ]);
+
+                if(!$conn->query($sql)) {
+                    $response = [
+                        'message' => 'Something went wrong please try again',
+                        'status' => 'error'
+                    ];
+                }
+            } else {
+                $response = [
+                    'message' => 'Something went wrong, please check your internet connection',
+                    'status' => 'error'
+                ];
+            }
+        break;
+
+
+        case 'inactive':
+            $sql = "UPDATE $tablename SET is_active='false' WHERE id='$id'";
+            $response = [
+                'message' => 'Customer package updated successfully',
+                'status' => 'success'
+            ];
+
+            $account_no = getRows("id='$id'", $tablename)[0]['account_no'];
+            $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
+
+            
+            $subject = "Customer Package Update: Inactive";
+            $bodytemplate = "<p style=\"font-size: 20px;\"> Dear " . $email . ",<br><br>We are pleased to inform you that your package is now <strong>Inactive</strong>.<br><br>If you have any further inquiries or require assistance, please feel free to contact us.<br><br>Thank you for choosing our services.<br><br>Best regards, <br>Swiftlink </p>";
+
+
+            if(SendMail($email, $bodytemplate, $subject)) {
+                setLog('admin', [
+                    'account_no' => $_SESSION['account_no'],
+                    'category' => 'Activity',
+                    'remark' => 'Updated data'
+                ]);
+
+                if(!$conn->query($sql)) {
+                    $response = [
+                        'message' => 'Something went wrong please try again',
+                        'status' => 'error'
+                    ];
+                }
+            } else {
+                $response = [
+                    'message' => 'Something went wrong, please check your internet connection',
+                    'status' => 'error'
+                ];
+            }
+        break;
     }
 
     echo json_encode($response);
