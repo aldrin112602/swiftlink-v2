@@ -65,22 +65,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql2 = "INSERT INTO user_package (account_no, invoice, package, coverage, total, period, due_date)
         VALUES ('$account_no', '$invoice', '$package', '$coverage', $total, '$period', '$dueDate')";
 
-        $emailBody = "Dear $email,<br>Your registration has been approved. Welcome to Swiftlink!<br><br>
-        Heres your credentials:<br>
-        Email: " . $email . "<br>
-        Password: " . $password . "<br>";
-        if (SendMail($email, $emailBody, 'Congratulations, registration approved successfully - Swiftlink')) {
-            if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
-                $success_msg = "Account created successfully";
-                setLog('admin', [
-                    'account_no' => $_SESSION['account_no'],
-                    'category' => 'Activity',
-                    'remark' => 'Added customer account'
-                ]);
-            }
-        } else {
-            $err_msg = "An error occurred while sending emails.";
+        if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
+            $success_msg = "Account created successfully";
+            setLog('admin', [
+                'account_no' => $_SESSION['account_no'],
+                'category' => 'Activity',
+                'remark' => 'Added customer account'
+            ]);
         }
+
+        // $emailBody = "Dear $email,<br>Your registration has been approved. Welcome to Swiftlink!<br><br>
+        // Heres your credentials:<br>
+        // Email: " . $email . "<br>
+        // Password: " . $password . "<br>";
+        // if (SendMail($email, $emailBody, 'Congratulations, registration approved successfully - Swiftlink')) {
+        //     if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
+        //         $success_msg = "Account created successfully";
+        //         setLog('admin', [
+        //             'account_no' => $_SESSION['account_no'],
+        //             'category' => 'Activity',
+        //             'remark' => 'Added customer account'
+        //         ]);
+        //     }
+        // } else {
+        //     $err_msg = "An error occurred while sending emails.";
+        // }
     }
 
     if (isset($err_msg) && file_exists($targetFile)) {
