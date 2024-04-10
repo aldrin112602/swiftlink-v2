@@ -288,8 +288,8 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center gap-2 mt-4">
-                                        <button class="btn btn-primary btn-sm" style="border-radius: 13px;">Facebook</button>
-                                        <button class="btn btn-danger btn-sm" style="border-radius: 13px;">Email</button>
+                                        <a href="https://www.facebook.com/SwiftlinkITSolutions" class="btn btn-primary btn-sm" style="border-radius: 13px;">Facebook</a>
+                                        <a href="mailto:swiftlinkitsolution@gmail.com" class="btn btn-danger btn-sm" style="border-radius: 13px;">Email</a>
                                     </div>
                                 </div>
                             </div>
