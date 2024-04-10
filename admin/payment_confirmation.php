@@ -126,6 +126,11 @@ $email = $row['email'] ?? null;
             #tablePreview ._header {
                 display: block !important;
             }
+
+            #tablePreview table tr td:first-child,
+            #tablePreview table tr th:first-child {
+                display: none !important;
+            }
         }
 
         ::-webkit-scrollbar {
