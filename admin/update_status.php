@@ -10,6 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 require "../vendor/autoload.php";
 require_once "../config.php";
 require_once "../global.php";
+require_once "../send_mail.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
@@ -70,23 +71,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($response)) {
         foreach ($id as $key => $value) {
             $sql = "UPDATE $table SET status = '$status' WHERE id = $value";
-            if (mysqli_query($conn, $sql)) {
-                $response = [
-                    "status" => "success",
-                    "message" => "Data updated successfully",
-                ];
+            if ($status == 'Inactive') {
+                $email = getRows("id='$value'", "accounts")[0]['email'];
+                $current_date = date("F j, Y");
+                $body = "
+                <p style=\"font-size: 18px;\">
+                Dear $email, <br><br>
+                We regret to inform you that your account has been deactivated as of $current_date. <br><br>
+                Should you require any assistance or wish to address any concerns, please feel free to reach out to us at swiftlink@gmail.com. <br><br>
+                Best regards, <br>
+                <b>Swiftlink</b>
+                </p>
+                ";
 
-                setLog('admin', [
-                    'account_no' => $_SESSION['account_no'],
-                    'category' => 'Activity',
-                    'remark' => 'Approved user registration'
-                ]);
-            } else {
-                $response = [
-                    "status" => "error",
-                    "message" => mysqli_error($conn),
-                ];
-                break;
+                
+
+                if (SendMail($email, $body, "Your account has been Deactivated - Swiftlink")) {
+                    if (mysqli_query($conn, $sql)) {
+                        $response = [
+                            "status" => "success",
+                            "message" => "Data updated successfully",
+                        ];
+
+                        setLog('admin', [
+                            'account_no' => $_SESSION['account_no'],
+                            'category' => 'Activity',
+                            'remark' => 'Approved user registration'
+                        ]);
+                    } else {
+                        $response = [
+                            "status" => "error",
+                            "message" => mysqli_error($conn),
+                        ];
+                        break;
+                    }
+                }
             }
         }
     }
