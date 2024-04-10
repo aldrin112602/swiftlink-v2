@@ -129,6 +129,38 @@ $email = $row['email'] ?? null;
             cursor: grab;
 
         }
+
+        @media print {
+            #tablePreview {
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: white;
+                z-index: 100;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #tablePreview ._header {
+                display: block !important;
+            }
+
+            #tablePreview h2 {
+                display: block !important;
+            }
+
+            #tablePreview table tr td:first-child,
+            #tablePreview table tr th:first-child,
+            #tablePreview table tr td:last-child,
+            #tablePreview table tr th:last-child {
+                display: none !important;
+            }
+
+            #tablePreview table tr input[type="checkbox"]:not(:checked)+.ellipsis-text {
+                display: none !important;
+            }
+
+        }
     </style>
 </head>
 
@@ -370,6 +402,7 @@ $email = $row['email'] ?? null;
 
 
                                 <div class="table-responsive">
+
                                     <table class="table table-white table-striped table-hover" style="min-width: 60vw;">
                                         <thead>
                                             <tr>
@@ -383,19 +416,6 @@ $email = $row['email'] ?? null;
                                         </thead>
                                         <tbody>
                                             <?php
-                                            // $sqlQuery = "SELECT up.id, ac.firstname, ac.lastname, ac.account_no, ac.email, ac.phone, up.status, ac.address, up.total, up.coverage, up.package, up.process_status
-                                            // FROM accounts AS ac
-                                            // JOIN user_package AS up ON ac.account_no = up.account_no  
-                                            // WHERE ac.account_no = '$account_no' AND up.process_status = 'Done'";
-
-
-                                            // $result = $conn->query( $sqlQuery );
-                                            // $data = [];
-                                            // if ( $result && $result->num_rows>0 ) {
-                                            //     while( $row = $result->fetch_assoc() ) {
-                                            //         $data[] = $row;
-                                            //     }
-                                            // }
 
                                             $data = getRows("account_no = '$account_no' AND process_status = 'Done' AND variant='false'", "user_package");
 
@@ -618,7 +638,22 @@ $email = $row['email'] ?? null;
                                     </div>
                                 </div>
 
-                                <div class="table-responsive">
+                                <div class="table-responsive" id="tablePreview">
+                                    <div class="d-none _header">
+                                        <h3 class="fw-bold">Swiftlink</h3>
+                                        <div class="row">
+                                            <div class="col">
+                                                <b><i>Address: #184 Purok 3, Ithan, Binangonan, Rizal</i></b><br>
+                                                <b>Phone: +639279972636</b><br>
+                                                <b>Email: swiftlinkitsolutions@gmail.com</b>
+                                            </div>
+                                            <div class="col d-flex alig-items-center justify-content-end">
+                                                <img src="../src/img/swLogo.png" alt="Logo" width="200px">
+                                            </div>
+                                        </div>
+
+                                        <h2 class="fs-5"><I>Customer Details</I></h2>
+                                    </div>
                                     <table class="table table-white table-striped table-hover" id="table">
                                         <thead>
                                             <tr>
@@ -642,9 +677,9 @@ $email = $row['email'] ?? null;
 
                                             function filterByStatus($status, $data)
                                             {
-                                                
-                                                if(!isset($status)) return $data;
-                                                
+
+                                                if (!isset($status)) return $data;
+
                                                 switch ($status) {
                                                     case 'All':
                                                         return $data;
