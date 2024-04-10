@@ -138,6 +138,10 @@ $email = $row['email'] ?? null;
                 display: block !important;
             }
 
+            #tablePreview h2 {
+                display: block !important;
+            }
+
             #tablePreview table tr td:first-child,
             #tablePreview table tr th:first-child {
                 display: none !important;
@@ -488,6 +492,7 @@ $email = $row['email'] ?? null;
                                                 <img src="../src/img/swLogo.png" alt="Logo" width="200px">
                                             </div>
                                         </div>
+                                        <h2 class="fs-5"><I>Finance</I></h2>
                                     </div>
 
                                     <table id="table" class="table table-striped table-hover">
