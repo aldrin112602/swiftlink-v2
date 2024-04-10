@@ -640,8 +640,11 @@ $email = $row['email'] ?? null;
                                             // Define variables
 
 
-                                            function filterByStatus($status = "All", $data)
+                                            function filterByStatus($status, $data)
                                             {
+                                                
+                                                if(!isset($status)) return $data;
+                                                
                                                 switch ($status) {
                                                     case 'All':
                                                         return $data;

@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         "<br>
                         ";
                     if ($mail->send()) {
-                        $sql = "UPDATE accounts SET verified = 'true', status = 'true' WHERE email = '$email'";
+                        $sql = "UPDATE accounts SET verified = 'true', status = 'Active' WHERE email = '$email'";
                         $conn->query($sql);
                     }
                 } catch (Exception $e) {
@@ -87,6 +87,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                 if (SendMail($email, $body, "Your account has been Deactivated - Swiftlink")) {
+                    if (mysqli_query($conn, $sql)) {
+                        $response = [
+                            "status" => "success",
+                            "message" => "Data updated successfully",
+                        ];
+
+                        setLog('admin', [
+                            'account_no' => $_SESSION['account_no'],
+                            'category' => 'Activity',
+                            'remark' => 'Approved user registration'
+                        ]);
+                    } else {
+                        $response = [
+                            "status" => "error",
+                            "message" => mysqli_error($conn),
+                        ];
+                        break;
+                    }
+                }
+            } elseif ($status == 'Active') {
+                $email = getRows("id='$value'", "accounts")[0]['email'];
+                $current_date = date("F j, Y");
+                $body = "
+                <p style=\"font-size: 18px;\">
+                Dear $email, <br><br>
+                We are pleased to inform you that your account has been Activated as of $current_date. <br><br>
+                Should you require any assistance or wish to address any concerns, please feel free to reach out to us at swiftlinkitsolution@gmail.com. <br><br>
+                Best regards, <br>
+                <b>Swiftlink</b>
+                </p>
+                ";
+
+
+
+                if (SendMail($email, $body, "Your account has been Activated - Swiftlink")) {
                     if (mysqli_query($conn, $sql)) {
                         $response = [
                             "status" => "success",
