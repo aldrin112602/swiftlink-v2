@@ -634,7 +634,7 @@ $email = $row['email'] ?? null;
                                             ?>
                                                 <tr>
                                                     <td class="ellipsis-text">
-                                                        <span align="right"><?= $no ?></span>
+                                                        <span align="right"><?= $row['id'] ?? null ?></span>
                                                         &nbsp;&nbsp;&nbsp;&nbsp;<input id="item" value="<?= $row['id'] ?? null ?>" data-invoice="<?= $row['invoice'] ?? null ?>" type="checkbox">
                                                     </td>
                                                     <td class="ellipsis-text"><?= $row['firstname'] . ' ' . $row['lastname'] ?>
