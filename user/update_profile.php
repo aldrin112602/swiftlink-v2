@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../global.php';
-if(isset($_FILES['profileImage'])) {
+if (isset($_FILES['profileImage'])) {
     $file = $_FILES['profileImage'];
     if ($file['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'profile/';

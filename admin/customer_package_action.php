@@ -1,4 +1,4 @@
-<?php   
+<?php
 require_once '../config.php';
 require_once '../global.php';
 require_once '../send_mail.php';
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $sql = "";
 
-    switch($action) {
+    switch ($action) {
         case 'process':
             $sql = "UPDATE $tablename SET process_status='Process' WHERE id='$id'";
             $response = [
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 'status' => 'success'
             ];
 
-            
+
             $account_no = getRows("id='$id'", $tablename)[0]['account_no'];
             $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
 
@@ -34,13 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             Thank you for choosing our services.<br><br>Best regards,<br>Swiftlink </p>";
 
 
-            if(SendMail($email, $bodytemplate, $subject)) {
+            if (SendMail($email, $bodytemplate, $subject)) {
                 setLog('admin', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'
                 ]);
-                if(!$conn->query($sql)) {
+                if (!$conn->query($sql)) {
                     $response = [
                         'message' => 'Something went wrong please try again',
                         'status' => 'error'
@@ -52,11 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     'status' => 'error'
                 ];
             }
-        break;
+            break;
         case 'delete':
             $sql = "DELETE FROM $tablename WHERE id='$id'";
-        
-            if($conn->query($sql)) {
+
+            if ($conn->query($sql)) {
                 $response = [
                     'message' => 'Data deleted successfully',
                     'status' => 'success'
@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     'message' => 'Failed to remove data',
                     'status' => 'error'
                 ];
-            } 
-        break;
+            }
+            break;
         case 'done':
             $sql = "UPDATE $tablename SET process_status='Done' WHERE id='$id'";
             $response = [
@@ -78,19 +78,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $account_no = getRows("id='$id'", $tablename)[0]['account_no'];
             $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
 
-            
+
             $subject = "Customer Package Update: Completed";
             $bodytemplate = "<p style=\"font-size: 20px;\"> Dear " . $email . ",<br><br>We are pleased to inform you that your package has been successfully completed.<br><br>If you have any further inquiries or require assistance, please feel free to contact us.<br><br>Thank you for choosing our services.<br><br>Best regards, <br>Swiftlink </p>";
 
 
-            if(SendMail($email, $bodytemplate, $subject)) {
+            if (SendMail($email, $bodytemplate, $subject)) {
                 setLog('admin', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'
                 ]);
 
-                if(!$conn->query($sql)) {
+                if (!$conn->query($sql)) {
                     $response = [
                         'message' => 'Something went wrong please try again',
                         'status' => 'error'
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     'status' => 'error'
                 ];
             }
-        break;
+            break;
 
 
         case 'active':
@@ -115,19 +115,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $account_no = getRows("id='$id'", $tablename)[0]['account_no'];
             $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
 
-            
+
             $subject = "Customer Package Update: Active";
             $bodytemplate = "<p style=\"font-size: 20px;\"> Dear " . $email . ",<br><br>We are pleased to inform you that your package is now <strong>Active</strong>.<br><br>If you have any further inquiries or require assistance, please feel free to contact us.<br><br>Thank you for choosing our services.<br><br>Best regards, <br>Swiftlink </p>";
 
 
-            if(SendMail($email, $bodytemplate, $subject)) {
+            if (SendMail($email, $bodytemplate, $subject)) {
                 setLog('admin', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'
                 ]);
 
-                if(!$conn->query($sql)) {
+                if (!$conn->query($sql)) {
                     $response = [
                         'message' => 'Something went wrong please try again',
                         'status' => 'error'
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     'status' => 'error'
                 ];
             }
-        break;
+            break;
 
 
         case 'inactive':
@@ -152,19 +152,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $account_no = getRows("id='$id'", $tablename)[0]['account_no'];
             $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
 
-            
+
             $subject = "Customer Package Update: Inactive";
             $bodytemplate = "<p style=\"font-size: 20px;\"> Dear " . $email . ",<br><br>We are pleased to inform you that your package is now <strong>Inactive</strong>.<br><br>If you have any further inquiries or require assistance, please feel free to contact us.<br><br>Thank you for choosing our services.<br><br>Best regards, <br>Swiftlink </p>";
 
 
-            if(SendMail($email, $bodytemplate, $subject)) {
+            if (SendMail($email, $bodytemplate, $subject)) {
                 setLog('admin', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'
                 ]);
 
-                if(!$conn->query($sql)) {
+                if (!$conn->query($sql)) {
                     $response = [
                         'message' => 'Something went wrong please try again',
                         'status' => 'error'
@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     'status' => 'error'
                 ];
             }
-        break;
+            break;
     }
 
     echo json_encode($response);

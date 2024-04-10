@@ -78,13 +78,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p style=\"font-size: 18px;\">
                 Dear $email, <br><br>
                 We regret to inform you that your account has been deactivated as of $current_date. <br><br>
-                Should you require any assistance or wish to address any concerns, please feel free to reach out to us at swiftlink@gmail.com. <br><br>
+                Should you require any assistance or wish to address any concerns, please feel free to reach out to us at swiftlinkitsolution@gmail.com. <br><br>
                 Best regards, <br>
                 <b>Swiftlink</b>
                 </p>
                 ";
 
-                
+
 
                 if (SendMail($email, $body, "Your account has been Deactivated - Swiftlink")) {
                     if (mysqli_query($conn, $sql)) {

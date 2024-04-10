@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $msg = [];
     // check if the data is exist
-    if(isDataExists("payment_confirmation", "*", "invoice='$invoice' AND status='Pending'")) {
+    if (isDataExists("payment_confirmation", "*", "invoice='$invoice' AND status='Pending'")) {
         // $sql = "UPDATE payment_confirmation SET status='Approved' WHERE invoice='$invoice'";
         // $conn->query($sql);
 
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $result->fetch_all(MYSQLI_ASSOC)[0]['email'];
 
         $body = "<h2>
-        Dear ". $email .", <br>
+        Dear " . $email . ", <br>
         We regret to inform you that we cannot process your payment due to incomplete information provided. Please review and resubmit with all required details accurately.
         <br><br>
         Thank you for your cooperation.
@@ -34,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </h2>";
         $subject = 'Payment Confirmation Declined';
 
-        if(SendMail($email, $body, $subject)) {
+        if (SendMail($email, $body, $subject)) {
             $sql = "DELETE FROM payment_confirmation WHERE invoice = '$invoice'";
-            if($conn->query($sql)) {
+            if ($conn->query($sql)) {
                 $msg = [
                     'status' => 'success',
                     'message' => 'Payment confirmation denied successfully'
@@ -48,8 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ];
             }
         }
-
-
     } else {
         $msg = [
             'status' => 'error',
@@ -60,4 +58,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Content-Type: application/json");
     echo json_encode($msg);
 }
-

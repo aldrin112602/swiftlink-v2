@@ -1,20 +1,20 @@
-<?php 
-    require_once '../config.php';
-    require_once '../global.php';
+<?php
+require_once '../config.php';
+require_once '../global.php';
 
-    if(isset($_SESSION['role'])) {
-        if($_SESSION['role'] == 'user') {
-            header('location: ../user');
-        }
-    } else {
-        header('location: ../index.php');
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == 'user') {
+        header('location: ../user');
     }
+} else {
+    header('location: ../index.php');
+}
 
-    $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
-    $email = $row['email'] ?? null;
+$sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
+$email = $row['email'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -33,9 +33,7 @@
     <meta name="display" content="standalone">
     <link rel="icon" type="image/png" sizes="192x192" href="../src/img/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="../src/img/android-chrome-512x512.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Poppins font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,77 +41,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 
     <!-- google icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="../src/style.css">
     <script src="../src/jquery.min.js"></script>
     <script src="../src/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="../src/w3.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
 
     <script src="../src/chart.js"></script>
 
     <!-- custom styles -->
     <style>
-    * {
-        font-family: "Poppins", sans-serif;
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        transition: all 0.5s;
-        text-decoration: none;
-    }
-
-    a {
-        text-decoration: none !important;
-    }
-
-    .current-page {
-        background: transparent;
-        border-radius: 2px;
-        border-right: 3px solid blue;
-        color: darkblue;
-    }
-
-    .current-page a {
-        color: darkblue;
-    }
-
-    .nav-item:hover {
-        color: darkblue;
-        background: transparent;
-        border-radius: 2px;
-        border-right: 3px solid blue;
-        color: darkblue;
-    }
-
-    .nav-item a:hover {
-        color: darkblue;
-    }
-
-    @media (max-width: 767px) {
-        .navbar {
-            background: #222;
+        * {
+            font-family: "Poppins", sans-serif;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            transition: all 0.5s;
+            text-decoration: none;
         }
-    }
 
-    ::-webkit-scrollbar {
-        outline: none;
-        height: 5px;
-        width: 5px;
-        background-color: rgba(0, 0, 0, 0.1);
-    }
+        a {
+            text-decoration: none !important;
+        }
 
-    ::-webkit-scrollbar-thumb {
-        height: 5px;
-        width: 5px;
-        background-color: rgba(0, 0, 100, 0.3);
-        border-radius: 2px;
-        cursor: grab;
+        .current-page {
+            background: transparent;
+            border-radius: 2px;
+            border-right: 3px solid blue;
+            color: darkblue;
+        }
 
-    }
+        .current-page a {
+            color: darkblue;
+        }
+
+        .nav-item:hover {
+            color: darkblue;
+            background: transparent;
+            border-radius: 2px;
+            border-right: 3px solid blue;
+            color: darkblue;
+        }
+
+        .nav-item a:hover {
+            color: darkblue;
+        }
+
+        @media (max-width: 767px) {
+            .navbar {
+                background: #222;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            outline: none;
+            height: 5px;
+            width: 5px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            height: 5px;
+            width: 5px;
+            background-color: rgba(0, 0, 100, 0.3);
+            border-radius: 2px;
+            cursor: grab;
+
+        }
     </style>
 </head>
 
@@ -130,9 +126,7 @@
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -140,29 +134,25 @@
                         <ul class="navbar-nav flex-column justify-content-start">
                             <img src="../src/img/swLogo.png" width="100%">
                             <li class="nav-item my-1 current-page">
-                                <a href="./index.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="./index.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">home</span>
                                     Home
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="package.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">deployed_code</span>
                                     Package
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="coverage.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="coverage.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">location_on</span>
                                     Coverage
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="customer_package.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="customer_package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">
                                         deployed_code
                                     </span>
@@ -170,52 +160,45 @@
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="customer.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="customer.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">person</span>
                                     Customer
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="bill.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="bill.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">receipt_long</span>
                                     Bill
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="payment_confirmation.php"
-                                    class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
+                                <a href="payment_confirmation.php" class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
                                     <span class="material-symbols-outlined">credit_card</span>
                                     Payment confirmation
                                 </a>
                             </li>
 
                             <li class="nav-item my-1">
-                                <a href="finance.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="finance.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">equalizer</span>
                                     Finance
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="profile.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="profile.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">account_box</span>
                                     Profile
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="help.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="help.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">help</span>
                                     Help
                                 </a>
                             </li>
 
                             <li class="nav-item my-1">
-                                <a href="logs.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="logs.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">info</span>
                                     Logs
                                 </a>
@@ -225,9 +208,8 @@
 
 
                             <li class="mt-2 d-grid">
-                                <?php  require_once './logout_confirmation.php'; ?>
-                                <button onclick="logoutConfirmation()" class="btn btn-block text-white"
-                                    style="border-radius: 50px; background: linear-gradient(45deg, dodgerblue, darkblue); background-repeat: no-repeat;">
+                                <?php require_once './logout_confirmation.php'; ?>
+                                <button onclick="logoutConfirmation()" class="btn btn-block text-white" style="border-radius: 50px; background: linear-gradient(45deg, dodgerblue, darkblue); background-repeat: no-repeat;">
                                     Logout
                                 </button>
                             </li>
@@ -276,11 +258,8 @@
                     <div class="ecommerse-widget">
                         <h3 class="text-success">Swiftlink</h3>
                         <div class="d-lg-flex d-block justify-content-between container mx-auto">
-                            <a href="./customer.php"
-                                class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3"
-                                style="border-radius: 30px; min-width: calc(100%/5);">
-                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;"
-                                    class="d-flex align-items-center justify-content-center">
+                            <a href="./customer.php" class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3" style="border-radius: 30px; min-width: calc(100%/5);">
+                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;" class="d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-users"></i>
                                 </span>
                                 <div>
@@ -289,18 +268,15 @@
                                         <?php
                                         $customer_counts = count(getRows("role='user'", 'accounts'));
                                         echo $customer_counts;
-                                    ?>
+                                        ?>
                                     </h3>
                                 </div>
 
                             </a>
 
 
-                            <a href="./payment_confirmation.php"
-                                class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3"
-                                style="border-radius: 30px; min-width: calc(100%/5);">
-                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;"
-                                    class="d-flex align-items-center justify-content-center">
+                            <a href="./payment_confirmation.php" class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3" style="border-radius: 30px; min-width: calc(100%/5);">
+                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;" class="d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-peso-sign"></i>
                                 </span>
                                 <div style="margin-right: -30px;">
@@ -310,13 +286,13 @@
                                         <?php
                                         $data = getRows("status='Paid'", 'user_package');
                                         $total_payments = 0;
-                                        foreach($data as $row) {
+                                        foreach ($data as $row) {
                                             $total_payments = $total_payments + ((int)$row['total']);
                                         }
 
                                         echo $total_payments;
-                                        
-                                    ?>
+
+                                        ?>
                                     </h3>
                                 </div>
 
@@ -324,11 +300,8 @@
 
 
 
-                            <a href="./customer.php"
-                                class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3"
-                                style="border-radius: 30px; min-width: calc(100%/5);">
-                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;"
-                                    class="d-flex align-items-center justify-content-center">
+                            <a href="./customer.php" class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3" style="border-radius: 30px; min-width: calc(100%/5);">
+                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;" class="d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-user"></i>
                                 </span>
                                 <div>
@@ -337,7 +310,7 @@
                                         <?php
                                         $customer_counts = count(getRows("role='user' AND status='Active'", 'accounts'));
                                         echo $customer_counts;
-                                    ?>
+                                        ?>
                                     </h3>
                                 </div>
 
@@ -346,11 +319,8 @@
 
 
 
-                            <a href="./bill.php"
-                                class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3"
-                                style="border-radius: 30px; min-width: calc(100%/5);">
-                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;"
-                                    class="d-flex align-items-center justify-content-center">
+                            <a href="./bill.php" class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3" style="border-radius: 30px; min-width: calc(100%/5);">
+                                <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;" class="d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-peso-sign"></i>
                                 </span>
                                 <div>
@@ -359,13 +329,13 @@
                                         <?php
                                         $data = getRows("status='Unpaid' AND process_status='Done'", 'user_package');
                                         $unpaid_bills = 0;
-                                        foreach($data as $row) {
+                                        foreach ($data as $row) {
                                             $unpaid_bills = $unpaid_bills + ((int)$row['total']);
                                         }
 
                                         echo $unpaid_bills;
-                                        
-                                    ?>
+
+                                        ?>
                                     </h3>
                                 </div>
 
@@ -404,33 +374,33 @@
                                         <tbody>
                                             <!-- contents -->
                                             <?php
-                                        $data = array_reverse(getRows(null, "admin_log_activity"));
-                                        // Pagination parameters
-                                        $totalItems = count($data);
-                                        $itemsPerPage = 5;
-                                        $totalPages = ceil($totalItems / $itemsPerPage);
-                                        $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-                                        $current_page = max(1, min($totalPages, intval($current_page)));
-                                        $offset = ($current_page - 1) * $itemsPerPage;
+                                            $data = array_reverse(getRows(null, "admin_log_activity"));
+                                            // Pagination parameters
+                                            $totalItems = count($data);
+                                            $itemsPerPage = 5;
+                                            $totalPages = ceil($totalItems / $itemsPerPage);
+                                            $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                            $current_page = max(1, min($totalPages, intval($current_page)));
+                                            $offset = ($current_page - 1) * $itemsPerPage;
 
-                                        $dataToDisplay = array_slice($data, $offset, $itemsPerPage);
-                                        
-                                        $count = 1;
-                                        foreach($dataToDisplay as $row) {
-                                            $user = getRows("account_no='{$row['account_no']}'", "accounts")[0];
-                                            $name = $user['firstname'] . ' ' . $user['lastname'];
-                                            echo '<tr>
-                                                <td>'. $count .'</td>
-                                                <td>'. $name .'</td>
-                                                <td>'. $row['date'] .'</td>
-                                                <td>'. $row['category'] .'</td>
-                                                <td>'. $row['remark'] .'</td>
-                                                <td>'. $row['level'] .'</td>
+                                            $dataToDisplay = array_slice($data, $offset, $itemsPerPage);
+
+                                            $count = 1;
+                                            foreach ($dataToDisplay as $row) {
+                                                $user = getRows("account_no='{$row['account_no']}'", "accounts")[0];
+                                                $name = $user['firstname'] . ' ' . $user['lastname'];
+                                                echo '<tr>
+                                                <td>' . $count . '</td>
+                                                <td>' . $name . '</td>
+                                                <td>' . $row['date'] . '</td>
+                                                <td>' . $row['category'] . '</td>
+                                                <td>' . $row['remark'] . '</td>
+                                                <td>' . $row['level'] . '</td>
                                             </tr>';
 
-                                            $count++;
-                                        }
-                                        ?>
+                                                $count++;
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -442,23 +412,21 @@
                                     <ul class="pagination">
                                         <!-- Previous page link -->
                                         <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
-                                            <a class="page-link" href="?page=<?= ($current_page - 1) ?>"
-                                                aria-label="Previous">
+                                            <a class="page-link" href="?page=<?= ($current_page - 1) ?>" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
 
                                         <!-- Page links -->
                                         <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                                        <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
-                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                        </li>
+                                            <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
+                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                            </li>
                                         <?php } ?>
 
                                         <!-- Next page link -->
                                         <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
-                                            <a class="page-link" href="?page=<?= ($current_page + 1) ?>"
-                                                aria-label="Next">
+                                            <a class="page-link" href="?page=<?= ($current_page + 1) ?>" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
@@ -474,9 +442,9 @@
                                         <small>Pending ticket</small><br>
                                         <h3>
                                             <?php
-                                        $pending_ticket =getRows("status='Pending'", "customer_ticket");
-                                        echo count($pending_ticket);
-                                        ?>
+                                            $pending_ticket = getRows("status='Pending'", "customer_ticket");
+                                            echo count($pending_ticket);
+                                            ?>
                                         </h3>
                                     </div>
                                 </div>
@@ -488,9 +456,9 @@
                                         <small>Pending Payment</small><br>
                                         <h3>
                                             <?php
-                                        $pending_payment =getRows("status='Pending'", "payment_confirmation");
-                                        echo count($pending_payment);
-                                    ?>
+                                            $pending_payment = getRows("status='Pending'", "payment_confirmation");
+                                            echo count($pending_payment);
+                                            ?>
                                         </h3>
                                     </div>
                                 </div>
@@ -502,9 +470,9 @@
                                         <small>Closed Ticket</small><br>
                                         <h3>
                                             <?php
-                                        $closed_ticket =getRows("status='Closed'", "customer_ticket");
-                                        echo count($closed_ticket);
-                                    ?>
+                                            $closed_ticket = getRows("status='Closed'", "customer_ticket");
+                                            echo count($closed_ticket);
+                                            ?>
                                         </h3>
                                     </div>
                                 </div>
@@ -520,119 +488,119 @@
                         $months = ['Jan' => '01', 'Feb' => '02', 'Mar' => '03', 'Apr' => '04', 'May' => '05', 'Jun' => '06', 'Jul' => '07', 'Aug' => '08', 'Sep' => '09', 'Oct' => '10', 'Nov' => '11', 'Dec' => '12'];
                         $data_set = array_fill_keys(array_keys($months), 0);
 
-                        
+
                         foreach ($data as $row) {
                             $month = date('M', strtotime($row['date']));
                             $total = (int)$row['total'];
                             $data_set[$month] += $total;
                         }
 
-                        
+
                         ?>
 
                         <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const ctx = document.getElementById('myChart');
-                            const DATASET = <?= json_encode($data_set) ?>;
-                            console.log(DATASET)
-                            const months = Object.keys(DATASET);
-                            const DATA_COUNT = months.length;
-                            const NUMBER_CFG = {
-                                count: DATA_COUNT,
-                                min: Math.min(...Object.values(DATASET)),
-                                max: Math.max(...Object.values(DATASET))
-                            };
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const ctx = document.getElementById('myChart');
+                                const DATASET = <?= json_encode($data_set) ?>;
+                                console.log(DATASET)
+                                const months = Object.keys(DATASET);
+                                const DATA_COUNT = months.length;
+                                const NUMBER_CFG = {
+                                    count: DATA_COUNT,
+                                    min: Math.min(...Object.values(DATASET)),
+                                    max: Math.max(...Object.values(DATASET))
+                                };
 
-                            const labels = Array.from({
-                                length: DATA_COUNT
-                            }, (_, i) => months[i]);
+                                const labels = Array.from({
+                                    length: DATA_COUNT
+                                }, (_, i) => months[i]);
 
-                            const datasetData = Object.values(DATASET);
+                                const datasetData = Object.values(DATASET);
 
-                            const data = {
-                                labels: labels,
+                                const data = {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Dataset 1',
+                                        data: datasetData,
+                                        borderColor: 'red',
+                                        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                                        tension: 0.4,
+                                    }]
+                                };
+
+                                const config = {
+                                    type: 'line',
+                                    data: data,
+                                    options: {
+                                        animations: {
+                                            radius: {
+                                                duration: 400,
+                                                easing: 'linear',
+                                                loop: (context) => context.active
+                                            }
+                                        },
+                                        hoverRadius: 12,
+                                        hoverBackgroundColor: 'yellow',
+                                        interaction: {
+                                            mode: 'nearest',
+                                            intersect: false,
+                                            axis: 'x'
+                                        },
+                                        plugins: {
+                                            tooltip: {
+                                                enabled: false
+                                            }
+                                        }
+                                    }
+                                };
+
+                                new Chart(ctx, config);
+                            });
+
+                            <?php
+                            $unpaid = getRows("status='Unpaid' AND process_status='Done'", "user_package");
+                            $paid = getRows("status='Paid' AND process_status='Done'", "user_package");
+
+                            $all_total_sum = 0;
+                            $paid_total_sum = 0;
+                            $unpaid_total_sum = 0;
+
+                            foreach ($unpaid as $row) {
+                                $all_total_sum += (int)$row['total'];
+                                $unpaid_total_sum += (int)$row['total'];
+                            }
+                            foreach ($paid as $row) {
+                                $all_total_sum += (int)$row['total'];
+                                $paid_total_sum += (int)$row['total'];
+                            }
+
+                            $paid_percentage = ($paid_total_sum / $all_total_sum) * 100;
+                            $unpaid_percentage = ($unpaid_total_sum / $all_total_sum) * 100;
+                            ?>
+                            const paymentData = {
+                                labels: ['Payments Done', 'Payments Pending'],
                                 datasets: [{
-                                    label: 'Dataset 1',
-                                    data: datasetData,
-                                    borderColor: 'red',
-                                    backgroundColor: 'rgba(255, 0, 0, 0.5)',
-                                    tension: 0.4,
+                                    data: [<?= $paid_percentage ?>, <?= $unpaid_percentage ?>],
+                                    backgroundColor: [
+                                        '#378CE7',
+                                        '#DFF5FF'
+                                    ]
                                 }]
                             };
 
-                            const config = {
-                                type: 'line',
-                                data: data,
+
+                            const ctx = document.getElementById('paymentPieChart').getContext('2d');
+                            const myPieChart = new Chart(ctx, {
+                                type: 'pie',
+                                data: paymentData,
                                 options: {
-                                    animations: {
-                                        radius: {
-                                            duration: 400,
-                                            easing: 'linear',
-                                            loop: (context) => context.active
-                                        }
-                                    },
-                                    hoverRadius: 12,
-                                    hoverBackgroundColor: 'yellow',
-                                    interaction: {
-                                        mode: 'nearest',
-                                        intersect: false,
-                                        axis: 'x'
-                                    },
-                                    plugins: {
-                                        tooltip: {
-                                            enabled: false
-                                        }
+                                    responsive: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Payment Status'
                                     }
                                 }
-                            };
-
-                            new Chart(ctx, config);
-                        });
-
-                        <?php
-                        $unpaid = getRows("status='Unpaid' AND process_status='Done'", "user_package");
-                        $paid = getRows("status='Paid' AND process_status='Done'", "user_package");
-
-                        $all_total_sum = 0;
-                        $paid_total_sum = 0;
-                        $unpaid_total_sum = 0;
-
-                        foreach($unpaid as $row) {
-                            $all_total_sum += (int)$row['total'];
-                            $unpaid_total_sum += (int)$row['total'];
-                        }
-                        foreach($paid as $row) {
-                            $all_total_sum += (int)$row['total'];
-                            $paid_total_sum += (int)$row['total'];
-                        }
-
-                        $paid_percentage = ($paid_total_sum / $all_total_sum) * 100;
-                        $unpaid_percentage = ($unpaid_total_sum / $all_total_sum) * 100;
-                    ?>
-                        const paymentData = {
-                            labels: ['Payments Done', 'Payments Pending'],
-                            datasets: [{
-                                data: [<?= $paid_percentage ?>, <?= $unpaid_percentage ?>],
-                                backgroundColor: [
-                                    '#378CE7',
-                                    '#DFF5FF'
-                                ]
-                            }]
-                        };
-
-
-                        const ctx = document.getElementById('paymentPieChart').getContext('2d');
-                        const myPieChart = new Chart(ctx, {
-                            type: 'pie',
-                            data: paymentData,
-                            options: {
-                                responsive: true,
-                                title: {
-                                    display: true,
-                                    text: 'Payment Status'
-                                }
-                            }
-                        });
+                            });
                         </script>
 
                     </div>

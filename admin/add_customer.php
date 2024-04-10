@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 require_once '../config.php';
 require_once '../global.php';
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account_no = generateRandomNumber(24);
 
     $coverage = $post["coverage"] ?? "";
-    
+
     $package = $post["package"] ?? "";
     $total = $post["price"] ?? "";
     $invoice = generateRandomNumber(9);
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $targetFile = '';
     if (isset($_FILES["file"]) && $_FILES["file"]["error"] == 0) {
         $targetFile = $targetDir . '-' . basename($_FILES["file"]["name"]);
-        if (!move_uploaded_file($_FILES["file"]["tmp_name"], '../'.$targetFile)) {
+        if (!move_uploaded_file($_FILES["file"]["tmp_name"], '../' . $targetFile)) {
             $err_msg = "Sorry, there was an error uploading your file.";
             return;
         }
@@ -50,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    if(isDataExists("accounts", "*", "email = '$email'")) {
+    if (isDataExists("accounts", "*", "email = '$email'")) {
         $err_msg = "Email already registered";
-    } elseif(strlen($password) < 6) {
+    } elseif (strlen($password) < 6) {
         $err_msg = "Password must atleast 6 or more characters.";
         return;
-    } elseif($password != $confirm_password) {
+    } elseif ($password != $confirm_password) {
         $err_msg = "Confirm password did not match.";
         return;
     } else {
@@ -69,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Heres your credentials:<br>
         Email: " . $email . "<br>
         Password: " . $password . "<br>";
-        if(SendMail($email, $emailBody, 'Congratulations, registration approved successfully - Swiftlink')) {
-            if(mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
+        if (SendMail($email, $emailBody, 'Congratulations, registration approved successfully - Swiftlink')) {
+            if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
                 $success_msg = "Account created successfully";
                 setLog('admin', [
                     'account_no' => $_SESSION['account_no'],
@@ -83,8 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if(isset($err_msg) && file_exists($targetFile)) {
+    if (isset($err_msg) && file_exists($targetFile)) {
         unlink('../' . $targetFile);
     }
 }
-

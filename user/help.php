@@ -1,19 +1,19 @@
-<?php 
-    require_once '../config.php';
-    require_once '../global.php';
+<?php
+require_once '../config.php';
+require_once '../global.php';
 
-    if(isset($_SESSION['role'])) {
-        if($_SESSION['role'] != 'user') {
-            header('location: ../admin');
-        }
-    } else {
-        header('location: ../index.php');
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] != 'user') {
+        header('location: ../admin');
     }
+} else {
+    header('location: ../index.php');
+}
 
-    $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    
+$sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +32,7 @@
     <meta name="display" content="standalone">
     <link rel="icon" type="image/png" sizes="192x192" href="../src/img/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="../src/img/android-chrome-512x512.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Poppins font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,86 +40,91 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 
     <!-- google icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="../src/style.css">
     <script src="../src/jquery.min.js"></script>
     <script src="../src/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="../src/w3.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 
     <!-- custom styles -->
     <style>
-    * {
-        font-family: "Poppins", sans-serif;
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        transition: all 0.5s; text-decoration: none;
-    } a {text-decoration: none !important;}
-
-    .current-page {
-        background: transparent;
-        border-radius: 2px;
-        border-right: 3px solid blue;
-        color: darkblue;
-    }
-
-    .current-page a {
-        color: darkblue;
-    }
-
-    .nav-item:hover {
-        color: darkblue;
-        background: transparent;
-        border-radius: 2px;
-        border-right: 3px solid blue;
-        color: darkblue;
-    }
-
-    .nav-item a:hover {
-        color: darkblue;
-    }
-
-    @media (max-width: 767px) {
-        .navbar {
-            background: #222;
+        * {
+            font-family: "Poppins", sans-serif;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            transition: all 0.5s;
+            text-decoration: none;
         }
-    }
 
-    .form .input {
-        border: 1px solid darkblue;
-        border-radius: 15px;
-        height: 50px;
-        background-color: transparent;
-        padding-left: 30px;
-    }
+        a {
+            text-decoration: none !important;
+        }
 
-    .form .btn {
-        height: 50px;
-        border-radius: 15px;
-    }
-    ::-webkit-scrollbar {
-        outline: none;
-        height: 5px;
-        width: 5px;
-        background-color: rgba(0, 0, 0, 0.1);
-    }
+        .current-page {
+            background: transparent;
+            border-radius: 2px;
+            border-right: 3px solid blue;
+            color: darkblue;
+        }
 
-    ::-webkit-scrollbar-thumb {
-        height: 5px;
-        width: 5px;
-        background-color: rgba(0, 0, 100, 0.3);
-        border-radius: 2px;
-        cursor:grab;
-        
-    } </style>
+        .current-page a {
+            color: darkblue;
+        }
+
+        .nav-item:hover {
+            color: darkblue;
+            background: transparent;
+            border-radius: 2px;
+            border-right: 3px solid blue;
+            color: darkblue;
+        }
+
+        .nav-item a:hover {
+            color: darkblue;
+        }
+
+        @media (max-width: 767px) {
+            .navbar {
+                background: #222;
+            }
+        }
+
+        .form .input {
+            border: 1px solid darkblue;
+            border-radius: 15px;
+            height: 50px;
+            background-color: transparent;
+            padding-left: 30px;
+        }
+
+        .form .btn {
+            height: 50px;
+            border-radius: 15px;
+        }
+
+        ::-webkit-scrollbar {
+            outline: none;
+            height: 5px;
+            width: 5px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            height: 5px;
+            width: 5px;
+            background-color: rgba(0, 0, 100, 0.3);
+            border-radius: 2px;
+            cursor: grab;
+
+        }
+    </style>
 </head>
 
 <body>
-<?php require_once '../loading_banner.php' ?>
+    <?php require_once '../loading_banner.php' ?>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
@@ -133,9 +136,7 @@
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -143,73 +144,63 @@
                         <ul class="navbar-nav flex-column justify-content-start">
                             <img src="../src/img/swLogo.png" width="100%">
                             <li class="nav-item my-1">
-                                <a href="./index.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="./index.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">home</span>
                                     Dashboard
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="package.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">deployed_code</span>
                                     Package
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="history.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="history.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">history</span>
                                     History
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="open_ticket.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="open_ticket.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">receipt</span>
-                                     Ticket
+                                    Ticket
                                 </a>
                             </li>
                             <li class="nav-item my-1 current-page">
-                                <a href="help.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="help.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">help</span>
                                     Help
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="logs.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="logs.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">manage_history</span>
                                     Logs
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="profile.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="profile.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">account_box</span>
                                     Profile
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="./update_password.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="./update_password.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">lock</span>
                                     Update password
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="about.php"
-                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="about.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">info</span>
                                     About
                                 </a>
                             </li>
-                            
+
                             <li class="mt-2 d-grid">
-                                <?php  require_once './logout_confirmation.php'; ?>
-                                <button onclick="logoutConfirmation()" class="btn btn-block text-white"
-                                    style="border-radius: 50px; background: linear-gradient(45deg, dodgerblue, darkblue); background-repeat: no-repeat;">
+                                <?php require_once './logout_confirmation.php'; ?>
+                                <button onclick="logoutConfirmation()" class="btn btn-block text-white" style="border-radius: 50px; background: linear-gradient(45deg, dodgerblue, darkblue); background-repeat: no-repeat;">
                                     Logout
                                 </button>
                             </li>
@@ -253,7 +244,7 @@
                     <!-- ============================================================== -->
                     <!-- end pageheader  -->
                     <!-- ============================================================== -->
-                    
+
                     <div class="ecommerse-widget">
                         <h5 class="text-success">Swiftlink</h5>
                         <div class="container-fluid">
@@ -309,45 +300,45 @@
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
     <!-- ============================================================== -->
-    
+
     <script>
-    $(document).ready(function() {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
+        $(document).ready(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
+            <?php
+            if (isset($err_msg)) {
+            ?>
+                Toast.fire({
+                    icon: "error",
+                    title: "<?php echo $err_msg ?>"
+                });
+            <?php
             }
-        });
-
-        <?php
-            if(isset($err_msg)) {
-                ?>
-        Toast.fire({
-            icon: "error",
-            title: "<?php echo $err_msg ?>"
-        });
-        <?php
-            }    
             ?>
 
-        <?php
-            if(isset($success_msg)) {
-                ?>
-        Toast.fire({
-            icon: "success",
-            title: "<?php echo $success_msg ?>"
-        });
-        <?php
-            }    
+            <?php
+            if (isset($success_msg)) {
             ?>
-    })
+                Toast.fire({
+                    icon: "success",
+                    title: "<?php echo $success_msg ?>"
+                });
+            <?php
+            }
+            ?>
+        })
     </script>
- 
+
 </body>
 
 </html>

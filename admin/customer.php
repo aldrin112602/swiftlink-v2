@@ -416,7 +416,8 @@ $email = $row['email'] ?? null;
                                             ?>
                                                 <tr>
                                                     <td class="ellipsis-text"><?= $row['account_no'] ?? null ?></td>
-                                                    <td class="ellipsis-text"><?= $row['is_active'] == 'true' ? 'Active' : "Inactive" ?></td>
+                                                    <td class="ellipsis-text">
+                                                        <?= $row['is_active'] == 'true' ? 'Active' : "Inactive" ?></td>
                                                     <td class="ellipsis-text"><?= $row['total'] ?></td>
                                                     <td class="ellipsis-text"><?= $row['coverage'] ?></td>
                                                     <td class="ellipsis-text"><?= $row['package'] ?></td>
@@ -685,7 +686,8 @@ $email = $row['email'] ?? null;
                                                     <td class="ellipsis-text"><?= $row['email'] ?></td>
                                                     <td class="ellipsis-text"><?= $row['phone'] ?></td>
                                                     <td class="ellipsis-text"><?= $row['status'] ?></td>
-                                                    <td class="ellipsis-text"><?= $row['address'] ?>, <?= $row['town'] ?>, <?= $row['city'] ?>, <?= $row['province'] ?></td>
+                                                    <td class="ellipsis-text"><?= $row['address'] ?>, <?= $row['town'] ?>,
+                                                        <?= $row['city'] ?>, <?= $row['province'] ?></td>
 
                                                     <td class="ellipsis-text">
                                                         <a href="?update=<?= $row['id'] ?>">

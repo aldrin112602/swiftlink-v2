@@ -3,7 +3,7 @@ require_once "../config.php";
 require_once "../global.php";
 
 header("Content-Type: application/json");
-if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['type'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['type'])) {
     $get = validate_post_data($_GET);
     $type = $get['type'];
 

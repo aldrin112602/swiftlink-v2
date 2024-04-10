@@ -2,7 +2,7 @@
 require_once '../config.php';
 require_once '../global.php';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage'])) {
     $file = $_FILES['profileImage'];
     $account_no = $_POST['account_no'];
     if ($file['error'] === UPLOAD_ERR_OK) {
@@ -17,21 +17,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage'])) {
                 'category' => 'Activity',
                 'remark' => 'Updated user profile picture'
             ]);
-            if(mysqli_query($conn, $sql)) {
+            if (mysqli_query($conn, $sql)) {
                 $response = [
                     "status" => "success",
                     "message" => "Profile updated successfully",
                 ];
             } else {
-                
+
                 $response = [
                     "status" => "error",
-                    "message" => 'Error updating record: '. mysqli_error($conn),
+                    "message" => 'Error updating record: ' . mysqli_error($conn),
                 ];
             }
-
         } else {
-            
+
             $response = [
                 "status" => "error",
                 "message" => 'Error moving the uploaded file.',
@@ -51,4 +50,3 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage'])) {
     header("Content-Type: application/json");
     echo json_encode($response);
 }
-

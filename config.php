@@ -9,7 +9,7 @@ $conn = new mysqli($host, $user, $password);
 if ($conn->connect_error) die('Database connection failed: ' . $conn->connect_error);
 $query = "CREATE DATABASE IF NOT EXISTS $database";
 if (!$conn->query($query)) {
-    echo "Error creating database: " . $conn->error; 
+    echo "Error creating database: " . $conn->error;
 }
 $conn->close();
 $conn = new mysqli($host, $user, $password, $database);

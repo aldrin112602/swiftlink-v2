@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $resultCheckData = mysqli_query($conn, $checkDataExistence);
 
     if (mysqli_num_rows($resultCheckData) > 0) {
-        if($table == 'customer_ticket') {
+        if ($table == 'customer_ticket') {
             // get document
             $document = getRows("id='$id'", $table)[0]['document'];
             unlink('../user/' . $document);
@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
 
             setLog('admin', [
-                    'account_no' => $_SESSION['account_no'],
-                    'category' => 'Activity',
-                    'remark' => 'Removed data'
+                'account_no' => $_SESSION['account_no'],
+                'category' => 'Activity',
+                'remark' => 'Removed data'
             ]);
         } else {
             $response = [
@@ -44,4 +44,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: application/json');
     echo json_encode($response);
 }
-

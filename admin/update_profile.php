@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../global.php';
-if(isset($_FILES['profileImage'])) {
+if (isset($_FILES['profileImage'])) {
     $file = $_FILES['profileImage'];
     if ($file['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'profile/';
@@ -15,7 +15,6 @@ if(isset($_FILES['profileImage'])) {
                 'remark' => 'Updated profile picture'
             ]);
             mysqli_query($conn, $sql);
-
         } else {
             echo 'Error moving the uploaded file.';
         }
@@ -23,4 +22,3 @@ if(isset($_FILES['profileImage'])) {
         echo 'Error during file upload. Error code: ' . $file['error'];
     }
 }
-

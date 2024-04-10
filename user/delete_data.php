@@ -8,11 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $table = $post['table'];
 
     $response = null;
-    if(isDataExists($table, "*", $condition)) {
-        if($table == 'customer_ticket') {
+    if (isDataExists($table, "*", $condition)) {
+        if ($table == 'customer_ticket') {
             // get document
             $document = getRows("$condition", $table)[0]['document'];
-            if(file_exists('./' . $document)) unlink('./' . $document);
+            if (file_exists('./' . $document)) unlink('./' . $document);
         }
 
 
@@ -29,17 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'message' => mysqli_error($conn)
             ];
         }
-
-
     } else {
         $response = [
-           'status' => 'error',
-           'message' => 'Data not removed'
+            'status' => 'error',
+            'message' => 'Data not removed'
         ];
     }
 
     header('Content-Type: application/json');
     echo json_encode($response);
-
 }
-

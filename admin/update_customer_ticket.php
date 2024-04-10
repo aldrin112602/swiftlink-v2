@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     We hope this message finds you well. We would like to inform you about an issue that has been identified and apologize for any inconvenience it may have caused. Our team is actively working on resolving the matter, and we anticipate having it fixed within the next 2-5 working days.<br><br>
 
-    We appreciate your understanding and patience during this time. If you have any further questions or concerns, please feel free to reach out to our support team at swiftlink@gmail.com.<br><br>
+    We appreciate your understanding and patience during this time. If you have any further questions or concerns, please feel free to reach out to our support team at swiftlinkitsolution@gmail.com.<br><br>
 
     Thank you for your cooperation.<br><br>
 
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         We hope this message finds you well. We would like to inform you about an issue that has been identified and apologize for any inconvenience it may have caused.
         <br>Your ticket has been closed!<br>
 
-        If you have any further questions or concerns, please feel free to reach out to our support team at swiftlink@gmail.com.<br><br>
+        If you have any further questions or concerns, please feel free to reach out to our support team at swiftlinkitsolution@gmail.com.<br><br>
 
         Thank you for your cooperation.<br><br>
 

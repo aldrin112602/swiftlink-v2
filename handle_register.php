@@ -1,4 +1,4 @@
-<?php   
+<?php
 require_once './config.php';
 require_once './global.php';
 
@@ -47,12 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    if(isDataExists("accounts", "*", "email = '$email'")) {
+    if (isDataExists("accounts", "*", "email = '$email'")) {
         $err_msg = "Email already registered";
-    } elseif(strlen($password) < 6) {
+    } elseif (strlen($password) < 6) {
         $err_msg = "Password must atleast 6 or more characters.";
         return;
-    } elseif($password != $confirm_password) {
+    } elseif ($password != $confirm_password) {
         $err_msg = "Confirm password did not match.";
         return;
     } else {
@@ -62,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql2 = "INSERT INTO user_package (account_no, invoice, package, coverage, total, period, due_date)
         VALUES ('$account_no', '$invoice', '$package', '$coverage', $total, '$period', '$dueDate')";
 
-        if(mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
-            ?>
+        if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
+?>
             <script>
                 $(document).ready(function() {
                     Swal.fire({
@@ -80,15 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 })
             </script>
-            <?php
+<?php
         } else {
-
         }
     }
 
-    if(isset($err_msg) && file_exists($targetFile)) {
+    if (isset($err_msg) && file_exists($targetFile)) {
         unlink($targetFile);
     }
 }
-
-
