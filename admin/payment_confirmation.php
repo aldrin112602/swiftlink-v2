@@ -425,6 +425,7 @@ $email = $row['email'] ?? null;
                                             <img src="../src/img/swLogo.png" alt="Logo" width="200px">
                                         </div>
                                     </div>
+                                    <h2 class="fs-5"><I>Payments details</I></h2>
                                 </div>
                                 <table class="table table-striped table-hover table-white">
                                     <thead>

@@ -362,8 +362,8 @@ $email = $row['email'] ?? null;
 
                                             foreach ($filterData as $row) {
                                                 // get user name
-                                                $user = getRows("account_no='{$row['account_no']}'", "accounts")[0];
-                                                $name = $user['firstname'] . " " . $user['middle_initial'] . ". " . $user['lastname'];
+                                                $user = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
+                                                $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null );
                                             ?>
                                                 <tr>
                                                     <td><?= $row['id'] ?></td>
