@@ -143,6 +143,10 @@ $email = $row['email'] ?? null;
             cursor: grab;
 
         }
+
+        img {
+            object-fit: cover !important;
+        }
     </style>
 
 </head>

@@ -313,7 +313,7 @@ $email = $row['email'] ?? null;
                                     <table id="table" class="table table-white table-striped table-hover" style="min-width: 100vw;">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Id</th>
+                                                <!-- <th scope="col">Id</th> -->
                                                 <th scope="col">Name</th>
                                                 <th scope="col">account no.</th>
                                                 <th scope="col">Invoice</th>
@@ -366,7 +366,7 @@ $email = $row['email'] ?? null;
                                                 $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null );
                                             ?>
                                                 <tr>
-                                                    <td><?= $row['id'] ?></td>
+                                                    <!-- <td><?= $row['id'] ?></td> -->
                                                     <td><?= $name ?></td>
                                                     <td><?= $row['account_no'] ?></td>
                                                     <td><?= $row['invoice'] ?></td>
