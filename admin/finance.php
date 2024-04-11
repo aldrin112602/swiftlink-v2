@@ -612,13 +612,13 @@ $email = $row['email'] ?? null;
 
 
                                             $i = 1;
-
-
-
+                                            $TOTAL = 0;
                                             foreach ($user_package as $row) {
                                                 $payment_method = getRows("invoice='{$row['invoice']}'", "payment_confirmation")[0]['payment_method'] ?? 'Others';
 
                                                 $user_ = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
+
+                                                $TOTAL += (float)$row['total'];
 
                                                 echo "<tr>
                                             
@@ -634,6 +634,7 @@ $email = $row['email'] ?? null;
                                             ?>
                                         </tbody>
                                     </table>
+                                    <p class="p-2" style="text-align: right;"><em>Total: </em><strong><?= $TOTAL ?> PHP</strong></p>
                                 </div>
 
                             </div>
