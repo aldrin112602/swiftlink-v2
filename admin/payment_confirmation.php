@@ -671,7 +671,7 @@ $email = $row['email'] ?? null;
                             $invoice = mysqli_real_escape_string($conn, trim($_GET['payment_confirmation']));
 
 
-                            $sql = "SELECT pc.invoice, pc.payment_method, pc.date_payment, pc.image_path, pc.status, ac.account_no, ac.firstname, ac.lastname, uc.period, uc.invoice, uc.account_no, uc.total
+                            $sql = "SELECT pc.invoice, pc.payment_method, pc.date_payment, pc.image_path, pc.status, ac.account_no, ac.firstname, ac.lastname, uc.period, pc.reference_number, uc.invoice, uc.account_no, uc.total
                                 FROM payment_confirmation AS pc
                                 JOIN user_package AS uc ON pc.invoice = uc.invoice
                                 JOIN accounts AS ac ON ac.account_no = uc.account_no
@@ -746,6 +746,11 @@ $email = $row['email'] ?? null;
                                     <div class="mb-3">
                                         <label for="date_payment" class="form-label">Date Payment</label>
                                         <input readonly value="<?= $row['date_payment'] ?>" type="text" class="form-control" name="date_payment" id="date_payment">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="reference_number" class="form-label">Reference number</label>
+                                        <input readonly value="<?= $row['reference_number'] ?? null ?>" type="text" class="form-control" name="reference_number" id="reference_number">
                                     </div>
                                     <div class="mb-3 <?= $row['status'] == 'Approved' ? 'd-none' : '' ?>">
                                         <button id="deny_btn" class="btn btn-danger px-5 btn-lg" style="border-radius: 15px;">Deny</button>
