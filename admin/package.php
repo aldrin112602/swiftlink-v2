@@ -270,6 +270,35 @@ $email = $row['email'] ?? null;
                         ?>
                             <div class="table-responsive bg-white p-2 p-md-5" style="border-radius: 40px;">
                                 <h4 class="text-primary fw-bold">Package</h4>
+
+                                <div class="d-flex align-items-center justify-content-start gap-2 py-1">
+                                    <span>Show</span>
+                                    <div>
+                                        <select name="" id="entries" class="">
+                                        </select>
+                                        <script>
+                                            $(() => {
+                                                $('#entries').on('change', function() {
+                                                    let entries = $(this).val();
+                                                    let urlParams = new URLSearchParams(window.location.search);
+                                                    if (urlParams.has('entries')) {
+                                                        urlParams.set('entries', entries);
+                                                    } else {
+                                                        urlParams.append('entries', entries);
+                                                    }
+
+                                                    let newUrl = window.location.pathname + '?' + urlParams.toString();
+
+                                                    window.location = newUrl;
+                                                });
+
+                                                for (let i = 10; i <= 4000; i *= 2) {
+                                                    $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
+                                                }
+                                            })
+                                        </script>
+                                    </div><span>entries</span>
+                                </div>
                                 <table class="table table-white table-striped table-hover">
                                     <thead>
                                         <tr>
@@ -287,7 +316,7 @@ $email = $row['email'] ?? null;
 
                                         // Pagination parameters
                                         $totalItems = count($data);
-                                        $itemsPerPage = 10;
+                                        $itemsPerPage = $_GET['entries'] ?? 10;
                                         $totalPages = ceil($totalItems / $itemsPerPage);
                                         $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
                                         $current_page = max(1, min($totalPages, intval($current_page)));
