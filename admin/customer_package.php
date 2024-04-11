@@ -305,10 +305,48 @@ $email = $row['email'] ?? null;
                                 </div>
                                 <script>
                                     $('#filter').on('change', function() {
-                                        let type = $(this).val().trim()
-                                        location.href = '?filter=' + type
+                                        let filter = $(this).val();
+                                        let urlParams = new URLSearchParams(window.location.search);
+                                        if (urlParams.has('filter')) {
+                                            urlParams.set('filter', filter);
+                                        } else {
+                                            urlParams.append('filter', filter);
+                                        }
+
+                                        let newUrl = window.location.pathname + '?' + urlParams.toString();
+
+                                        window.location = newUrl;
                                     })
                                 </script>
+
+                                <div class="d-flex align-items-center justify-content-start gap-2 py-1">
+                                    <span>Show</span>
+                                    <div>
+                                        <select name="" id="entries" class="">
+                                        </select>
+                                        <script>
+                                            $(() => {
+                                                $('#entries').on('change', function() {
+                                                    let entries = $(this).val();
+                                                    let urlParams = new URLSearchParams(window.location.search);
+                                                    if (urlParams.has('entries')) {
+                                                        urlParams.set('entries', entries);
+                                                    } else {
+                                                        urlParams.append('entries', entries);
+                                                    }
+
+                                                    let newUrl = window.location.pathname + '?' + urlParams.toString();
+
+                                                    window.location = newUrl;
+                                                });
+
+                                                for (let i = 10; i <= 4000; i *= 2) {
+                                                    $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
+                                                }
+                                            })
+                                        </script>
+                                    </div><span>entries</span>
+                                </div>
                                 <div class="table-responsive">
                                     <table id="table" class="table table-white table-striped table-hover" style="min-width: 100vw;">
                                         <thead>
@@ -349,7 +387,7 @@ $email = $row['email'] ?? null;
 
                                             // Pagination parameters
                                             $totalItems = count($filterData);
-                                            $itemsPerPage = 10;
+                                            $itemsPerPage = ($_GET['entries'] ?? 10);
                                             $totalPages = ceil($totalItems / $itemsPerPage);
                                             $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
                                             $current_page = max(1, min($totalPages, intval($current_page)));
@@ -363,7 +401,7 @@ $email = $row['email'] ?? null;
                                             foreach ($filterData as $row) {
                                                 // get user name
                                                 $user = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
-                                                $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null );
+                                                $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null);
                                             ?>
                                                 <tr>
                                                     <!-- <td><?= $row['id'] ?></td> -->
