@@ -121,6 +121,12 @@ $email = $row['email'] ?? null;
             text-overflow: ellipsis;
         }
 
+        .form-select {
+            /* padding: 0 20px; */
+            font-size: 12px;
+            height: 40px;
+        }
+
         @media print {
             #tablePreview {
                 position: fixed;
@@ -327,7 +333,8 @@ $email = $row['email'] ?? null;
                                 <button onclick="downLoadAsPdf()" class="btn btn-white btn-sm border">Print</button>
                                 <button onclick="handleDownloadPDF()" class="btn btn-white btn-sm border">Download</button>
                             </div>
-                            <h2 class="fw-bold text-primary" style="text-align: right !important; font-family: serif">INVOICE</h2>
+                            <h2 class="fw-bold text-primary" style="text-align: right !important; font-family: serif">
+                                INVOICE</h2>
                             <?php
                             // get account no
                             $get = validate_post_data($_GET);
@@ -534,26 +541,60 @@ $email = $row['email'] ?? null;
                         <?php
                         if (!(isset($_GET['add_bill']) && $_GET['add_bill'] == 'true' || isset($_GET['update']))) {
                         ?>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-end my-2">
+                                <a href="?add_bill=true" class="btn btn-primary text-white d-flex align-items-center justify-content-center gap-2" style="border-radius: 20px;"><i class="fa-solid fa-plus"></i> Add</a>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-start gap-2 mb-2 flex-wrap">
                                 <div>
-                                    <select id="action" class="form-select bg-white">
-                                        <option class="d-none" disabledb selected value="">-- Choose action --</option>
+                                    <select id="action" class="form-select bg-white mt-1">
+                                        <option class="d-none" disabled selected value="">-- Choose action --</option>
                                         <option value="print">Print Selected</option>
                                         <option value="paid">Paid Selected</option>
                                         <option value="delete">Delete Selected</option>
                                     </select>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-end gap-3">
+
+                                <div>
+                                    <select id="coverage" class="form-select bg-white mt-1">
+                                        <option class="d-none" disabled selected value="">-- Choose coverage --</option>
+                                        <?php
+                                        $coverage = getRows("status='Active'", "coverage");
+                                        foreach ($coverage as $row) {
+                                            echo '
+                                                <option value="' . $row['name'] . '">' . $row['name'] . '</option>
+                                            ';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <select id="month" class="form-select bg-white mt-1">
+                                        <option class="d-none" disabled selected value="">-- Choose month --</option>
+
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <select id="year" class="form-select bg-white mt-1">
+                                        <option class="d-none" disabled selected value="">-- Choose year --</option>
+
+                                    </select>
+                                </div>
+
+
+                                <div>
                                     <?php
                                     $status = $_GET['status'] ?? null;
                                     ?>
-                                    <select class="form-select bg-white" id="chooseStatus">
+                                    <select class="form-select bg-white mt-1" id="chooseStatus">
+                                        <option class="d-none" disabled selected value="">-- Choose status --</option>
                                         <option value="Unpaid" <?= $status == 'Unpaid' ? 'selected' : '' ?>>Unpaid</option>
                                         <option value="Paid" <?= $status == 'Paid' ? 'selected' : '' ?>>Paid</option>
                                         <option value="All" <?= $status == 'All' ? 'selected' : '' ?>>All</option>
 
                                     </select>
-                                    <a href="?add_bill=true" class="btn btn-primary btn-lg px-4 text-white d-flex align-items-center justify-content-center gap-2" style="border-radius: 20px;"><i class="fa-solid fa-plus"></i> Add</a>
                                 </div>
 
                             </div>
@@ -597,13 +638,16 @@ $email = $row['email'] ?? null;
                                                         urlParams.append('entries', entries);
                                                     }
 
-                                                    let newUrl = window.location.pathname + '?' + urlParams.toString();
+                                                    let newUrl = window.location.pathname + '?' + urlParams
+                                                        .toString();
 
                                                     window.location = newUrl;
                                                 });
 
                                                 for (let i = 10; i <= 4000; i *= 2) {
-                                                    $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
+                                                    $('#entries').append(
+                                                        `<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`
+                                                    )
                                                 }
                                             })
                                         </script>
@@ -728,14 +772,16 @@ $email = $row['email'] ?? null;
 
                                                     $('#chooseStatus').on('change', function() {
                                                         let status = $(this).val();
-                                                        let urlParams = new URLSearchParams(window.location.search);
+                                                        let urlParams = new URLSearchParams(window.location
+                                                            .search);
                                                         if (urlParams.has('status')) {
                                                             urlParams.set('status', status);
                                                         } else {
                                                             urlParams.append('status', status);
                                                         }
 
-                                                        let newUrl = window.location.pathname + '?' + urlParams.toString();
+                                                        let newUrl = window.location.pathname + '?' + urlParams
+                                                            .toString();
 
                                                         window.location = newUrl;
                                                     })
