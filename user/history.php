@@ -774,12 +774,15 @@ $row = mysqli_fetch_assoc($result);
 
                         $payment_method = mysqli_real_escape_string($conn, trim($_POST['payment_method']));
                         $date_payment = mysqli_real_escape_string($conn, trim($_POST['date_payment']));
+                        $reference_number = strtoupper(mysqli_real_escape_string($conn, trim($_POST['reference_number'])));
+
+
                         if (isset($_FILES["file"]) && $_FILES["file"]["error"] == 0) {
                             $targetFile = $targetDir . '-' . basename($_FILES["file"]["name"]);
                             if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
                                 $date_payment = $_POST['date_payment'];
-                                $sql = "INSERT INTO payment_confirmation(invoice, payment_method, date_payment, image_path)
-                                    VALUES('$invoice', '$payment_method', '$date_payment', '$targetFile')";
+                                $sql = "INSERT INTO payment_confirmation(invoice, payment_method, date_payment, image_path, reference_number)
+                                    VALUES('$invoice', '$payment_method', '$date_payment', '$targetFile', '$reference_number')";
 
                                 if ($conn->query($sql)) {
                                     $success_msg = "Payment Information has been submitted successfully";
@@ -861,6 +864,12 @@ $row = mysqli_fetch_assoc($result);
                                 <label for="date_payment" class="form-label">Date Payment</label>
                                 <input readonly value="<?= date('Y-m-d') ?>" type="text" class="form-control" name="date_payment" id="date_payment">
                             </div>
+
+                            <div class="mb-3">
+                                <label for="reference_number" class="form-label">Reference number</label>
+                                <input required placeholder="Type N/A if not applicable" type="text" class="form-control" name="reference_number" id="reference_number">
+                            </div>
+
                             <div class="mb-3">
                                 <a href="history.php" class="btn btn-danger px-5 btn-lg" style="border-radius: 15px;">Cancel</a>
 

@@ -97,6 +97,7 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS payment_confirmation (
     payment_method VARCHAR(255),
     date_payment VARCHAR(255),
     image_path VARCHAR(255),
+    reference_number VARCHAR(255),
     status VARCHAR(255) DEFAULT 'Pending',
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
