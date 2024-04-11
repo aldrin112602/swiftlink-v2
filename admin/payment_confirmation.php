@@ -126,11 +126,6 @@ $email = $row['email'] ?? null;
             #tablePreview ._header {
                 display: block !important;
             }
-
-            #tablePreview table tr td:first-child,
-            #tablePreview table tr th:first-child {
-                display: none !important;
-            }
         }
 
         ::-webkit-scrollbar {
@@ -430,7 +425,7 @@ $email = $row['email'] ?? null;
                                 <table class="table table-striped table-hover table-white">
                                     <thead>
                                         <tr>
-                                            <th scope="col">No</th>
+                                            
                                             <th scope="col">Invoice No.</th>
                                             <th scope="col">Period</th>
                                             <th scope="col">Account No</th>
@@ -577,7 +572,7 @@ $email = $row['email'] ?? null;
                                         foreach ($dataToDisplay as $row) {
                                         ?>
                                             <tr class="py-0">
-                                                <td><?= $row['id'] ?? null ?></td>
+                                                
                                                 <td><?= $row['invoice'] ?? null ?></td>
                                                 <td><?= $row['period'] ?? null ?></td>
                                                 <td><?= $row['account_no'] ?? null ?></td>

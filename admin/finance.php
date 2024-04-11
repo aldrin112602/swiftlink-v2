@@ -142,10 +142,7 @@ $email = $row['email'] ?? null;
                 display: block !important;
             }
 
-            #tablePreview table tr td:first-child,
-            #tablePreview table tr th:first-child {
-                display: none !important;
-            }
+            
         }
     </style>
 </head>
@@ -498,7 +495,7 @@ $email = $row['email'] ?? null;
                                     <table id="table" class="table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                
                                                 <th>Account no.</th>
                                                 <th>Date</th>
                                                 <th>Name</th>
@@ -596,7 +593,7 @@ $email = $row['email'] ?? null;
                                                 $user_ = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
 
                                                 echo "<tr>
-                                            <td>{$row['id']}</td>
+                                            
                                             <td>{$row['account_no']}</td>
                                             <td>{$row['date']}</td>
                                             <td>" . ($user_['firstname'] ?? null) . " " . ($user_['middle_initial'] ?? null) . " " . ($user_['lastname'] ?? null) . "</td>

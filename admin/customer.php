@@ -657,8 +657,8 @@ $email = $row['email'] ?? null;
                                     <table class="table table-white table-striped table-hover" id="table">
                                         <thead>
                                             <tr>
-                                                <th class="ellipsis-text" scope="col d-flex align-items-center justify-content-start">
-                                                    <span>No</span> <input type="checkbox" id="selectAll">
+                                                <th class="ellipsis-text" scope="col">
+                                                     <input type="checkbox" id="selectAll">
                                                 </th>
                                                 <th class="ellipsis-text" scope="col">Name</th>
                                                 <th class="ellipsis-text" scope="col">Account no.</th>
@@ -715,8 +715,7 @@ $email = $row['email'] ?? null;
                                             ?>
                                                 <tr>
                                                     <td class="ellipsis-text">
-                                                        <span align="right"><?= $row['id'] ?? null ?></span>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<input data-email="<?= $row['email'] ?? null ?>" id="item" value="<?= $row['id'] ?? null ?>" type="checkbox">
+                                                        <input data-email="<?= $row['email'] ?? null ?>" id="item" value="<?= $row['id'] ?? null ?>" type="checkbox">
                                                     </td>
                                                     <td class="ellipsis-text"><?= $row['firstname'] . ' ' . $row['lastname'] ?>
                                                     </td>
