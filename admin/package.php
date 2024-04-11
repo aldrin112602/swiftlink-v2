@@ -33,7 +33,9 @@ $email = $row['email'] ?? null;
     <meta name="display" content="standalone">
     <link rel="icon" type="image/png" sizes="192x192" href="../src/img/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="../src/img/android-chrome-512x512.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Poppins font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,83 +43,85 @@ $email = $row['email'] ?? null;
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 
     <!-- google icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="../src/style.css">
     <script src="../src/jquery.min.js"></script>
     <script src="../src/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="../src/w3.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
 
 
     <!-- custom styles -->
     <style>
-        * {
-            font-family: "Poppins", sans-serif;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            transition: all 0.5s;
-            text-decoration: none;
-        }
+    * {
+        font-family: "Poppins", sans-serif;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        transition: all 0.5s;
+        text-decoration: none;
+    }
 
-        a {
-            text-decoration: none !important;
-        }
+    a {
+        text-decoration: none !important;
+    }
 
-        .current-page {
-            background: transparent;
-            border-radius: 2px;
-            border-right: 3px solid blue;
-            color: darkblue;
-        }
+    .current-page {
+        background: transparent;
+        border-radius: 2px;
+        border-right: 3px solid blue;
+        color: darkblue;
+    }
 
-        .current-page a {
-            color: darkblue;
-        }
+    .current-page a {
+        color: darkblue;
+    }
 
-        .nav-item:hover {
-            color: darkblue;
-            background: transparent;
-            border-radius: 2px;
-            border-right: 3px solid blue;
-            color: darkblue;
-        }
+    .nav-item:hover {
+        color: darkblue;
+        background: transparent;
+        border-radius: 2px;
+        border-right: 3px solid blue;
+        color: darkblue;
+    }
 
-        .nav-item a:hover {
-            color: darkblue;
-        }
+    .nav-item a:hover {
+        color: darkblue;
+    }
 
-        @media (max-width: 767px) {
-            .navbar {
-                background: #222;
-            }
+    @media (max-width: 767px) {
+        .navbar {
+            background: #222;
         }
+    }
 
-        .input,
-        .form-select {
-            border: 1px solid darkblue;
-            border-radius: 15px;
-            height: 50px;
-            background-color: transparent;
-            padding-left: 30px;
-        }
+    .input,
+    .form-select {
+        border: 1px solid darkblue;
+        border-radius: 15px;
+        height: 50px;
+        background-color: transparent;
+        padding-left: 30px;
+    }
 
-        ::-webkit-scrollbar {
-            outline: none;
-            height: 5px;
-            width: 5px;
-            background-color: rgba(0, 0, 0, 0.1);
-        }
+    ::-webkit-scrollbar {
+        outline: none;
+        height: 5px;
+        width: 5px;
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 
-        ::-webkit-scrollbar-thumb {
-            height: 5px;
-            width: 5px;
-            background-color: rgba(0, 0, 100, 0.3);
-            border-radius: 2px;
-            cursor: grab;
+    ::-webkit-scrollbar-thumb {
+        height: 5px;
+        width: 5px;
+        background-color: rgba(0, 0, 100, 0.3);
+        border-radius: 2px;
+        cursor: grab;
 
-        }
+    }
     </style>
 </head>
 
@@ -134,7 +138,9 @@ $email = $row['email'] ?? null;
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -142,25 +148,29 @@ $email = $row['email'] ?? null;
                         <ul class="navbar-nav flex-column justify-content-start">
                             <img src="../src/img/swLogo.png" width="100%">
                             <li class="nav-item my-1">
-                                <a href="./index.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="./index.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">home</span>
                                     Home
                                 </a>
                             </li>
                             <li class="nav-item my-1 current-page">
-                                <a href="package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="package.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">deployed_code</span>
                                     Package
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="coverage.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="coverage.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">location_on</span>
                                     Coverage
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="customer_package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="customer_package.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">
                                         deployed_code
                                     </span>
@@ -168,43 +178,50 @@ $email = $row['email'] ?? null;
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="customer.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="customer.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">person</span>
                                     Customer
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="bill.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="bill.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">receipt_long</span>
                                     Bill
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="payment_confirmation.php" class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
+                                <a href="payment_confirmation.php"
+                                    class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
                                     <span class="material-symbols-outlined">credit_card</span>
                                     Payment confirmation
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="finance.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="finance.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">equalizer</span>
                                     Finance
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="profile.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="profile.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">account_box</span>
                                     Profile
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="help.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="help.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">help</span>
                                     Help
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="logs.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="logs.php"
+                                    class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">info</span>
                                     Logs
                                 </a>
@@ -215,7 +232,8 @@ $email = $row['email'] ?? null;
 
                             <li class="mt-2 d-grid">
                                 <?php require_once './logout_confirmation.php'; ?>
-                                <button onclick="logoutConfirmation()" class="btn btn-block text-white" style="border-radius: 50px; background: linear-gradient(45deg, dodgerblue, darkblue); background-repeat: no-repeat;">
+                                <button onclick="logoutConfirmation()" class="btn btn-block text-white"
+                                    style="border-radius: 50px; background: linear-gradient(45deg, dodgerblue, darkblue); background-repeat: no-repeat;">
                                     Logout
                                 </button>
                             </li>
@@ -263,55 +281,59 @@ $email = $row['email'] ?? null;
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <h5 class="text-success">Swiftlink</h5>
-                            <a href="?add_package=true" class="btn btn-primary btn-sm px-4 text-white" style="border-radius: 50px;"><i class="fa-solid fa-plus"></i> Add</a>
+                            <a href="?add_package=true" class="btn btn-primary btn-sm px-4 text-white"
+                                style="border-radius: 50px;"><i class="fa-solid fa-plus"></i> Add</a>
                         </div>
                         <?php
                         if ((!isset($_GET['add_package']) || $_GET['add_package'] != 'true') && !isset($_GET['update'])) {
                         ?>
-                            <div class="table-responsive bg-white p-2 p-md-5" style="border-radius: 40px;">
-                                <h4 class="text-primary fw-bold">Package</h4>
+                        <div class="table-responsive bg-white p-2 p-md-5" style="border-radius: 40px;">
+                            <h4 class="text-primary fw-bold">Package</h4>
 
-                                <div class="d-flex align-items-center justify-content-start gap-2 py-1">
-                                    <span>Show</span>
-                                    <div>
-                                        <select name="" id="entries" class="">
-                                        </select>
-                                        <script>
-                                            $(() => {
-                                                $('#entries').on('change', function() {
-                                                    let entries = $(this).val();
-                                                    let urlParams = new URLSearchParams(window.location.search);
-                                                    if (urlParams.has('entries')) {
-                                                        urlParams.set('entries', entries);
-                                                    } else {
-                                                        urlParams.append('entries', entries);
-                                                    }
+                            <div class="d-flex align-items-center justify-content-start gap-2 py-1">
+                                <span>Show</span>
+                                <div>
+                                    <select name="" id="entries" class="">
+                                    </select>
+                                    <script>
+                                    $(() => {
+                                        $('#entries').on('change', function() {
+                                            let entries = $(this).val();
+                                            let urlParams = new URLSearchParams(window.location.search);
+                                            if (urlParams.has('entries')) {
+                                                urlParams.set('entries', entries);
+                                            } else {
+                                                urlParams.append('entries', entries);
+                                            }
 
-                                                    let newUrl = window.location.pathname + '?' + urlParams.toString();
+                                            let newUrl = window.location.pathname + '?' + urlParams
+                                                .toString();
 
-                                                    window.location = newUrl;
-                                                });
+                                            window.location = newUrl;
+                                        });
 
-                                                for (let i = 10; i <= 4000; i *= 2) {
-                                                    $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
-                                                }
-                                            })
-                                        </script>
-                                    </div><span>entries</span>
-                                </div>
-                                <table class="table table-white table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
+                                        for (let i = 10; i <= 4000; i *= 2) {
+                                            $('#entries').append(
+                                                `<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`
+                                                )
+                                        }
+                                    })
+                                    </script>
+                                </div><span>entries</span>
+                            </div>
+                            <table class="table table-white table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
                                         $data = getRows(null, "package");
 
                                         // Pagination parameters
@@ -326,53 +348,55 @@ $email = $row['email'] ?? null;
 
                                         foreach ($dataToDisplay as $row) {
                                         ?>
-                                            <tr>
-                                                <td><?= $row['id'] ?></td>
-                                                <td><?= $row['package'] ?></td>
-                                                <td><?= $row['price'] ?></td>
-                                                <td><?= $row['category'] ?></td>
-                                                <td><?= $row['status'] ?></td>
-                                                <td>
-                                                    <a href="?update=<?= $row['id'] ?>">
-                                                        <i class="fa-regular fa-pen-to-square"></i>
-                                                    </a>
-                                                    <button class="fa-regular fa-trash-can text-danger btn btn-sm" onclick="deleteConfirmation(<?= $row['id'] ?>, 'package')"></button>
+                                    <tr>
+                                        <td><?= $row['id'] ?></td>
+                                        <td><?= $row['package'] ?></td>
+                                        <td><?= $row['price'] ?></td>
+                                        <td><?= $row['category'] ?></td>
+                                        <td><?= $row['status'] ?></td>
+                                        <td>
+                                            <a href="?update=<?= $row['id'] ?>">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                            <button class="fa-regular fa-trash-can text-danger btn btn-sm"
+                                                onclick="deleteConfirmation(<?= $row['id'] ?>, 'package')"></button>
 
-                                                </td>
-                                            </tr>
-                                        <?php
+                                        </td>
+                                    </tr>
+                                    <?php
                                         }
                                         ?>
-                                    </tbody>
-                                </table>
-                                <br>
-                                <!-- Bootstrap Pagination -->
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination">
-                                        <!-- Previous page link -->
-                                        <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
-                                            <a class="page-link" href="?page=<?= ($current_page - 1) ?>" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
+                                </tbody>
+                            </table>
+                            <br>
+                            <!-- Bootstrap Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <!-- Previous page link -->
+                                    <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
+                                        <a class="page-link" href="?page=<?= ($current_page - 1) ?>"
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
 
-                                        <!-- Page links -->
-                                        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                                            <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
-                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                            </li>
-                                        <?php } ?>
+                                    <!-- Page links -->
+                                    <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                                    <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
+                                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
+                                    <?php } ?>
 
-                                        <!-- Next page link -->
-                                        <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
-                                            <a class="page-link" href="?page=<?= ($current_page + 1) ?>" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                    <!-- Next page link -->
+                                    <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
+                                        <a class="page-link" href="?page=<?= ($current_page + 1) ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
 
-                            </div>
+                        </div>
                         <?php
                         } elseif (isset($_GET['add_package']) && $_GET['add_package'] == 'true' && !isset($_GET['update'])) {
                             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -395,42 +419,45 @@ $email = $row['email'] ?? null;
                                 }
                             }
                         ?>
-                            <form action="" method="POST" class="bg-white p-2 p-md-5" style="border-radius: 40px;">
-                                <h4 class="text-primary fw-bold">Add Package</h4>
-                                <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
+                        <form action="" method="POST" class="bg-white p-2 p-md-5" style="border-radius: 40px;">
+                            <h4 class="text-primary fw-bold">Add Package</h4>
+                            <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
 
-                                    <div class="col mt-1">
-                                        <label class="form-label">Name</label>
-                                        <input required type="text" class="form-control form-control-sm input" id="name" name="name">
-                                    </div>
+                                <div class="col mt-1">
+                                    <label class="form-label">Name</label>
+                                    <input required type="text" class="form-control form-control-sm input" id="name"
+                                        name="name">
                                 </div>
-                                <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
-                                    <div class="col-lg-6 col-12 mt-1">
-                                        <label class="form-label">Price</label>
-                                        <input required type="number" class="form-control form-control-sm input" id="price" name="price">
-                                    </div>
-                                    <div class="col-lg-6 col-12 mt-1">
-                                        <label class="form-label">Category</label>
-                                        <select required class="form-select form-select-sm" name="category">
-                                            <option class="d-none" selected disabled value="">-- Select category --</option>
-                                            <option value="Fiber">Fiber</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
+                                <div class="col-lg-6 col-12 mt-1">
+                                    <label class="form-label">Price</label>
+                                    <input required type="number" class="form-control form-control-sm input" id="price"
+                                        name="price">
                                 </div>
-
-                                <div class="col-12 mt-1 px-2">
-                                    <label class="form-label">Status</label>
-                                    <select required class="form-select form-select-sm" name="status">
-                                        <option class="d-none" selected disabled value="">-- Select Status --</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
+                                <div class="col-lg-6 col-12 mt-1">
+                                    <label class="form-label">Category</label>
+                                    <select required class="form-select form-select-sm" name="category">
+                                        <option class="d-none" selected disabled value="">-- Select category --</option>
+                                        <option value="Fiber">Fiber</option>
                                     </select>
                                 </div>
+                            </div>
 
-                                <div class="col-12 mt-5">
-                                    <button type="submit" class="btn btn-primary btn-lg px-5 text-white" style="border-radius: 20px;">Save</button>
-                                </div>
-                            </form>
+                            <div class="col-12 mt-1 px-2">
+                                <label class="form-label">Status</label>
+                                <select required class="form-select form-select-sm" name="status">
+                                    <option class="d-none" selected disabled value="">-- Select Status --</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 mt-5">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 text-white"
+                                    style="border-radius: 20px;">Save</button>
+                            </div>
+                        </form>
                         <?php
                         } elseif (!isset($_GET['add_package']) && isset($_GET['update'])) {
                             $id = isset($_GET['update']) ? intval($_GET['update']) : 0;
@@ -469,45 +496,49 @@ $email = $row['email'] ?? null;
                                 $row = $data[0];
                             }
                         ?>
-                            <form action="" method="POST" class="bg-white p-2 p-md-5" style="border-radius: 20px;">
-                                <h4 class="text-primary fw-bold">Edit Package</h4>
-                                <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
-                                    <div class="col mt-1">
-                                        <label class="form-label">Name</label>
-                                        <input value="<?= $row['package'] ?? null ?>" required type="text" class="input form-control form-control-sm" id="name" name="name">
-                                    </div>
+                        <form action="" method="POST" class="bg-white p-2 p-md-5" style="border-radius: 20px;">
+                            <h4 class="text-primary fw-bold">Edit Package</h4>
+                            <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
+                                <div class="col mt-1">
+                                    <label class="form-label">Name</label>
+                                    <input value="<?= $row['package'] ?? null ?>" required type="text"
+                                        class="input form-control form-control-sm" id="name" name="name">
                                 </div>
-                                <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
-                                    <div class="col-lg-6 col-12 mt-1">
-                                        <label class="form-label">Price</label>
-                                        <input value="<?= $row['price'] ?? null ?>" required type="number" class="input form-control form-control-sm" id="price" name="price">
-                                    </div>
-                                    <div class="col-lg-6 col-12 mt-1">
-                                        <label class="form-label">Category</label>
-                                        <select required class="form-select form-select-sm" name="category">
-                                            <option class="d-none" selected disabled value="">-- Select category --</option>
-                                            <option value="Fiber" <?= ($row['category'] == 'Fiber') ? 'selected' : ''; ?>>
-                                                Fiber</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="container my-3 d-md-flex align-items-center justify-content-between gap-2">
+                                <div class="col-lg-6 col-12 mt-1">
+                                    <label class="form-label">Price</label>
+                                    <input value="<?= $row['price'] ?? null ?>" required type="number"
+                                        class="input form-control form-control-sm" id="price" name="price">
                                 </div>
-
-                                <div class="col-12 mt-1 px-2">
-                                    <label class="form-label">Status</label>
-                                    <select required class="form-select form-select-sm" name="status">
-                                        <option class="d-none" selected disabled value="">-- Select Status --</option>
-                                        <option value="Active" <?= ($row['status'] == 'Active') ? 'selected' : ''; ?>>Active
-                                        </option>
-                                        <option value="Inactive" <?= ($row['status'] == 'Inactive') ? 'selected' : ''; ?>>
-                                            Inactive</option>
+                                <div class="col-lg-6 col-12 mt-1">
+                                    <label class="form-label">Category</label>
+                                    <select required class="form-select form-select-sm" name="category">
+                                        <option class="d-none" selected disabled value="">-- Select category --</option>
+                                        <option value="Fiber" <?= ($row['category'] == 'Fiber') ? 'selected' : ''; ?>>
+                                            Fiber</option>
                                     </select>
                                 </div>
+                            </div>
 
-                                <div class="col-12 mt-5 d-flex align-items-center justify-content-end gap-3">
-                                    <a href="package.php" class="btn btn-danger btn-lg px-5 text-white" style="border-radius: 20px;">Cancel</a>
-                                    <button type="submit" class="btn btn-primary btn-lg px-5 text-white" style="border-radius: 20px;">Save</button>
-                                </div>
-                            </form>
+                            <div class="col-12 mt-1 px-2">
+                                <label class="form-label">Status</label>
+                                <select required class="form-select form-select-sm" name="status">
+                                    <option class="d-none" selected disabled value="">-- Select Status --</option>
+                                    <option value="Active" <?= ($row['status'] == 'Active') ? 'selected' : ''; ?>>Active
+                                    </option>
+                                    <option value="Inactive" <?= ($row['status'] == 'Inactive') ? 'selected' : ''; ?>>
+                                        Inactive</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 mt-5 d-flex align-items-center justify-content-end gap-3">
+                                <a href="package.php" class="btn btn-danger btn-lg px-5 text-white"
+                                    style="border-radius: 20px;">Cancel</a>
+                                <button type="submit" class="btn btn-primary btn-lg px-5 text-white"
+                                    style="border-radius: 20px;">Save</button>
+                            </div>
+                        </form>
                         <?php
                         }
                         ?>
@@ -529,87 +560,87 @@ $email = $row['email'] ?? null;
     <!-- ============================================================== -->
 
     <script>
-        $(document).ready(function() {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
+    $(document).ready(function() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
 
-            <?php
+        <?php
             if (isset($err_msg)) {
             ?>
-                Toast.fire({
-                    icon: "error",
-                    title: "<?php echo $err_msg ?>"
-                });
-            <?php
+        Toast.fire({
+            icon: "error",
+            title: "<?php echo $err_msg ?>"
+        });
+        <?php
             }
             ?>
 
-            <?php
+        <?php
             if (isset($success_msg)) {
             ?>
-                Toast.fire({
-                    icon: "success",
-                    title: "<?php echo $success_msg ?>"
-                }).then(() => {
-                    location.href = 'package.php';
-                });
-            <?php
+        Toast.fire({
+            icon: "success",
+            title: "<?php echo $success_msg ?>"
+        }).then(() => {
+            location.href = 'package.php';
+        });
+        <?php
             }
             ?>
-        })
+    })
 
-        function deleteConfirmation(id, table) {
-            Swal.fire({
-                title: "Delete",
-                text: "Are you sure to delete it?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: "delete_data.php",
-                        data: {
-                            id,
-                            table
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            if (response.status === "success") {
-                                Swal.fire({
-                                    title: "Deleted!",
-                                    text: response.message,
-                                    icon: "success"
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: "Error",
-                                    text: response.message,
-                                    icon: "error"
-                                });
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
+    function deleteConfirmation(id, table) {
+        Swal.fire({
+            title: "Delete",
+            text: "Are you sure to delete it?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "delete_data.php",
+                    data: {
+                        id,
+                        table
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === "success") {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: response.message,
+                                icon: "success"
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                text: response.message,
+                                icon: "error"
+                            });
                         }
-                    });
-                }
-            });
-        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    }
     </script>
 
 </body>
