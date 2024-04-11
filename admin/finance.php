@@ -476,6 +476,34 @@ $email = $row['email'] ?? null;
                                 })
                             </script>
                             <div class="table-responsive mt-3" style="min-height: 100px;">
+                            <div class="d-flex align-items-center justify-content-start gap-2 py-1">
+                                    <span>Show</span>
+                                    <div>
+                                        <select name="" id="entries" class="">
+                                        </select>
+                                        <script>
+                                            $(() => {
+                                                $('#entries').on('change', function() {
+                                                    let entries = $(this).val();
+                                                    let urlParams = new URLSearchParams(window.location.search);
+                                                    if (urlParams.has('entries')) {
+                                                        urlParams.set('entries', entries);
+                                                    } else {
+                                                        urlParams.append('entries', entries);
+                                                    }
+
+                                                    let newUrl = window.location.pathname + '?' + urlParams.toString();
+
+                                                    window.location = newUrl;
+                                                });
+
+                                                for (let i = 10; i <= 4000; i *= 2) {
+                                                    $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
+                                                }
+                                            })
+                                        </script>
+                                    </div><span>entries</span>
+                                </div>
                                 <div id="tablePreview">
                                     <div class="d-none _header">
                                         <h3 class="fw-bold">Swiftlink</h3>
@@ -511,7 +539,7 @@ $email = $row['email'] ?? null;
 
                                             // Pagination parameters
                                             $totalItems = count($data);
-                                            $itemsPerPage = 5;
+                                            $itemsPerPage = $_GET['entries'] ?? 10;
                                             $totalPages = ceil($totalItems / $itemsPerPage);
                                             $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
                                             $current_page = max(1, min($totalPages, intval($current_page)));
