@@ -484,6 +484,9 @@ $email = $row['email'] ?? null;
                                                 // get user name
                                                 $user = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
                                                 $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null);
+
+
+                                                $selected_date = $row['selected_date'] == date("Y-m-d");
                                             ?>
                                                 <tr>
                                                     <!-- <td><?= $row['id'] ?></td> -->
@@ -500,8 +503,8 @@ $email = $row['email'] ?? null;
                                                         <select onchange="packageAction(<?= $row['id'] ?>, this)">
                                                             <option value="" selected disabled class="d-none">Choose one
                                                             </option>
-                                                            <option value="Process" <?= $row['process_status'] == 'Process' ? 'disabled' : null ?>>Process</option>
-                                                            <option value="Done" <?= $row['process_status'] == 'Done' ? 'disabled' : null ?>>Done</option>
+                                                            <option value="Process" <?= in_array($row['process_status'], ['Done', 'Process']) ? 'disabled' : null ?>>Process</option>
+                                                            <option value="Done" <?= in_array($row['process_status'], ['Done', 'Pending']) || !$selected_date ? 'disabled' : null ?>>Done</option>
                                                             <option value="Delete">Delete</option>
                                                             <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
                                                             <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option>

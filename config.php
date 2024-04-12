@@ -71,6 +71,7 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS user_package (
     invoice VARCHAR(255),
     package VARCHAR(255),
     coverage VARCHAR(255),
+    selected_date VARCHAR(255) DEFAULT 'N/A',
     total DECIMAL(10,2),
     category VARCHAR(255) DEFAULT 'Fiber',
     period VARCHAR(255),

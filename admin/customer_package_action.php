@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     switch ($action) {
         case 'process':
-            $sql = "UPDATE $tablename SET process_status='Process' WHERE id='$id'";
+            $sql = "UPDATE $tablename SET process_status='Process', selected_date='$dateSelected' WHERE id='$id'";
             $response = [
                 'message' => 'Customer package updated successfully',
                 'status' => 'success'
@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
             if (SendMail($email, $bodytemplate, $subject)) {
+                
                 setLog('admin', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
