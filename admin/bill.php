@@ -545,8 +545,8 @@ $email = $row['email'] ?? null;
                                 <a href="?add_bill=true" class="btn btn-primary text-white d-flex align-items-center justify-content-center gap-2" style="border-radius: 20px;"><i class="fa-solid fa-plus"></i> Add</a>
                             </div>
 
-                            <div class="d-flex align-items-center justify-content-start gap-2 mb-2 flex-wrap">
-                                <div>
+                            <div class="row gap-2 mb-2 flex-wrap">
+                                <div class="col">
                                     <select id="action" class="form-select bg-white mt-1">
                                         <option class="d-none" disabled selected value="">-- Choose action --</option>
                                         <option value="print">Print Selected</option>
@@ -555,40 +555,55 @@ $email = $row['email'] ?? null;
                                     </select>
                                 </div>
 
-                                <div>
+                                <div class="col">
                                     <select id="coverage" class="form-select bg-white mt-1">
                                         <option class="d-none" disabled selected value="">-- Choose coverage --</option>
                                         <?php
                                         $coverage = getRows("status='Active'", "coverage");
                                         foreach ($coverage as $row) {
+                                            $selected = ($_GET['coverage'] ?? null) == $row['name'] ? 'selected' : '';
                                             echo '
-                                                <option value="' . $row['name'] . '">' . $row['name'] . '</option>
+                                                <option value="' . $row['name'] . '" ' . $selected . '>' . $row['name'] . '</option>
                                             ';
                                         }
                                         ?>
                                     </select>
                                 </div>
 
-                                <div>
+                                <div class="col">
                                     <select id="month" class="form-select bg-white mt-1">
                                         <option class="d-none" disabled selected value="">-- Choose month --</option>
+                                        <?php
 
+                                        for ($i = 1; $i <= 12; $i++) {
+                                            $monthName = date("M", mktime(0, 0, 0, $i, 1));
+                                            $selected = ($_GET['month'] ?? null) == $monthName ? 'selected' : '';
+                                            echo "<option value='$monthName' $selected>$monthName</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
 
-                                <div>
+                                <div class="col">
                                     <select id="year" class="form-select bg-white mt-1">
                                         <option class="d-none" disabled selected value="">-- Choose year --</option>
-
+                                        <?php
+                                        $currentYear = date("Y");
+                                        for ($i = 2024; $i <= $currentYear; $i++) {
+                                            $selected = ($_GET['year'] ?? null) == $i ? 'selected' : '';
+                                            echo "<option value='$i' $selected>$i</option>";
+                                        }
+                                        ?>
                                     </select>
+
                                 </div>
 
 
-                                <div>
+                                <div class="col">
                                     <?php
                                     $status = $_GET['status'] ?? null;
                                     ?>
-                                    <select class="form-select bg-white mt-1" id="chooseStatus">
+                                    <select class="form-select bg-white mt-1" id="status">
                                         <option class="d-none" disabled selected value="">-- Choose status --</option>
                                         <option value="Unpaid" <?= $status == 'Unpaid' ? 'selected' : '' ?>>Unpaid</option>
                                         <option value="Paid" <?= $status == 'Paid' ? 'selected' : '' ?>>Paid</option>
@@ -596,6 +611,28 @@ $email = $row['email'] ?? null;
 
                                     </select>
                                 </div>
+
+                                <script>
+                                    $(() => {
+                                        $('#coverage, #month, #year, #status')
+                                            .change(function() {
+                                                let param = $(this).attr('id')
+                                                let value = $(this).val()
+                                                let urlParams = new URLSearchParams(window.location.search);
+                                                if (urlParams.has(param)) {
+                                                    urlParams.set(param, value);
+                                                } else {
+                                                    urlParams.append(param, value);
+                                                }
+
+                                                let newUrl = window.location.pathname + '?' + urlParams
+                                                    .toString();
+
+                                                window.location = newUrl;
+
+                                            })
+                                    })
+                                </script>
 
                             </div>
                         <?php
@@ -718,6 +755,56 @@ $email = $row['email'] ?? null;
                                             }
 
 
+                                            function filterByCoverage($coverage, $data): array
+                                            {
+                                                if (!isset($coverage)) return $data;
+
+                                                $filteredData = [];
+                                                foreach ($data as $row) {
+                                                    if ($row['coverage'] == $coverage) {
+                                                        $filteredData[] = $row;
+                                                    }
+                                                }
+                                                return $filteredData;
+                                            }
+
+                                            function filterByMonth($month, $data): array
+                                            {
+                                                if (!isset($month)) return $data;
+                                                $filteredData = [];
+                                                foreach ($data as $row) {
+                                                    if ($month == explode(' ', $row['period'])[0]) {
+                                                        $filteredData[] = $row;
+                                                    }
+                                                }
+                                                return $filteredData;
+                                            }
+
+                                            function filterByYear($year, $data): array
+                                            {
+                                                if (!isset($year)) return $data;
+                                                $filteredData = [];
+                                                foreach ($data as $row) {
+                                                    if ($year == explode(' ', $row['period'])[1]) {
+                                                        $filteredData[] = $row;
+                                                    }
+                                                }
+                                                return $filteredData;
+                                            }
+
+
+                                            $data = filterByYear(
+                                                $_GET['year'] ?? null,
+                                                filterByMonth(
+                                                    $_GET['month'] ?? null,
+                                                    filterByCoverage(
+                                                        $_GET['coverage'] ?? null,
+                                                        $data
+                                                    )
+                                                )
+                                            );
+
+
 
                                             // Pagination parameters
                                             $totalItems = count($data);
@@ -770,21 +857,7 @@ $email = $row['email'] ?? null;
 
                                                     })
 
-                                                    $('#chooseStatus').on('change', function() {
-                                                        let status = $(this).val();
-                                                        let urlParams = new URLSearchParams(window.location
-                                                            .search);
-                                                        if (urlParams.has('status')) {
-                                                            urlParams.set('status', status);
-                                                        } else {
-                                                            urlParams.append('status', status);
-                                                        }
 
-                                                        let newUrl = window.location.pathname + '?' + urlParams
-                                                            .toString();
-
-                                                        window.location = newUrl;
-                                                    })
 
 
                                                     $('#action').on('change', function() {
