@@ -273,12 +273,88 @@ $email = $row['email'] ?? null;
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <h5 class="text-success">Swiftlink</h5>
-                            <!-- <a href="?add_coverage=true" class="btn btn-primary btn-sm px-4 text-white"
-                                style="border-radius: 50px;"><i class="fa-solid fa-plus"></i> Add</a> -->
                         </div>
                         <?php
                         if (!isset($_GET['add_package'])) {
                         ?>
+
+                            <div class="row gap-2 mb-2 flex-wrap">
+
+                                <div class="col">
+                                    <select id="coverage" class="form-select bg-white mt-1">
+                                        <option class="d-none" disabled selected value="">-- Choose coverage --</option>
+                                        <?php
+                                        $coverage = getRows("status='Active'", "coverage");
+                                        foreach ($coverage as $row) {
+                                            $selected = ($_GET['coverage'] ?? null) == $row['name'] ? 'selected' : '';
+                                            echo '
+                                                <option value="' . $row['name'] . '" ' . $selected . '>' . $row['name'] . '</option>
+                                            ';
+                                        }
+                                        ?>
+
+                                        <option <?= ($_GET['coverage'] ?? null) == 'All' ? 'selected' : '' ?> value="All">All</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col">
+                                    <select id="package" class="form-select bg-white mt-1">
+                                        <option class="d-none" disabled selected value="">-- Choose package --</option>
+                                        <?php
+                                        $package = getRows("status='Active'", "package");
+                                        foreach ($package as $row) {
+                                            $selected = ($_GET['package'] ?? null) == $row['package'] ? 'selected' : '';
+                                            echo '
+                                                <option value="' . $row['package'] . '" ' . $selected . '>' . $row['package'] . '</option>
+                                            ';
+                                        }
+                                        ?>
+
+                                        <option <?= ($_GET['package'] ?? null) == 'All' ? 'selected' : '' ?> value="All">All</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <select class="form-select bg-white mt-1" id="status">
+                                        <option class="d-none" disabled selected value="">-- Choose status --</option>
+
+                                        <option value="Process" <?= ($_GET['status'] ?? null) == 'Process' ? 'selected' : '' ?>>Process
+                                        </option>
+                                        <option value="Done" <?= ($_GET['status'] ?? null) == 'Done' ? 'selected' : '' ?>>Done
+                                        </option>
+                                        <option value="Pending" <?= ($_GET['status'] ?? null) == 'Pending' ? 'selected' : '' ?>>Pending
+                                        </option>
+                                        <option value="All" <?= ($_GET['status'] ?? null) == 'All' ? 'selected' : '' ?>>
+                                            All</option>
+
+                                    </select>
+                                </div>
+
+                                <script>
+                                    $(() => {
+                                        $('#coverage, #status, #package')
+                                            .change(function() {
+                                                let param = $(this).attr('id')
+                                                let value = $(this).val()
+                                                let urlParams = new URLSearchParams(window.location.search);
+                                                if (urlParams.has(param)) {
+                                                    urlParams.set(param, value);
+                                                } else {
+                                                    urlParams.append(param, value);
+                                                }
+
+                                                let newUrl = window.location.pathname + '?' + urlParams
+                                                    .toString();
+
+                                                window.location = newUrl;
+
+                                            })
+                                    })
+                                </script>
+
+                            </div>
+
                             <div class="container-fluid bg-white p-2 p-md-5" style="border-radius: 40px;">
                                 <h4 class="text-primary fw-bold d-flex align-items-center justify-content-between">Customer
                                     package <a href="?add_package=true" class="btn btn-primary">+ Add</a></h4>
@@ -288,37 +364,7 @@ $email = $row['email'] ?? null;
                                         <input type="search" style="padding-right: 2.5rem;" class="form-control" placeholder="Search" oninput="w3.filterHTML('#table', 'tr', this.value)">
                                         <i class="fas fa-search position-absolute" style="top: 50%;right: 20px; transform: translateY(-50%); pointer-events: none;"></i>
                                     </div>
-                                    <div class="col-6 col-lg-4">
-                                        <h5 class="d-inline">Filter by: </h5>
-                                        <select class="form-select" id="filter">
-                                            <option value="All" <?= ($_GET['filter'] ?? null) == 'All' ? 'selected' : '' ?>>
-                                                All</option>
-                                            <option value="Process" <?= ($_GET['filter'] ?? null) == 'Process' ? 'selected' : '' ?>>Process
-                                            </option>
-                                            <option value="Done" <?= ($_GET['filter'] ?? null) == 'Done' ? 'selected' : '' ?>>Done
-                                            </option>
-                                            <option value="Pending" <?= ($_GET['filter'] ?? null) == 'Pending' ? 'selected' : '' ?>>Pending
-                                            </option>
-
-                                        </select>
-                                    </div>
                                 </div>
-                                <script>
-                                    $('#filter').on('change', function() {
-                                        let filter = $(this).val();
-                                        let urlParams = new URLSearchParams(window.location.search);
-                                        if (urlParams.has('filter')) {
-                                            urlParams.set('filter', filter);
-                                        } else {
-                                            urlParams.append('filter', filter);
-                                        }
-
-                                        let newUrl = window.location.pathname + '?' + urlParams.toString();
-
-                                        window.location = newUrl;
-                                    })
-                                </script>
-
                                 <div class="d-flex align-items-center justify-content-start gap-2 py-1">
                                     <span>Show</span>
                                     <div>
@@ -368,37 +414,73 @@ $email = $row['email'] ?? null;
                                             <?php
                                             $data = getRows("variant='false'", "user_package");
 
-                                            $filterData = $data;
+                                            function filterByCoverage($coverage, $data): array
+                                            {
+                                                if (!isset($coverage) || $coverage == 'All') return $data;
 
-                                            $filter = validate_post_data($_GET)['filter'] ?? null;
-
-                                            if ($filter) {
-                                                if ($filter != "All") {
-                                                    $filterData = [];
-
-                                                    foreach ($data as $row) {
-
-                                                        if ($row['process_status'] == $filter) {
-                                                            $filterData[] = $row;
-                                                        }
+                                                $filteredData = [];
+                                                foreach ($data as $row) {
+                                                    if ($row['coverage'] == $coverage) {
+                                                        $filteredData[] = $row;
                                                     }
                                                 }
+                                                return $filteredData;
                                             }
 
+                                            function filterByPackage($package, $data): array
+                                            {
+                                                if (!isset($package) || $package == 'All') return $data;
+
+                                                $filteredData = [];
+                                                foreach ($data as $row) {
+                                                    if ($row['package'] == $package) {
+                                                        $filteredData[] = $row;
+                                                    }
+                                                }
+                                                return $filteredData;
+                                            }
+
+
+                                            function filterByStatus($status, $data): array
+                                            {
+                                                if (!isset($status) || $status == 'All') return $data;
+
+                                                $filteredData = [];
+                                                foreach ($data as $row) {
+                                                    if ($row['process_status'] == $status) {
+                                                        $filteredData[] = $row;
+                                                    }
+                                                }
+                                                return $filteredData;
+                                            }
+
+                                            $data = filterByStatus(
+                                                $_GET['status'] ?? null,
+                                                filterByPackage(
+                                                    $_GET['package'] ?? null,
+                                                    filterByCoverage(
+                                                        $_GET['coverage'] ?? null,
+                                                        $data
+                                                    )
+                                                )
+                                            );
+
+
+
                                             // Pagination parameters
-                                            $totalItems = count($filterData);
+                                            $totalItems = count($data);
                                             $itemsPerPage = ($_GET['entries'] ?? 10);
                                             $totalPages = ceil($totalItems / $itemsPerPage);
                                             $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
                                             $current_page = max(1, min($totalPages, intval($current_page)));
                                             $offset = ($current_page - 1) * $itemsPerPage;
 
-                                            $dataToDisplay = array_slice($filterData, $offset, $itemsPerPage);
-                                            $filterData = $dataToDisplay;
+                                            $data = array_slice($data, $offset, $itemsPerPage);
+                                            
 
 
 
-                                            foreach ($filterData as $row) {
+                                            foreach ($data as $row) {
                                                 // get user name
                                                 $user = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
                                                 $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null);

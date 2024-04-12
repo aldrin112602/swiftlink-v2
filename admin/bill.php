@@ -567,6 +567,8 @@ $email = $row['email'] ?? null;
                                             ';
                                         }
                                         ?>
+
+                                        <option <?= ($_GET['coverage'] ?? null) == 'All' ? 'selected' : '' ?> value="All">All</option>
                                     </select>
                                 </div>
 
@@ -581,6 +583,8 @@ $email = $row['email'] ?? null;
                                             echo "<option value='$monthName' $selected>$monthName</option>";
                                         }
                                         ?>
+
+                                        <option <?= ($_GET['month'] ?? null) == 'All' ? 'selected' : '' ?> value="All">All</option>
                                     </select>
                                 </div>
 
@@ -594,6 +598,7 @@ $email = $row['email'] ?? null;
                                             echo "<option value='$i' $selected>$i</option>";
                                         }
                                         ?>
+                                        <option <?= ($_GET['year'] ?? null) == 'All' ? 'selected' : '' ?> value="All">All</option>
                                     </select>
 
                                 </div>
@@ -757,7 +762,7 @@ $email = $row['email'] ?? null;
 
                                             function filterByCoverage($coverage, $data): array
                                             {
-                                                if (!isset($coverage)) return $data;
+                                                if (!isset($coverage) || $coverage == 'All') return $data;
 
                                                 $filteredData = [];
                                                 foreach ($data as $row) {
@@ -770,7 +775,7 @@ $email = $row['email'] ?? null;
 
                                             function filterByMonth($month, $data): array
                                             {
-                                                if (!isset($month)) return $data;
+                                                if (!isset($month) || $month == 'All') return $data;
                                                 $filteredData = [];
                                                 foreach ($data as $row) {
                                                     if ($month == explode(' ', $row['period'])[0]) {
@@ -782,7 +787,7 @@ $email = $row['email'] ?? null;
 
                                             function filterByYear($year, $data): array
                                             {
-                                                if (!isset($year)) return $data;
+                                                if (!isset($year) || $year == 'All') return $data;
                                                 $filteredData = [];
                                                 foreach ($data as $row) {
                                                     if ($year == explode(' ', $row['period'])[1]) {
