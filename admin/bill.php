@@ -1,6 +1,8 @@
 <?php
 require_once '../config.php';
 require_once '../global.php';
+require_once "../send_mail.php";
+
 
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'user') {
@@ -121,7 +123,8 @@ $email = $row['email'] ?? null;
             text-overflow: ellipsis;
         }
 
-        .form-select {
+        .form-select,
+        .form-control {
             /* padding: 0 20px; */
             font-size: 12px;
             height: 40px;
@@ -541,9 +544,115 @@ $email = $row['email'] ?? null;
                         <?php
                         if (!(isset($_GET['add_bill']) && $_GET['add_bill'] == 'true' || isset($_GET['update']))) {
                         ?>
-                            <div class="d-flex align-items-center justify-content-end my-2">
+                            <div class="d-flex align-items-center justify-content-end my-2 gap-2">
+                                <button data-bs-toggle="modal" data-bs-target="#generateBill" style="border-radius: 20px;" class="btn btn-dark">Generate</button>
                                 <a href="?add_bill=true" class="btn btn-primary text-white d-flex align-items-center justify-content-center gap-2" style="border-radius: 20px;"><i class="fa-solid fa-plus"></i> Add</a>
                             </div>
+
+
+                            <?php
+                            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['year']) && isset($_POST['month'])) {
+                                $month = explode('-', $_POST['month'])[1];
+                                $year = $_POST['year'];
+                                $active_users = getRows("role='user' AND status='Active'", "accounts");
+
+
+                                $account_no = $post['selected_customer'];
+                                $to_date = new DateTime($post['to_date']);
+                                $from_date = new DateTime($post['from_date']);
+
+                                $package_coverage = explode(" - ", $post['package_coverage']);
+                                $total = $post['total'];
+
+
+                                $coverage = trim($package_coverage[1]);
+                                $package = trim($package_coverage[0]);
+                                $category = $post['category'] ?? 'Fiber';
+                                $invoice = generateRandomNumber(9);
+
+
+                                $period = $to_date->format('M Y');
+                                $dueDate = $to_date->format('d M Y');
+
+                                $insertQuery = "INSERT INTO user_package (account_no, invoice, package, coverage, total, period, due_date, process_status, variant, status) VALUES ('$account_no', '$invoice', '$package', '$coverage', $total, '$period', '$dueDate', 'Done', 'true', 'Paid')";
+
+                                $email = getRows("account_no='$account_no'", "accounts")[0]['email'];
+
+                                $body = "";
+
+                                $body .= "<p style='font-size: 18px'>Dear $email,<br><br>";
+                                $body .= "We are pleased to inform you that your recent bill has been successfully processed.<br><br>";
+                                $body .= "Below are the details of your bill:<br><br>";
+                                $body .= "<strong>Account Number:</strong> $account_no<br>";
+                                $body .= "<strong>Package:</strong> $package<br>";
+                                $body .= "<strong>Coverage:</strong> $coverage<br>";
+                                // $body .= "<strong>Total Amount Due:</strong> $total<br>";
+                                $body .= "<strong>Invoice Period:</strong> $period<br>";
+                                $body .= "<strong>Due Date:</strong> $dueDate<br><br>";
+                                $body .= "If you have any questions or concerns regarding this bill, please feel free to contact us.<br><br>";
+                                $body .= "Thank you for choosing Swiftlink!<br>";
+                                $body .= "</p>";
+
+
+                                if (SendMail($email, $body, "Bill added successfully - Swiftlink")) {
+                                    if ($conn->query($insertQuery)) {
+                                        echo '<script>
+                                        $(() => {
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: "Success",
+                                                text: "Bill added successfully",
+                                            });
+                                        })
+                                    </script>';
+                                    
+                                    } else {
+                                        $error_msg = "Something went wrong, please try again";
+                                    }
+                                }
+                            }
+
+
+                            ?>
+
+
+                            <!-- Modal -->
+                            <form class="modal fade" method="POST" id="generateBill" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="generateBillLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="border-radius: 20px;">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="generateBillLabel">Generate</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                <label class="form-label" for="month__">Select Month: </label>
+                                                <input required type="month" class="form-control form-control-sm" name="month" id="month__">
+                                            </div>
+
+                                            <div>
+                                                <label class="form-label" for="year__">Select Year: </label>
+                                                <select required class="form-select" name="year" id="year__">
+                                                    <option selected value="" class="d-none" disabled> -- Select year --</option>
+                                                    <?php
+
+                                                    $currentYear = date("Y");
+                                                    for ($year = $currentYear; $year <= $currentYear + 10; $year++) {
+                                                        echo "<option value=\"$year\">$year</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button style="border-radius: 20px;" type="submit" class="btn btn-primary">Save</button>
+                                            <button style="border-radius: 20px;" type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
                             <div class="row gap-2 mb-2 flex-wrap">
                                 <div class="col">
