@@ -605,7 +605,6 @@ $email = $row['email'] ?? null;
                                             });
                                         })
                                     </script>';
-                                    
                                     } else {
                                         $error_msg = "Something went wrong, please try again";
                                     }
@@ -1094,13 +1093,22 @@ $email = $row['email'] ?? null;
                                 </div>
                                 <div class="row px-3">
                                     <div class="mb-3 px-2 col">
-                                        <label for="from_date" class="form-label">From:</label>
-                                        <input type="date" name="from_date" id="from_date" class="form-control input" required>
+                                        <label for="__month" class="form-label">Select month:</label>
+                                        <input type="month" name="month" id="__month" class="form-control input" required>
                                     </div>
 
                                     <div class="mb-3 px-2 col">
-                                        <label for="to_date" class="form-label">To:</label>
-                                        <input type="date" name="to_date" id="to_date" class="form-control input" required>
+                                        <label class="form-label" for="year__">Select Year: </label>
+                                        <select required class="form-select" name="year" id="year__">
+                                            <option selected value="" class="d-none" disabled> -- Select year --</option>
+                                            <?php
+
+                                            $currentYear = date("Y");
+                                            for ($year = $currentYear; $year <= $currentYear + 10; $year++) {
+                                                echo "<option value=\"$year\">$year</option>";
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <input type="hidden" id="_total" name="total">
