@@ -695,7 +695,7 @@ $email = $row['email'] ?? null;
                                                 <th class="ellipsis-text" scope="col">Phone</th>
                                                 <th class="ellipsis-text" scope="col">Status</th>
                                                 <th class="ellipsis-text" scope="col">Address</th>
-
+                                                <th class="ellipsis-text" scope="col">Valid ID</th>
                                                 <th class="ellipsis-text" scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -754,6 +754,8 @@ $email = $row['email'] ?? null;
                                                     <td class="ellipsis-text"><?= $row['status'] ?></td>
                                                     <td class="ellipsis-text"><?= $row['address'] ?>, <?= $row['town'] ?>,
                                                         <?= $row['city'] ?>, <?= $row['province'] ?></td>
+
+                                                        <td class="ellipsis-text"><a href="../users/<?= $row['valid_id'] ?>">View ID</a></td>
 
                                                     <td class="ellipsis-text">
                                                         <a href="?update=<?= $row['id'] ?>">

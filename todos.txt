@@ -1,0 +1,41 @@
+
+// - print (filtered only for pending installation) (can also be filtered and print on the installation date)
+
+// - job order for lineman (for installation - need mafilter kung ilan kakabitan on the given date or weekly or monthly)
+
+
+// - line man account can be activated the package upon installation so it needs to have the access how can he activate the package along the installation process ( need din ilagay kung sinong line man nagprocess or naginstall)
+
+
+// - sa bill/payment need maglagay ng label/filter or need maidentify if for package, coverage/ and date of payment / billing period / nakaindicate din dapat kung kelan nakabitan ang customer and mafifilter at maipiprint ang mga kung tomer na nakabitan for today, tomorrow or weekly or monthly 
+
+
+- 2 months na unpaid bills pano ipapakita ng hindi na nagpapatong sa bill at nakatotal na, nakaindicate na din dapat for what billing period ang nga unpaid 
+
+- disconnection notice ( pano isesend kay customer thru email at kelan/paano ang process paaano masesend ang email sa customer 
+
+- report bill ( unpaid bills kailangan makikita na may mga customer na na kapag 2 konths unpaid na per package and nakatotal. Kailangan din mafilter per account)
+
+- help (ililipat na yung laman ng ticket at gagawing FAQs) 
+Ticket dun ilalagay ang ticket history at iaalis ang billing history since for ticket lang dapat sya
+
+- ticket ( pwedwng mag add ticket yung mga sumbong or reklamo dito nakalagay)
+
+- Dashboard ( ilagay yung announcement kung may promotions ba na ongoing or magkakaron ba ng maintenance)
+
+Reports - running total nung ipiprint na bill, nakaindicate din dapat kung from what billing period yung nakalagay ) 
+
+- payment confirmation ( dapat need ilagay ng customer yung reference no. ng receipt nila along with the me picture so maveverify agad kapag nacheck ang referece no.) 
+
+- billing period sa finance
+
+- billing can view the previous bill, current bill and total balance also when printing needs to be visible like meralco bill)
+
+- print ( kailangan nakaindicate sa baba kung kelan na print, sino nagprint) also yung billing period at running total
+
+- sa bill/invoice din kailangan naka indicate previous bill, current bill also the total balance 
+
+- dashaboard ( nakalagay announcement if may promotion ba at kung may maintenance ang internet)
+
+
+- dashboard ( kailangan nakikita kung ilan subscriber and najoin sa date na nakaset, mafifilter kung ilan nagjoin sa specific package at mafifilterkung ilan nag activate by today, weekly and monthly

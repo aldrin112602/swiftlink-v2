@@ -321,7 +321,7 @@ $email = $row['email'] ?? null;
 
                                         <option value="Process" <?= ($_GET['status'] ?? null) == 'Process' ? 'selected' : '' ?>>Process
                                         </option>
-                                        <option value="Done" <?= ($_GET['status'] ?? null) == 'Done' ? 'selected' : '' ?>>Done
+                                        <option value="Active" <?= ($_GET['status'] ?? null) == 'Active' ? 'selected' : '' ?>>Active
                                         </option>
                                         <option value="Pending" <?= ($_GET['status'] ?? null) == 'Pending' ? 'selected' : '' ?>>Pending
                                         </option>
@@ -503,11 +503,11 @@ $email = $row['email'] ?? null;
                                                         <select onchange="packageAction(<?= $row['id'] ?>, this)">
                                                             <option value="" selected disabled class="d-none">Choose one
                                                             </option>
-                                                            <option value="Process" <?= in_array($row['process_status'], ['Done', 'Process']) ? 'disabled' : null ?>>Process</option>
-                                                            <option value="Done" <?= in_array($row['process_status'], ['Done', 'Pending']) || !$selected_date ? 'disabled' : null ?>>Done</option>
+                                                            <option value="Process" <?= in_array($row['process_status'], ['Active', 'Process']) ? 'disabled' : null ?>>Process</option>
+                                                            <option value="Active" <?= in_array($row['process_status'], ['Active', 'Pending']) || !$selected_date ? 'disabled' : null ?>>Active</option>
                                                             <option value="Delete">Delete</option>
-                                                            <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
-                                                            <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option>
+                                                            <!-- <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
+                                                            <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option> -->
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -536,7 +536,7 @@ $email = $row['email'] ?? null;
                                                 if (result.isConfirmed) {
                                                     if (action == 'process') {
                                                         Swal.fire({
-                                                            title: "Enter a date",
+                                                            title: "Installation date",
                                                             html: `<div>
                                                                 <input required id="date_" type="date" class="form-control"/>
                                                             </div>`,
@@ -707,7 +707,7 @@ $email = $row['email'] ?? null;
                                 The Swiftlink Team", "Package Submission Confirmation")) {
 
                                         $insertQuery = "INSERT INTO user_package (account_no, invoice, package, coverage, total, period, due_date, process_status)
-                                    VALUES ('$account_no', '$invoice', '$package', '$coverage', $total, '$period', '$dueDate', 'Done')";
+                                    VALUES ('$account_no', '$invoice', '$package', '$coverage', $total, '$period', '$dueDate', 'Active')";
 
 
                                         $result = mysqli_query($conn, $insertQuery);
