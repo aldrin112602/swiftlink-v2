@@ -512,6 +512,11 @@ $email = $row['email'] ?? null;
                                                 <b><i>Address: #184 Purok 3, Ithan, Binangonan, Rizal</i></b><br>
                                                 <b>Phone: +639279972636</b><br>
                                                 <b>Email: swiftlinkitsolutions@gmail.com</b>
+                                                <br>
+                                                <?php 
+                                                $user = getRows("account_no='{$_SESSION['account_no']}'", "accounts")[0];
+                                                ?>
+                                                <b>Printed by: <?= $user['firstname'] ?> <?= $user['middle_initial'] ?> <?= $user['lastname'] ?></b>
                                             </div>
                                             <div class="col d-flex alig-items-center justify-content-end">
                                                 <img src="../src/img/swLogo.png" alt="Logo" width="200px">
@@ -528,6 +533,7 @@ $email = $row['email'] ?? null;
                                                 <th>Date</th>
                                                 <th>Name</th>
                                                 <th>Payment Method</th>
+                                                <th>Due date</th>
                                                 <th>Amount</th>
                                                 <!-- <th>Created by</th> -->
                                             </tr>
@@ -626,6 +632,7 @@ $email = $row['email'] ?? null;
                                             <td>{$row['date']}</td>
                                             <td>" . ($user_['firstname'] ?? null) . " " . ($user_['middle_initial'] ?? null) . " " . ($user_['lastname'] ?? null) . "</td>
                                             <td>$payment_method</td>
+                                            <td>{$row['due_date']}</td>
                                             <td>{$row['total']} PHP</td>
                                         </tr>";
 

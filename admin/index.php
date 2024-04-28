@@ -256,7 +256,13 @@ $email = $row['email'] ?? null;
                     <!-- ============================================================== -->
 
                     <div class="ecommerse-widget">
-                        <h3 class="text-success">Swiftlink</h3>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h3 class="text-success">Swiftlink</h3>
+                            <div>
+                            <button class="btn btn-sm btn-primary" style="border-radius: 15px;">Make announcement</button>
+                            <button class="btn btn-sm btn-success" style="border-radius: 15px;">View announcement</button>
+                            </div>
+                        </div>
                         <div class="d-lg-flex d-block justify-content-between container mx-auto">
                             <a href="./customer.php" class="d-flex align-items-center justify-content-start bg-white px-3 py-2 gap-2 mt-3" style="border-radius: 30px; min-width: calc(100%/5);">
                                 <span style="height: 50px; width: 50px; background-color: #DCF2F1; border-radius: 50%;" class="d-flex align-items-center justify-content-center">
