@@ -204,3 +204,18 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS admin_log_activity (
 if (!$conn->query($queryCreateTable)) {
     die("Error creating table: " . $conn->error);
 }
+
+
+$queryCreateTable = "CREATE TABLE IF NOT EXISTS announcement (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    announcement VARCHAR(255),
+    description VARCHAR(1000),
+    uploaded_file VARCHAR(1000),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+
+
+if (!$conn->query($queryCreateTable)) {
+    die("Error creating table: " . $conn->error);
+}

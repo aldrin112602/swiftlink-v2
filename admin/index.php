@@ -255,12 +255,13 @@ $email = $row['email'] ?? null;
                     <!-- end pageheader  -->
                     <!-- ============================================================== -->
                     <?php require_once './components/add_announcement_modal.php' ?>
+                    <?php require_once './components/view_announcements.php' ?>
                     <div class="ecommerse-widget">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="text-success">Swiftlink</h3>
                             <div>
                             <button data-bs-target="#announcementModal" data-bs-toggle="modal" class="btn btn-sm btn-primary" style="border-radius: 15px;">Make announcement</button>
-                            <button class="btn btn-sm btn-success" style="border-radius: 15px;">View announcement</button>
+                            <button data-bs-target="#viewAnnouncementModal" data-bs-toggle="modal" class="btn btn-sm btn-success" style="border-radius: 15px;">Announcements</button>
                             </div>
                         </div>
                         <div class="d-lg-flex d-block justify-content-between container mx-auto">
