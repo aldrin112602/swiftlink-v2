@@ -30,7 +30,7 @@ $rows = getRows(null, "announcement");
                     </td>
                     <td>
                         <button class="btn btn-success btn-sm p-1">Edit</button>
-                        <button class="btn btn-danger btn-sm p-1">Delete</button>
+                        <button class="btn btn-danger btn-sm p-1" onclick="deleteConfirmation(<?= $row['id']?>, 'announcement')">Delete</button>
                     </td>
                 </tr>
                <?php

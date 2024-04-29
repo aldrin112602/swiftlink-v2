@@ -256,6 +256,7 @@ $email = $row['email'] ?? null;
                     <!-- ============================================================== -->
                     <?php require_once './components/add_announcement_modal.php' ?>
                     <?php require_once './components/view_announcements.php' ?>
+                    <?php require_once './components/delete_confirmation.php' ?>
                     <div class="ecommerse-widget">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="text-success">Swiftlink</h3>
