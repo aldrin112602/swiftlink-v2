@@ -25,7 +25,6 @@ Ticket dun ilalagay ang ticket history at iaalis ang billing history since for t
 
 Reports - running total nung ipiprint na bill, nakaindicate din dapat kung from what billing period yung nakalagay ) 
 
-- payment confirmation ( dapat need ilagay ng customer yung reference no. ng receipt nila along with the me picture so maveverify agad kapag nacheck ang referece no.) 
 
 
 - billing can view the previous bill, current bill and total balance also when printing needs to be visible like meralco bill)

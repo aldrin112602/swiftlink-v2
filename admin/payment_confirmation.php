@@ -468,6 +468,7 @@ $email = $row['email'] ?? null;
                                             <th scope="col">Account No</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Payment Method</th>
+                                            <th scope="col">Ref. No.</th>
                                             <th scope="col">Date Payment</th>
                                             <th scope="col">Image</th>
                                             <th scope="col">Status</th>
@@ -476,7 +477,7 @@ $email = $row['email'] ?? null;
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT pc.invoice, pc.payment_method, pc.date_payment, pc.image_path, pc.status, pc.id, ac.account_no, ac.firstname, ac.lastname, uc.period, uc.invoice, uc.account_no
+                                        $sql = "SELECT pc.invoice, pc.payment_method, pc.date_payment, pc.image_path, pc.status, pc.id, ac.account_no, ac.firstname, ac.lastname, uc.period, uc.invoice, uc.account_no, pc.reference_number
                                     FROM payment_confirmation AS pc
                                     JOIN user_package AS uc ON pc.invoice = uc.invoice
                                     JOIN accounts AS ac ON ac.account_no = uc.account_no";
@@ -615,6 +616,7 @@ $email = $row['email'] ?? null;
                                                 <td><?= $row['account_no'] ?? null ?></td>
                                                 <td><?= $row['firstname'] ?? null ?> <?= $row['lastname'] ?? null ?></td>
                                                 <td><?= $row['payment_method'] ?? null ?></td>
+                                                <td><?= $row['reference_number'] ?? 'N/A' ?></td>
                                                 <td><?= $row['date_payment'] ?? null ?></td>
                                                 <td>
                                                     <a href="../user/<?= $row['image_path'] ?? null ?>">
