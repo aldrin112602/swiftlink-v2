@@ -257,6 +257,7 @@ $email = $row['email'] ?? null;
                     <?php require_once './components/add_announcement_modal.php' ?>
                     <?php require_once './components/view_announcements.php' ?>
                     <?php require_once './components/delete_confirmation.php' ?>
+                    <?php require_once './components/update_announcement_modal.php' ?>
                     <div class="ecommerse-widget">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="text-success">Swiftlink</h3>
@@ -510,7 +511,7 @@ $email = $row['email'] ?? null;
                             document.addEventListener('DOMContentLoaded', function() {
                                 const ctx = document.getElementById('myChart');
                                 const DATASET = <?= json_encode($data_set) ?>;
-                                console.log(DATASET)
+                                // console.log(DATASET)
                                 const months = Object.keys(DATASET);
                                 const DATA_COUNT = months.length;
                                 const NUMBER_CFG = {

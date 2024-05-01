@@ -29,7 +29,7 @@ $rows = getRows(null, "announcement");
                         <img style="height: 60px; width: 60px; object-fit: cover;" src="<?= $row['uploaded_file']?>" alt="<?= $row['uploaded_file']?>">
                     </td>
                     <td>
-                        <button class="btn btn-success btn-sm p-1">Edit</button>
+                        <a href="?update=<?= $row['id']?>" class="btn btn-success btn-sm p-1">Edit</a>
                         <button class="btn btn-danger btn-sm p-1" onclick="deleteConfirmation(<?= $row['id']?>, 'announcement')">Delete</button>
                     </td>
                 </tr>
