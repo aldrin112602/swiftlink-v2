@@ -304,10 +304,26 @@ $email = $row['email'] ?? null;
                                     </div>
                                 </div>
                             </a>
+                            <div data-bs-toggle="modal" data-bs-target="#viewAnnouncementModal" class="col-12 col-lg-5 bg-white shadow p-5" style="border-radius: 40px; cursor: pointer">
+                                <h3 class="text-muted fw-bold">Announcement</h3>
+                                <div class="container-fluid p-0 position-relative">
+                                    <h1 class="text-success">
+                                        <?php
+                                        echo count(getRows(null, "announcement"));
+                                        ?>
+                                    </h1>
+                                    <div style="height: 50px; width: 50px; position: absolute; top: 50%; right: 10px; transform: translateY(-50%);" class="container-fluid p-0 d-flex align-items-center justify-content-center bg-success rounded-circle">
+                                        <span class="material-symbols-outlined text-white">
+                                            campaign
+                                        </span>
+                                    </div>
+                                </div>
+                            </d>
 
                         </div>
                     </div>
 
+                    <?php require_once 'components/view_announcements.php' ?>
 
                 </div>
             </div>
