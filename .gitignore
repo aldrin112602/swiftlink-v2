@@ -14,5 +14,8 @@ user/proof_of_payment/*
 user/uploads/*
 !user/uploads/robots.txt
 
+admin/uploads/*
+!admin/uploads/robots.txt
+
 uploads/*
 !uploads/robots.txt
