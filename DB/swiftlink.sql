@@ -27,28 +27,28 @@ SET time_zone = "+00:00";
 -- Table structure for table `accounts`
 --
 
-CREATE TABLE `accounts` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `middle_initial` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `account_no` varchar(255) DEFAULT NULL,
-  `address` varchar(500) DEFAULT NULL,
-  `town` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `province` varchar(500) DEFAULT NULL,
-  `postal_code` varchar(255) DEFAULT NULL,
-  `valid_id` varchar(500) DEFAULT NULL,
-  `profile` varchar(255) DEFAULT NULL,
-  `role` varchar(255) DEFAULT 'user',
-  `enable2FA` varchar(255) DEFAULT 'true',
-  `status` varchar(255) DEFAULT 'Pending',
-  `verified` varchar(255) DEFAULT 'false',
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- CREATE TABLE `accounts` (
+--   `id` int(11) NOT NULL,
+--   `email` varchar(255) DEFAULT NULL,
+--   `phone` varchar(255) DEFAULT NULL,
+--   `password` varchar(255) DEFAULT NULL,
+--   `firstname` varchar(255) DEFAULT NULL,
+--   `middle_initial` varchar(255) DEFAULT NULL,
+--   `lastname` varchar(255) DEFAULT NULL,
+--   `account_no` varchar(255) DEFAULT NULL,
+--   `address` varchar(500) DEFAULT NULL,
+--   `town` varchar(255) DEFAULT NULL,
+--   `city` varchar(255) DEFAULT NULL,
+--   `province` varchar(500) DEFAULT NULL,
+--   `postal_code` varchar(255) DEFAULT NULL,
+--   `valid_id` varchar(500) DEFAULT NULL,
+--   `profile` varchar(255) DEFAULT NULL,
+--   `role` varchar(255) DEFAULT 'user',
+--   `enable2FA` varchar(255) DEFAULT 'true',
+--   `status` varchar(255) DEFAULT 'Pending',
+--   `verified` varchar(255) DEFAULT 'false',
+--   `date` timestamp NOT NULL DEFAULT current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `accounts`
@@ -68,14 +68,14 @@ INSERT INTO `accounts` (`id`, `email`, `phone`, `password`, `firstname`, `middle
 -- Table structure for table `admin_log_activity`
 --
 
-CREATE TABLE `admin_log_activity` (
-  `id` int(11) NOT NULL,
-  `account_no` varchar(255) DEFAULT NULL,
-  `category` varchar(255) DEFAULT 'Activity',
-  `remark` varchar(1000) DEFAULT NULL,
-  `level` varchar(100) DEFAULT 'Admin',
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- CREATE TABLE `admin_log_activity` (
+--   `id` int(11) NOT NULL,
+--   `account_no` varchar(255) DEFAULT NULL,
+--   `category` varchar(255) DEFAULT 'Activity',
+--   `remark` varchar(1000) DEFAULT NULL,
+--   `level` varchar(100) DEFAULT 'Admin',
+--   `date` timestamp NOT NULL DEFAULT current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin_log_activity`
@@ -122,12 +122,12 @@ INSERT INTO `admin_log_activity` (`id`, `account_no`, `category`, `remark`, `lev
 -- Table structure for table `coverage`
 --
 
-CREATE TABLE `coverage` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT 'Active',
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- CREATE TABLE `coverage` (
+--   `id` int(11) NOT NULL,
+--   `name` varchar(255) DEFAULT NULL,
+--   `status` varchar(255) DEFAULT 'Active',
+--   `date` timestamp NOT NULL DEFAULT current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `coverage`
@@ -148,17 +148,17 @@ INSERT INTO `coverage` (`id`, `name`, `status`, `date`) VALUES
 -- Table structure for table `customer_ticket`
 --
 
-CREATE TABLE `customer_ticket` (
-  `id` int(11) NOT NULL,
-  `ticket_no` varchar(255) DEFAULT NULL,
-  `account_no` varchar(255) DEFAULT NULL,
-  `report` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT 'Pending',
-  `remark` varchar(500) DEFAULT NULL,
-  `document` varchar(255) DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- CREATE TABLE `customer_ticket` (
+--   `id` int(11) NOT NULL,
+--   `ticket_no` varchar(255) DEFAULT NULL,
+--   `account_no` varchar(255) DEFAULT NULL,
+--   `report` varchar(255) DEFAULT NULL,
+--   `status` varchar(255) DEFAULT 'Pending',
+--   `remark` varchar(500) DEFAULT NULL,
+--   `document` varchar(255) DEFAULT NULL,
+--   `date` timestamp NOT NULL DEFAULT current_timestamp(),
+--   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer_ticket`
@@ -181,12 +181,12 @@ INSERT INTO `customer_ticket` (`id`, `ticket_no`, `account_no`, `report`, `statu
 -- Table structure for table `help_category`
 --
 
-CREATE TABLE `help_category` (
-  `id` int(11) NOT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `remarks` varchar(500) DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- CREATE TABLE `help_category` (
+--   `id` int(11) NOT NULL,
+--   `type` varchar(255) DEFAULT NULL,
+--   `remarks` varchar(500) DEFAULT NULL,
+--   `date` timestamp NOT NULL DEFAULT current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `help_category`
@@ -319,23 +319,23 @@ INSERT INTO `user_log_activity` (`id`, `account_no`, `category`, `activity`, `ti
 -- Table structure for table `user_package`
 --
 
-CREATE TABLE `user_package` (
-  `id` int(11) NOT NULL,
-  `account_no` varchar(255) DEFAULT NULL,
-  `invoice` varchar(255) DEFAULT NULL,
-  `package` varchar(255) DEFAULT NULL,
-  `coverage` varchar(255) DEFAULT NULL,
-  `total` decimal(10,2) DEFAULT NULL,
-  `category` varchar(255) DEFAULT 'Fiber',
-  `period` varchar(255) DEFAULT NULL,
-  `variant` varchar(255) DEFAULT 'false',
-  `is_active` varchar(255) DEFAULT 'true',
-  `due_date` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT 'Unpaid',
-  `process_status` varchar(255) DEFAULT 'Pending',
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- CREATE TABLE `user_package` (
+--   `id` int(11) NOT NULL,
+--   `account_no` varchar(255) DEFAULT NULL,
+--   `invoice` varchar(255) DEFAULT NULL,
+--   `package` varchar(255) DEFAULT NULL,
+--   `coverage` varchar(255) DEFAULT NULL,
+--   `total` decimal(10,2) DEFAULT NULL,
+--   `category` varchar(255) DEFAULT 'Fiber',
+--   `period` varchar(255) DEFAULT NULL,
+--   `variant` varchar(255) DEFAULT 'false',
+--   `is_active` varchar(255) DEFAULT 'true',
+--   `due_date` varchar(255) DEFAULT NULL,
+--   `status` varchar(255) DEFAULT 'Unpaid',
+--   `process_status` varchar(255) DEFAULT 'Pending',
+--   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+--   `date` timestamp NOT NULL DEFAULT current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_package`

@@ -5,10 +5,16 @@ require_once './global.php';
 
 
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'user') {
-        header('location: ./user/');
-    } else {
-        header('location: ./admin/');
+    switch($_SESSION['role']) {
+        case 'admin':
+            header('location: ./admin/');
+        break;
+        case 'user':
+            header('location: ./user/');
+        break;
+        case 'lineman':
+            header('location: ./lineman/');
+        break;
     }
 }
 $email = $err_msg = $success_msg = null;
