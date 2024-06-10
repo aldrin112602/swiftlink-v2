@@ -241,7 +241,7 @@ $email = $row['email'] ?? null;
                         if (!isset($_GET['add_package'])) {
                         ?>
 
-                            <div class="row gap-2 mb-2 flex-wrap">
+                            <!-- <div class="row gap-2 mb-2 flex-wrap">
 
                                 <div class="col">
                                     <select id="coverage" class="form-select bg-white mt-1">
@@ -316,11 +316,11 @@ $email = $row['email'] ?? null;
                                     })
                                 </script>
 
-                            </div>
+                            </div> -->
 
                             <div class="container-fluid bg-white p-2 p-md-5" style="border-radius: 40px;">
-                                <h4 class="text-primary fw-bold d-flex align-items-center justify-content-between">Customer
-                                    package <a href="?add_package=true" class="btn btn-primary">+ Add</a></h4>
+                                <h4 class="text-primary fw-bold">Customer package
+                                    <!-- package <a href="?add_package=true" class="btn btn-primary">+ Add</a></h4> -->
                                 <div class="d-flex align-items-center justify-content-between mb-4">
 
                                     <div class="col col-lg-4 position-relative mt-3">
@@ -375,7 +375,7 @@ $email = $row['email'] ?? null;
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $data = getRows("variant='false'", "user_package");
+                                            $data = getRows("variant='false' AND process_status='Pending'", "user_package");
 
                                             function filterByCoverage($coverage, $data): array
                                             {
@@ -417,16 +417,16 @@ $email = $row['email'] ?? null;
                                                 return $filteredData;
                                             }
 
-                                            $data = filterByStatus(
-                                                $_GET['status'] ?? null,
-                                                filterByPackage(
-                                                    $_GET['package'] ?? null,
-                                                    filterByCoverage(
-                                                        $_GET['coverage'] ?? null,
-                                                        $data
-                                                    )
-                                                )
-                                            );
+                                            // $data = filterByStatus(
+                                            //     $_GET['status'] ?? null,
+                                            //     filterByPackage(
+                                            //         $_GET['package'] ?? null,
+                                            //         filterByCoverage(
+                                            //             $_GET['coverage'] ?? null,
+                                            //             $data
+                                            //         )
+                                            //     )
+                                            // );
 
 
 
@@ -604,6 +604,8 @@ $email = $row['email'] ?? null;
                                                         });
                                                     }
 
+                                                } else {
+                                                    location.reload()
                                                 }
                                             });
                                         }

@@ -80,6 +80,8 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS user_package (
     due_date VARCHAR(255),
     status VARCHAR(255) DEFAULT 'Unpaid',
     process_status VARCHAR(255) DEFAULT 'Pending',
+    lineman_installed VARCHAR(255),
+    installation_date VARCHAR(255),
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 03:50 AM
+-- Generation Time: Jun 10, 2024 at 07:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,7 +55,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `email`, `phone`, `password`, `firstname`, `middle_initial`, `lastname`, `account_no`, `address`, `town`, `city`, `province`, `postal_code`, `valid_id`, `profile`, `role`, `enable2FA`, `status`, `verified`, `date`) VALUES
-(1, 'rubayajohnemmanuel@gmail.com', '0965449477', 'John5555', 'Jey ihh', 'D', 'Rubaya', '054745002751816378821949', '184 Sapang Buli Street', 'Ithan', 'Binangonan', 'Rizal', '1940', 'uploads/6616afbe24b03-jey.png', NULL, 'lineman', 'false', 'Active', 'true', '2024-04-10 07:26:54'),
+(1, 'rubayajohnemmanuel@gmail.com', '0965449477', 'John5555', 'Jey ihhh', 'D', 'Rubaya', '054745002751816378821949', '184 Sapang Buli Street', 'Ithan', 'Binangonan', 'Rizal', '1940', 'uploads/6616afbe24b03-jey.png', 'profile/profile_66650d56899a6_50f7d043c3e67379c488fe1d4f839b3c.jpg', 'lineman', 'false', 'Active', 'true', '2024-04-10 07:26:54'),
 (2, 'emmanuelrubaya@gmail.com', '09652449477', 'John5555', 'Emmanuel', 'D', 'Rubaya', '265608270665835741940025', '184 Sapang Buli Street', 'Ithan', 'Binangonan', 'Rizal', '1940', 'uploads/6616bec036514-j2.jpg', NULL, 'user', 'false', 'Active', 'true', '2024-04-10 08:30:59'),
 (3, 'emmanueljohnrubaya@gmail.com', '09519629526', 'John5555', 'Jem', 'D', 'Cruz', '646975440125929132284548', 'Poblacion Street', 'Pila-Pila', 'Binangonan', 'Rizal', '1940', 'uploads/6616c667abcd2-IMG_20210314_163423-removebg-preview.png', NULL, 'user', 'false', 'Active', 'true', '2024-04-10 09:03:35'),
 (4, 'lesterf524@gmail.com', '09519629526', 'jeyyelll@2400', 'Jhon Lester', 'C', 'Delgado', '958504089820265537839496', 'Mabato Street', 'Pila-Pila', 'Binangonan', 'Rizal', '1940', 'uploads/6616c44828e0f-387519584_146199961906351_6139406061816624895_n-removebg-preview.png', NULL, 'user', 'false', 'Active', 'True', '2024-04-10 08:54:32'),
@@ -114,7 +114,10 @@ INSERT INTO `admin_log_activity` (`id`, `account_no`, `category`, `remark`, `lev
 (30, '576681987956493900885004', 'Activity', 'Approved user registration', 'Admin', '2024-04-10 22:50:06'),
 (31, '576681987956493900885004', 'Activity', 'Updated data', 'Admin', '2024-04-10 22:56:46'),
 (32, '576681987956493900885004', 'Activity', 'Updated data', 'Admin', '2024-04-10 23:06:48'),
-(33, '576681987956493900885004', 'Activity', 'Approved payment confirmation', 'Admin', '2024-04-10 23:33:04');
+(33, '576681987956493900885004', 'Activity', 'Approved payment confirmation', 'Admin', '2024-04-10 23:33:04'),
+(34, '054745002751816378821949', 'Activity', 'Updated profile picture', 'Admin', '2024-06-09 02:02:51'),
+(35, '054745002751816378821949', 'Activity', 'Updated profile picture', 'Admin', '2024-06-09 02:03:02'),
+(36, '054745002751816378821949', 'Activity', 'Updated profile information', 'Admin', '2024-06-09 02:03:24');
 
 -- --------------------------------------------------------
 
@@ -349,6 +352,8 @@ CREATE TABLE `user_package` (
   `due_date` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT 'Unpaid',
   `process_status` varchar(255) DEFAULT 'Pending',
+  `lineman_installed` varchar(255) DEFAULT NULL,
+  `installation_date` varchar(255) DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -357,22 +362,22 @@ CREATE TABLE `user_package` (
 -- Dumping data for table `user_package`
 --
 
-INSERT INTO `user_package` (`id`, `account_no`, `invoice`, `package`, `coverage`, `selected_date`, `total`, `category`, `period`, `variant`, `is_active`, `due_date`, `status`, `process_status`, `updated_at`, `date`) VALUES
-(1, '054745002751816378821949', '582855194', 'SL ULTRA 150 Mbps', 'ITHAN', 'N/A', 1999.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Unpaid', 'Done', '2024-04-10 07:36:10', '2024-04-10 07:26:54'),
-(2, '054745002751816378821949', '148294411', 'SL LITE 15 Mbps', 'LIMBON-LIMBON', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Paid', 'Done', '2024-04-10 07:53:02', '2024-04-10 07:40:48'),
-(3, '265608270665835741940025', '950001065', 'SL TERA 100 Mbps', 'KALINAWAN', 'N/A', 1699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Done', '2024-04-10 08:32:49', '2024-04-10 08:30:59'),
-(4, '958504089820265537839496', '060922979', 'SL LITE 15 Mbps', 'PILA-PILA', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Unpaid', 'Pending', '2024-04-10 09:31:36', '2024-04-10 08:54:32'),
-(5, '646975440125929132284548', '724869248', 'SL ULTRA 150 Mbps', 'PILA-PILA', 'N/A', 1999.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Paid', 'Done', '2024-04-10 21:36:56', '2024-04-10 09:03:35'),
-(6, '265608270665835741940025', '512218279', 'SL TERA 100 Mbps', 'KALINAWAN', 'N/A', 1699.00, 'Fiber', 'Jul 2024', 'true', 'true', '11 Jul 2024', 'Paid', 'Done', '2024-04-10 10:19:47', '2024-04-10 10:19:47'),
-(7, '265608270665835741940025', '826809536', 'SL TERA 100 Mbps', 'KALINAWAN', 'N/A', 1699.00, 'Fiber', 'Jun 2024', 'true', 'true', '11 Jun 2024', 'Paid', 'Done', '2024-04-10 10:22:42', '2024-04-10 10:22:42'),
-(8, '265608270665835741940025', '978941207', 'SL LITE 15 Mbps', 'KALINAWAN', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Done', '2024-04-10 10:30:54', '2024-04-10 10:30:21'),
-(9, '265608270665835741940025', '157625793', 'SL LITE 15 Mbps', 'LIMBON-LIMBON', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', '2024-04-10 21:20:57', '2024-04-10 21:20:57'),
-(10, '646975440125929132284548', '927227440', 'SL LITE 15 Mbps', 'KALINAWAN', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', '2024-04-10 21:24:03', '2024-04-10 21:24:03'),
-(11, '646975440125929132284548', '204795253', 'SL TERA 100 Mbps', 'GUPIING', 'N/A', 1699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Done', '2024-04-10 21:27:17', '2024-04-10 21:25:09'),
-(12, '646975440125929132284548', '276782044', 'SL PLUS 30 Mbps', 'LUNSAD', 'N/A', 999.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Process', '2024-04-10 21:27:46', '2024-04-10 21:26:14'),
-(13, '646975440125929132284548', '997080958', 'SL MEGA 45 Mbps', 'PILA-PILA', 'N/A', 1299.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', '2024-04-10 21:26:57', '2024-04-10 21:26:57'),
-(14, '240487537997979910265071', '997298423', 'SL ULTRA 150 Mbps', 'ITHAN', 'N/A', 1999.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Paid', 'Done', '2024-04-10 23:33:04', '2024-04-10 22:49:20'),
-(15, '240487537997979910265071', '515893344', 'SL MEGA 45 Mbps', 'LIMBON-LIMBON', 'N/A', 1299.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', '2024-04-10 22:54:51', '2024-04-10 22:54:51');
+INSERT INTO `user_package` (`id`, `account_no`, `invoice`, `package`, `coverage`, `selected_date`, `total`, `category`, `period`, `variant`, `is_active`, `due_date`, `status`, `process_status`, `lineman_installed`, `installation_date`, `updated_at`, `date`) VALUES
+(1, '054745002751816378821949', '582855194', 'SL ULTRA 150 Mbps', 'ITHAN', 'N/A', 1999.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Unpaid', 'Done', NULL, NULL, '2024-04-09 23:36:10', '2024-04-09 23:26:54'),
+(2, '054745002751816378821949', '148294411', 'SL LITE 15 Mbps', 'LIMBON-LIMBON', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Paid', 'Done', NULL, NULL, '2024-04-09 23:53:02', '2024-04-09 23:40:48'),
+(3, '265608270665835741940025', '950001065', 'SL TERA 100 Mbps', 'KALINAWAN', 'N/A', 1699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Done', NULL, NULL, '2024-04-10 00:32:49', '2024-04-10 00:30:59'),
+(4, '958504089820265537839496', '060922979', 'SL LITE 15 Mbps', 'PILA-PILA', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Unpaid', 'Pending', NULL, NULL, '2024-04-10 01:31:36', '2024-04-10 00:54:32'),
+(5, '646975440125929132284548', '724869248', 'SL ULTRA 150 Mbps', 'PILA-PILA', 'N/A', 1999.00, 'Fiber', 'May 2024', 'false', 'true', '10 May 2024', 'Paid', 'Done', NULL, NULL, '2024-04-10 13:36:56', '2024-04-10 01:03:35'),
+(6, '265608270665835741940025', '512218279', 'SL TERA 100 Mbps', 'KALINAWAN', 'N/A', 1699.00, 'Fiber', 'Jul 2024', 'true', 'true', '11 Jul 2024', 'Paid', 'Done', NULL, NULL, '2024-04-10 02:19:47', '2024-04-10 02:19:47'),
+(7, '265608270665835741940025', '826809536', 'SL TERA 100 Mbps', 'KALINAWAN', 'N/A', 1699.00, 'Fiber', 'Jun 2024', 'true', 'true', '11 Jun 2024', 'Paid', 'Done', NULL, NULL, '2024-04-10 02:22:42', '2024-04-10 02:22:42'),
+(8, '265608270665835741940025', '978941207', 'SL LITE 15 Mbps', 'KALINAWAN', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Done', NULL, NULL, '2024-04-10 02:30:54', '2024-04-10 02:30:21'),
+(9, '265608270665835741940025', '157625793', 'SL LITE 15 Mbps', 'LIMBON-LIMBON', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', NULL, NULL, '2024-04-10 13:20:57', '2024-04-10 13:20:57'),
+(10, '646975440125929132284548', '927227440', 'SL LITE 15 Mbps', 'KALINAWAN', 'N/A', 699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', NULL, NULL, '2024-04-10 13:24:03', '2024-04-10 13:24:03'),
+(11, '646975440125929132284548', '204795253', 'SL TERA 100 Mbps', 'GUPIING', 'N/A', 1699.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Done', NULL, NULL, '2024-04-10 13:27:17', '2024-04-10 13:25:09'),
+(12, '646975440125929132284548', '276782044', 'SL PLUS 30 Mbps', 'LUNSAD', 'N/A', 999.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Process', NULL, NULL, '2024-04-10 13:27:46', '2024-04-10 13:26:14'),
+(13, '646975440125929132284548', '997080958', 'SL MEGA 45 Mbps', 'PILA-PILA', 'N/A', 1299.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', NULL, NULL, '2024-04-10 13:26:57', '2024-04-10 13:26:57'),
+(14, '240487537997979910265071', '997298423', 'SL ULTRA 150 Mbps', 'ITHAN', 'N/A', 1999.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Paid', 'Done', NULL, NULL, '2024-04-10 15:33:04', '2024-04-10 14:49:20'),
+(15, '240487537997979910265071', '515893344', 'SL MEGA 45 Mbps', 'LIMBON-LIMBON', 'N/A', 1299.00, 'Fiber', 'May 2024', 'false', 'true', '11 May 2024', 'Unpaid', 'Pending', NULL, NULL, '2024-04-10 14:54:51', '2024-04-10 14:54:51');
 
 --
 -- Indexes for dumped tables
@@ -452,13 +457,13 @@ ALTER TABLE `user_package`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `admin_log_activity`
 --
 ALTER TABLE `admin_log_activity`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `announcement`
