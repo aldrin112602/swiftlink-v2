@@ -1,12 +1,6 @@
 
 // - print (filtered only for pending installation) (can also be filtered and print on the installation date)
 
-// - job order for lineman (for installation - need mafilter kung ilan kakabitan on the given date or weekly or monthly)
-
-
-// - line man account can be activated the package upon installation so it needs to have the access how can he activate the package along the installation process ( need din ilagay kung sinong line man nagprocess or naginstall)
-
-
 // - sa bill/payment need maglagay ng label/filter or need maidentify if for package, coverage/ and date of payment / billing period / nakaindicate din dapat kung kelan nakabitan ang customer and mafifilter at maipiprint ang mga kung tomer na nakabitan for today, tomorrow or weekly or monthly 
 
 
