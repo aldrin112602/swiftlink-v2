@@ -156,7 +156,7 @@ $email = $row['email'] ?? null;
                                     Home
                                 </a>
                             </li>
-                            
+
                             <li class="nav-item my-1 current-page">
                                 <a href="customer_package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">
@@ -321,333 +321,336 @@ $email = $row['email'] ?? null;
                             <div class="container-fluid bg-white p-2 p-md-5" style="border-radius: 40px;">
                                 <h4 class="text-primary fw-bold">Customer package
                                     <!-- package <a href="?add_package=true" class="btn btn-primary">+ Add</a></h4> -->
-                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
 
-                                    <div class="col col-lg-4 position-relative mt-3">
-                                        <input type="search" style="padding-right: 2.5rem;" class="form-control" placeholder="Search" oninput="w3.filterHTML('#table', 'tr', this.value)">
-                                        <i class="fas fa-search position-absolute" style="top: 50%;right: 20px; transform: translateY(-50%); pointer-events: none;"></i>
+                                        <div class="col col-lg-4 position-relative mt-3">
+                                            <input type="search" style="padding-right: 2.5rem;" class="form-control" placeholder="Search" oninput="w3.filterHTML('#table', 'tr', this.value)">
+                                            <i class="fas fa-search position-absolute" style="top: 50%;right: 20px; transform: translateY(-50%); pointer-events: none;"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start gap-2 py-1">
-                                    <span>Show</span>
-                                    <div>
-                                        <select name="" id="entries" class="">
-                                        </select>
-                                        <script>
-                                            $(() => {
-                                                $('#entries').on('change', function() {
-                                                    let entries = $(this).val();
-                                                    let urlParams = new URLSearchParams(window.location.search);
-                                                    if (urlParams.has('entries')) {
-                                                        urlParams.set('entries', entries);
-                                                    } else {
-                                                        urlParams.append('entries', entries);
+                                    <div class="d-flex align-items-center justify-content-start gap-2 py-1">
+                                        <span>Show</span>
+                                        <div>
+                                            <select name="" id="entries" class="">
+                                            </select>
+                                            <script>
+                                                $(() => {
+                                                    $('#entries').on('change', function() {
+                                                        let entries = $(this).val();
+                                                        let urlParams = new URLSearchParams(window.location.search);
+                                                        if (urlParams.has('entries')) {
+                                                            urlParams.set('entries', entries);
+                                                        } else {
+                                                            urlParams.append('entries', entries);
+                                                        }
+
+                                                        let newUrl = window.location.pathname + '?' + urlParams.toString();
+
+                                                        window.location = newUrl;
+                                                    });
+
+                                                    for (let i = 10; i <= 4000; i *= 2) {
+                                                        $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
                                                     }
+                                                })
+                                            </script>
+                                        </div><span>entries</span>
+                                    </div>
 
-                                                    let newUrl = window.location.pathname + '?' + urlParams.toString();
-
-                                                    window.location = newUrl;
-                                                });
-
-                                                for (let i = 10; i <= 4000; i *= 2) {
-                                                    $('#entries').append(`<option ${i == <?= ($_GET['entries'] ?? 0) ?> ? 'selected' : ''} value="${i}">${i}</option>`)
-                                                }
-                                            })
-                                        </script>
-                                    </div><span>entries</span>
-                                </div>
-                                <div class="table-responsive">
-                                    <table id="table" class="table table-white table-striped table-hover" style="min-width: 100vw;">
-                                        <thead>
-                                            <tr>
-                                                <!-- <th scope="col">Id</th> -->
-                                                <th scope="col">Name</th>
-                                                <th scope="col">account no.</th>
-                                                <th scope="col">Invoice</th>
-                                                <th scope="col">Package</th>
-                                                <th scope="col">Coverage</th>
-                                                <th scope="col">Total</th>
-                                                <!-- <th scope="col">Status</th> -->
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $date = date("Y-m-d");
-                                            $data = getRows("variant='false' AND process_status='Process' AND selected_date='$date'", "user_package");
-
-                                            function filterByCoverage($coverage, $data): array
-                                            {
-                                                if (!isset($coverage) || $coverage == 'All') return $data;
-
-                                                $filteredData = [];
-                                                foreach ($data as $row) {
-                                                    if ($row['coverage'] == $coverage) {
-                                                        $filteredData[] = $row;
-                                                    }
-                                                }
-                                                return $filteredData;
-                                            }
-
-                                            function filterByPackage($package, $data): array
-                                            {
-                                                if (!isset($package) || $package == 'All') return $data;
-
-                                                $filteredData = [];
-                                                foreach ($data as $row) {
-                                                    if ($row['package'] == $package) {
-                                                        $filteredData[] = $row;
-                                                    }
-                                                }
-                                                return $filteredData;
-                                            }
-
-
-                                            function filterByStatus($status, $data): array
-                                            {
-                                                if (!isset($status) || $status == 'All') return $data;
-
-                                                $filteredData = [];
-                                                foreach ($data as $row) {
-                                                    if ($row['process_status'] == $status) {
-                                                        $filteredData[] = $row;
-                                                    }
-                                                }
-                                                return $filteredData;
-                                            }
-
-                                            // $data = filterByStatus(
-                                            //     $_GET['status'] ?? null,
-                                            //     filterByPackage(
-                                            //         $_GET['package'] ?? null,
-                                            //         filterByCoverage(
-                                            //             $_GET['coverage'] ?? null,
-                                            //             $data
-                                            //         )
-                                            //     )
-                                            // );
-
-
-
-                                            // Pagination parameters
-                                            $totalItems = count($data);
-                                            $itemsPerPage = ($_GET['entries'] ?? 10);
-                                            $totalPages = ceil($totalItems / $itemsPerPage);
-                                            $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-                                            $current_page = max(1, min($totalPages, intval($current_page)));
-                                            $offset = ($current_page - 1) * $itemsPerPage;
-
-                                            $data = array_slice($data, $offset, $itemsPerPage);
-                                            
-
-
-
-                                            foreach ($data as $row) {
-                                                // get user name
-                                                $user = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
-                                                $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null);
-
-
-                                                // $selected_date = $row['selected_date'] == date("Y-m-d");
-                                            ?>
+                                    <div class="table-responsive">
+                                        <table id="table" class="table table-white table-striped table-hover" style="min-width: 100vw;">
+                                            <thead>
                                                 <tr>
-                                                    <!-- <td><?= $row['id'] ?></td> -->
-                                                    <td><?= $name ?></td>
-                                                    <td><?= $row['account_no'] ?></td>
-                                                    <td><?= $row['invoice'] ?></td>
-                                                    <td><?= $row['package'] ?></td>
-                                                    <td><?= $row['coverage'] ?></td>
-                                                    <td><?= $row['total'] ?></td>
-                                                    <!-- <td><?= $row['status'] ?></td> -->
-                                                    <td><?= $row['process_status'] ?></td>
-                                                    <td><?= $row['date'] ?></td>
-                                                    <td>
-                                                        <select onchange="packageAction(<?= $row['id'] ?>, this)">
-                                                            <option value="" selected disabled class="d-none">Choose one
-                                                            </option>
-                                                            <option value="Process" <?= in_array($row['process_status'], ['Active', 'Process']) ? 'disabled' : null ?>>Process</option>
-                                                            <option value="Active" <?= in_array($row['process_status'], ['Active', 'Pending']) ? 'disabled' : null ?>>Active</option>
-                                                            <option value="Delete">Delete</option>
-                                                            <!-- <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
-                                                            <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option> -->
-                                                        </select>
-                                                    </td>
+                                                    <!-- <th scope="col">Id</th> -->
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">account no.</th>
+                                                    <th scope="col">Invoice</th>
+                                                    <th scope="col">Package</th>
+                                                    <th scope="col">Coverage</th>
+                                                    <th scope="col">Total</th>
+                                                    <!-- <th scope="col">Status</th> -->
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Action</th>
                                                 </tr>
-                                            <?php
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $date = date("Y-m-d");
+                                                $data = getRows("variant='false' AND process_status='Process' AND selected_date='$date'", "user_package");
+
+                                                function filterByCoverage($coverage, $data): array
+                                                {
+                                                    if (!isset($coverage) || $coverage == 'All') return $data;
+
+                                                    $filteredData = [];
+                                                    foreach ($data as $row) {
+                                                        if ($row['coverage'] == $coverage) {
+                                                            $filteredData[] = $row;
+                                                        }
+                                                    }
+                                                    return $filteredData;
+                                                }
+
+                                                function filterByPackage($package, $data): array
+                                                {
+                                                    if (!isset($package) || $package == 'All') return $data;
+
+                                                    $filteredData = [];
+                                                    foreach ($data as $row) {
+                                                        if ($row['package'] == $package) {
+                                                            $filteredData[] = $row;
+                                                        }
+                                                    }
+                                                    return $filteredData;
+                                                }
+
+
+                                                function filterByStatus($status, $data): array
+                                                {
+                                                    if (!isset($status) || $status == 'All') return $data;
+
+                                                    $filteredData = [];
+                                                    foreach ($data as $row) {
+                                                        if ($row['process_status'] == $status) {
+                                                            $filteredData[] = $row;
+                                                        }
+                                                    }
+                                                    return $filteredData;
+                                                }
+
+                                                // $data = filterByStatus(
+                                                //     $_GET['status'] ?? null,
+                                                //     filterByPackage(
+                                                //         $_GET['package'] ?? null,
+                                                //         filterByCoverage(
+                                                //             $_GET['coverage'] ?? null,
+                                                //             $data
+                                                //         )
+                                                //     )
+                                                // );
+
+
+
+                                                // Pagination parameters
+                                                $totalItems = count($data);
+                                                $itemsPerPage = ($_GET['entries'] ?? 10);
+                                                $totalPages = ceil($totalItems / $itemsPerPage);
+                                                $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                                $current_page = max(1, min($totalPages, intval($current_page)));
+                                                $offset = ($current_page - 1) * $itemsPerPage;
+
+                                                $data = array_slice($data, $offset, $itemsPerPage);
+
+
+
+
+                                                foreach ($data as $row) {
+                                                    // get user name
+                                                    $user = getRows("account_no='{$row['account_no']}'", "accounts")[0] ?? [];
+                                                    $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null);
+
+
+                                                    // $selected_date = $row['selected_date'] == date("Y-m-d");
+                                                ?>
+                                                    <tr>
+                                                        <!-- <td><?= $row['id'] ?></td> -->
+                                                        <td><?= $name ?></td>
+                                                        <td><?= $row['account_no'] ?></td>
+                                                        <td><?= $row['invoice'] ?></td>
+                                                        <td><?= $row['package'] ?></td>
+                                                        <td><?= $row['coverage'] ?></td>
+                                                        <td><?= $row['total'] ?></td>
+                                                        <!-- <td><?= $row['status'] ?></td> -->
+                                                        <td><?= $row['process_status'] ?></td>
+                                                        <td><?= $row['date'] ?></td>
+                                                        <td>
+                                                            <select onchange="packageAction(<?= $row['id'] ?>, this)">
+                                                                <option value="" selected disabled class="d-none">Choose one
+                                                                </option>
+                                                                <option value="Process" <?= in_array($row['process_status'], ['Active', 'Process']) ? 'disabled' : null ?>>Process</option>
+                                                                <option value="Active" <?= in_array($row['process_status'], ['Active', 'Pending']) ? 'disabled' : null ?>>Active</option>
+                                                                <option value="Delete">Delete</option>
+                                                                <!-- <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
+                                                            <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option> -->
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <!-- function packageAction -->
+                                        <script>
+                                            function packageAction(id, el, table = 'user_package') {
+                                                let action = $(el).val().trim().toLowerCase();
+
+                                                // create confirmation
+
+                                                Swal.fire({
+                                                    title: action,
+                                                    text: `Are you sure to ${action} item \`${id}\`?`,
+                                                    icon: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#3085d6",
+                                                    cancelButtonColor: "#d33",
+                                                    confirmButtonText: `Yes, ${action} it!`
+                                                }).then((result) => {
+                                                    let dateSelected = "";
+                                                    if (result.isConfirmed) {
+                                                        if (action == 'process') {
+                                                            Swal.fire({
+                                                                title: "Installation date",
+                                                                html: `<div>
+                                                                <input required id="date_" type="date" class="form-control"/>
+                                                            </div>`,
+                                                                showCancelButton: true,
+                                                                confirmButtonText: 'Submit',
+                                                                preConfirm: () => {
+                                                                    dateSelected = $('#date_').val().trim()
+                                                                    if (dateSelected == "") {
+                                                                        return;
+                                                                    }
+
+                                                                    loader_con.style.display = 'flex'
+                                                                    $.ajax({
+                                                                        type: "GET",
+                                                                        url: "customer_package_action.php",
+                                                                        data: {
+                                                                            id,
+                                                                            table,
+                                                                            action,
+                                                                            dateSelected
+                                                                        },
+                                                                        dataType: "json",
+                                                                        success: function(response) {
+                                                                            if (response.status ===
+                                                                                "success") {
+                                                                                loader_con.style
+                                                                                    .display =
+                                                                                    'none'
+                                                                                Swal.fire({
+                                                                                    title: "Success!",
+                                                                                    text: response
+                                                                                        .message,
+                                                                                    icon: "success"
+                                                                                }).then(() => {
+                                                                                    location
+                                                                                        .reload();
+                                                                                });
+                                                                            } else {
+                                                                                loader_con.style
+                                                                                    .display =
+                                                                                    'none'
+                                                                                Swal.fire({
+                                                                                    title: "Error",
+                                                                                    text: response
+                                                                                        .message,
+                                                                                    icon: "error"
+                                                                                }).then(() => {
+                                                                                    location
+                                                                                        .reload();
+                                                                                });
+                                                                            }
+                                                                        },
+                                                                        error: function(xhr, status,
+                                                                            error) {
+                                                                            console.error(xhr
+                                                                                .responseText);
+                                                                            loader_con.style
+                                                                                .display = 'none';
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
+
+
+                                                        } else {
+                                                            loader_con.style.display = 'flex'
+                                                            $.ajax({
+                                                                type: "GET",
+                                                                url: "customer_package_action.php",
+                                                                data: {
+                                                                    id,
+                                                                    table,
+                                                                    action,
+                                                                    dateSelected
+                                                                },
+                                                                dataType: "json",
+                                                                success: function(response) {
+                                                                    if (response.status === "success") {
+                                                                        loader_con.style.display = 'none'
+                                                                        Swal.fire({
+                                                                            title: "Success!",
+                                                                            text: response.message,
+                                                                            icon: "success"
+                                                                        }).then(() => {
+                                                                            location.reload();
+                                                                        });
+                                                                    } else {
+                                                                        loader_con.style.display = 'none'
+                                                                        Swal.fire({
+                                                                            title: "Error",
+                                                                            text: response.message,
+                                                                            icon: "error"
+                                                                        }).then(() => {
+                                                                            location.reload();
+                                                                        });
+                                                                    }
+                                                                },
+                                                                error: function(xhr, status, error) {
+                                                                    console.error(xhr.responseText);
+                                                                    loader_con.style.display = 'none';
+                                                                }
+                                                            });
+                                                        }
+
+                                                    } else {
+                                                        location.reload()
+                                                    }
+                                                });
                                             }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                        </script>
+
+                                    </div>
+
                                     <?php
-                                    if(count($data) == 0) {
-                                        ?>
+                                    if (count($data) == 0) {
+                                    ?>
                                         <div class="alert alert-info my-4">
                                             Congratulations, you don't have installation today, take some rest!
                                         </div>
-                                        <?php
+                                    <?php
                                     }
                                     ?>
-                                    <!-- function packageAction -->
-                                    <script>
-                                        function packageAction(id, el, table = 'user_package') {
-                                            let action = $(el).val().trim().toLowerCase();
 
-                                            // create confirmation
-
-                                            Swal.fire({
-                                                title: action,
-                                                text: `Are you sure to ${action} item \`${id}\`?`,
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: `Yes, ${action} it!`
-                                            }).then((result) => {
-                                                let dateSelected = "";
-                                                if (result.isConfirmed) {
-                                                    if (action == 'process') {
-                                                        Swal.fire({
-                                                            title: "Installation date",
-                                                            html: `<div>
-                                                                <input required id="date_" type="date" class="form-control"/>
-                                                            </div>`,
-                                                            showCancelButton: true,
-                                                            confirmButtonText: 'Submit',
-                                                            preConfirm: () => {
-                                                                dateSelected = $('#date_').val().trim()
-                                                                if (dateSelected == "") {
-                                                                    return;
-                                                                }
-
-                                                                loader_con.style.display = 'flex'
-                                                                $.ajax({
-                                                                    type: "GET",
-                                                                    url: "customer_package_action.php",
-                                                                    data: {
-                                                                        id,
-                                                                        table,
-                                                                        action,
-                                                                        dateSelected
-                                                                    },
-                                                                    dataType: "json",
-                                                                    success: function(response) {
-                                                                        if (response.status ===
-                                                                            "success") {
-                                                                            loader_con.style
-                                                                                .display =
-                                                                                'none'
-                                                                            Swal.fire({
-                                                                                title: "Success!",
-                                                                                text: response
-                                                                                    .message,
-                                                                                icon: "success"
-                                                                            }).then(() => {
-                                                                                location
-                                                                                    .reload();
-                                                                            });
-                                                                        } else {
-                                                                            loader_con.style
-                                                                                .display =
-                                                                                'none'
-                                                                            Swal.fire({
-                                                                                title: "Error",
-                                                                                text: response
-                                                                                    .message,
-                                                                                icon: "error"
-                                                                            }).then(() => {
-                                                                                location
-                                                                                    .reload();
-                                                                            });
-                                                                        }
-                                                                    },
-                                                                    error: function(xhr, status,
-                                                                        error) {
-                                                                        console.error(xhr
-                                                                            .responseText);
-                                                                        loader_con.style
-                                                                            .display = 'none';
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
-
-
-                                                    } else {
-                                                        loader_con.style.display = 'flex'
-                                                        $.ajax({
-                                                            type: "GET",
-                                                            url: "customer_package_action.php",
-                                                            data: {
-                                                                id,
-                                                                table,
-                                                                action,
-                                                                dateSelected
-                                                            },
-                                                            dataType: "json",
-                                                            success: function(response) {
-                                                                if (response.status === "success") {
-                                                                    loader_con.style.display = 'none'
-                                                                    Swal.fire({
-                                                                        title: "Success!",
-                                                                        text: response.message,
-                                                                        icon: "success"
-                                                                    }).then(() => {
-                                                                        location.reload();
-                                                                    });
-                                                                } else {
-                                                                    loader_con.style.display = 'none'
-                                                                    Swal.fire({
-                                                                        title: "Error",
-                                                                        text: response.message,
-                                                                        icon: "error"
-                                                                    }).then(() => {
-                                                                        location.reload();
-                                                                    });
-                                                                }
-                                                            },
-                                                            error: function(xhr, status, error) {
-                                                                console.error(xhr.responseText);
-                                                                loader_con.style.display = 'none';
-                                                            }
-                                                        });
-                                                    }
-
-                                                } else {
-                                                    location.reload()
-                                                }
-                                            });
-                                        }
-                                    </script>
-
-                                </div>
-                                <br>
-                                <!-- Bootstrap Pagination -->
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination">
-                                        <!-- Previous page link -->
-                                        <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
-                                            <a class="page-link" href="?page=<?= ($current_page - 1) ?>" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-
-                                        <!-- Page links -->
-                                        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                                            <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
-                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    <br>
+                                    <!-- Bootstrap Pagination -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            <!-- Previous page link -->
+                                            <li class="page-item <?= ($current_page == 1 ? 'disabled' : '') ?>">
+                                                <a class="page-link" href="?page=<?= ($current_page - 1) ?>" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
                                             </li>
-                                        <?php } ?>
 
-                                        <!-- Next page link -->
-                                        <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
-                                            <a class="page-link" href="?page=<?= ($current_page + 1) ?>" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                            <!-- Page links -->
+                                            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                                                <li class="page-item <?= ($i == $current_page ? 'active' : '') ?>">
+                                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                                </li>
+                                            <?php } ?>
+
+                                            <!-- Next page link -->
+                                            <li class="page-item <?= ($current_page == $totalPages ? 'disabled' : '') ?>">
+                                                <a class="page-link" href="?page=<?= ($current_page + 1) ?>" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
                             </div>
                         <?php
                         } elseif (isset($_GET['add_package']) && $_GET['add_package'] == 'true') {
