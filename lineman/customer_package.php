@@ -375,7 +375,8 @@ $email = $row['email'] ?? null;
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $data = getRows("variant='false' AND process_status='Pending'", "user_package");
+                                            $date = date("Y-m-d");
+                                            $data = getRows("variant='false' AND process_status='Process' AND selected_date='$date'", "user_package");
 
                                             function filterByCoverage($coverage, $data): array
                                             {
@@ -449,7 +450,7 @@ $email = $row['email'] ?? null;
                                                 $name = ($user['firstname'] ?? null) . " " . ($user['middle_initial'] ?? null) . ". " . ($user['lastname'] ?? null);
 
 
-                                                $selected_date = $row['selected_date'] == date("Y-m-d");
+                                                // $selected_date = $row['selected_date'] == date("Y-m-d");
                                             ?>
                                                 <tr>
                                                     <!-- <td><?= $row['id'] ?></td> -->
@@ -467,7 +468,7 @@ $email = $row['email'] ?? null;
                                                             <option value="" selected disabled class="d-none">Choose one
                                                             </option>
                                                             <option value="Process" <?= in_array($row['process_status'], ['Active', 'Process']) ? 'disabled' : null ?>>Process</option>
-                                                            <option value="Active" <?= in_array($row['process_status'], ['Active', 'Pending']) || !$selected_date ? 'disabled' : null ?>>Active</option>
+                                                            <option value="Active" <?= in_array($row['process_status'], ['Active', 'Pending']) ? 'disabled' : null ?>>Active</option>
                                                             <option value="Delete">Delete</option>
                                                             <!-- <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
                                                             <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option> -->
@@ -479,6 +480,15 @@ $email = $row['email'] ?? null;
                                             ?>
                                         </tbody>
                                     </table>
+                                    <?php
+                                    if(count($data) == 0) {
+                                        ?>
+                                        <div class="alert alert-info my-4">
+                                            Congratulations, you don't have installation today, take some rest!
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
                                     <!-- function packageAction -->
                                     <script>
                                         function packageAction(id, el, table = 'user_package') {
