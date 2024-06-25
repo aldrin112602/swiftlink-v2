@@ -17,7 +17,7 @@ function SendMail($email, $bodytemplate, $subject)
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'caballeroaldrin02@gmail.com';
-        $mail->Password = 'psfgjxovixwhnjtd';
+        $mail->Password = 'cstmfbmumklsflnn';
         $mail->SMTPSecure = 'ssl';
         $mail->Port       = 465;
         $mail->setFrom('caballeroaldrin02@gmail.com', 'Swiftlink', true);

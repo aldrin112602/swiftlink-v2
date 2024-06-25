@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($table == 'customer_ticket') {
             // get document
             $document = getRows("id='$id'", $table)[0]['document'];
-            unlink('../user/' . $document);
+            if(file_exists('../user/' . $document)) unlink('../user/' . $document);
         }
         $sql = "DELETE FROM $table WHERE id = '$id'";
         if (mysqli_query($conn, $sql)) {

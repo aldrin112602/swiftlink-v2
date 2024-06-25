@@ -261,7 +261,7 @@ $email = $row['email'] ?? null;
                                                 <td>' . $row['date'] . '</td>
                                                 <td>' . $row['category'] . '</td>
                                                 <td>' . $row['remark'] . '</td>
-                                                <td>' . $row['level'] . '</td>
+                                                <td>' . ucwords($user['role']) . '</td>
                                             </tr>';
 
                                             $count++;
