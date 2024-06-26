@@ -5,10 +5,13 @@ require_once '../global.php';
 if (isset($_SESSION['role'])) {
     switch($_SESSION['role']) {
         case 'admin':
-            header('location: ./admin/');
+            header('location: ../admin/');
         break;
         case 'user':
-            header('location: ./user/');
+            header('location: ../user/');
+        break;
+        case 'lineman':
+            // header('location: ../lineman/');
         break;
     }
 } else {

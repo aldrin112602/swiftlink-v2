@@ -89,3 +89,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         unlink($targetFile);
     }
 }
+
+
+
+if (isset($_SESSION['role'])) {
+    switch($_SESSION['role']) {
+        case 'admin':
+            header('location: ./admin/');
+        break;
+        case 'user':
+            header('location: ./user/');
+        break;
+        case 'lineman':
+            header('location: ./lineman/');
+        break;
+    }
+}

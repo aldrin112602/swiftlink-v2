@@ -138,18 +138,7 @@ $email = $row['email'] ?? null;
                                     Home
                                 </a>
                             </li>
-                            <li class="nav-item my-1">
-                                <a href="package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">deployed_code</span>
-                                    Package
-                                </a>
-                            </li>
-                            <li class="nav-item my-1">
-                                <a href="coverage.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">location_on</span>
-                                    Coverage
-                                </a>
-                            </li>
+                            
                             <li class="nav-item my-1">
                                 <a href="customer_package.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">
@@ -158,31 +147,7 @@ $email = $row['email'] ?? null;
                                     Customer package
                                 </a>
                             </li>
-                            <li class="nav-item my-1">
-                                <a href="customer.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">person</span>
-                                    Customer
-                                </a>
-                            </li>
-                            <li class="nav-item my-1">
-                                <a href="bill.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">receipt_long</span>
-                                    Bill
-                                </a>
-                            </li>
-                            <li class="nav-item my-1">
-                                <a href="payment_confirmation.php" class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">credit_card</span>
-                                    Payment confirmation
-                                </a>
-                            </li>
-
-                            <li class="nav-item my-1">
-                                <a href="finance.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">equalizer</span>
-                                    Finance
-                                </a>
-                            </li>
+                            
                             <li class="nav-item my-1">
                                 <a href="profile.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">account_box</span>
@@ -203,6 +168,7 @@ $email = $row['email'] ?? null;
                                 </a>
                             </li>
 
+                            <br><br><br><br><br><br>
 
 
 
@@ -295,7 +261,7 @@ $email = $row['email'] ?? null;
                                                 <td>' . $row['date'] . '</td>
                                                 <td>' . $row['category'] . '</td>
                                                 <td>' . $row['remark'] . '</td>
-                                                <td>' . $row['level'] . '</td>
+                                                <td>' . ucwords($user['role']) . '</td>
                                             </tr>';
 
                                             $count++;
