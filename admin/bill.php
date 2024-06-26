@@ -5,8 +5,16 @@ require_once "../send_mail.php";
 
 
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'user') {
-        header('location: ../user');
+    switch($_SESSION['role']) {
+        case 'admin':
+            // header('location: ../admin/');
+        break;
+        case 'user':
+            header('location: ../user/');
+        break;
+        case 'lineman':
+            header('location: ../lineman/');
+        break;
     }
 } else {
     header('location: ../index.php');

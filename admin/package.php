@@ -3,13 +3,20 @@ require_once '../config.php';
 require_once '../global.php';
 
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'user') {
-        header('location: ../user');
+    switch($_SESSION['role']) {
+        case 'admin':
+            // header('location: ../admin/');
+        break;
+        case 'user':
+            header('location: ../user/');
+        break;
+        case 'lineman':
+            header('location: ../lineman/');
+        break;
     }
 } else {
     header('location: ../index.php');
 }
-
 $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
