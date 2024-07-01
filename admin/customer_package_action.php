@@ -23,11 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $dateSelected = explode('-', $get['dateSelected']);
             $currYear = (int)date('Y');
             $currMonth = (int)date('n');
+            $currDay = (int)date('j');
+
 
             $year = (int)$dateSelected[0];
             $month = (int)$dateSelected[1];
+            $day = (int)$dateSelected[2];
 
-            if ($year > $currYear || ($year == $currYear && $month > $currMonth)) {
+            if ($year > $currYear || ($year == $currYear && $month > $currMonth) || ($month == $currMonth && $day > $currDay)) {
                 $sql = "UPDATE $tablename SET process_status='Process', selected_date='{$get['dateSelected']}' WHERE id='$id'";
                 $response = [
                     'message' => 'Customer package updated successfully',
