@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $month = (int)$dateSelected[1];
 
             if ($year > $currYear || ($year == $currYear && $month > $currMonth)) {
-                $sql = "UPDATE $tablename SET process_status='Process', selected_date='$dateSelected' WHERE id='$id'";
+                $sql = "UPDATE $tablename SET process_status='Process', selected_date='{$get['dateSelected']}' WHERE id='$id'";
                 $response = [
                     'message' => 'Customer package updated successfully',
                     'status' => 'success'
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 $packageName = getRows("id=$id", $tablename)[0]['package'];
 
                 $subject = "Customer Package Update Notification";
-                $bodytemplate = "<p style=\"font-size: 20px;\"><p style=\"font-size: 20px;\">Dear " . $email . ",<br><br>We are writing to inform you that your package ($packageName) has been successfully updated and is now in process as of $dateSelected. Please prepare <b>500.00 PHP</b> for the installation fee.<br><br>Thank you for choosing our services.<br><br>Best regards,<br>Swiftlink </p>";
+                $bodytemplate = "<p style=\"font-size: 20px;\"><p style=\"font-size: 20px;\">Dear " . $email . ",<br><br>We are writing to inform you that your package ($packageName) has been successfully updated and is now in process as of {$get['dateSelected']}. Please prepare <b>500.00 PHP</b> for the installation fee.<br><br>Thank you for choosing our services.<br><br>Best regards,<br>Swiftlink </p>";
 
 
                 if (SendMail($email, $bodytemplate, $subject)) {
