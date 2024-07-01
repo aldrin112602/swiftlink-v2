@@ -385,7 +385,8 @@ $email = $row['email'] ?? null;
                                             <tbody>
                                                 <?php
                                                 $date = date("Y-m-d");
-                                                $data = getRows("variant='false' AND process_status='Process' AND selected_date='$date'", "user_package");
+                                                // $data = getRows("variant='false' AND process_status='Process' AND selected_date='$date'", "user_package");
+                                                $data = getRows("variant='false' AND process_status='Process'", "user_package");
 
                                                 function filterByCoverage($coverage, $data): array
                                                 {
@@ -476,11 +477,8 @@ $email = $row['email'] ?? null;
                                                             <select onchange="packageAction(<?= $row['id'] ?>, this)">
                                                                 <option value="" selected disabled class="d-none">Choose one
                                                                 </option>
-                                                                <option value="Process" <?= in_array($row['process_status'], ['Active', 'Process']) ? 'disabled' : null ?>>Process</option>
-                                                                <option value="Active" <?= in_array($row['process_status'], ['Active', 'Pending']) ? 'disabled' : null ?>>Active</option>
-                                                                <option value="Delete">Delete</option>
-                                                                <!-- <option value="Active" <?= $row['is_active'] == 'true' ? 'disabled' : null ?>>Active</option>
-                                                            <option value="Inactive" <?= $row['is_active'] == 'false' ? 'disabled' : null ?>>Inactive</option> -->
+                                                                <option value="Active">Active</option>
+                                                               
                                                             </select>
                                                         </td>
                                                     </tr>

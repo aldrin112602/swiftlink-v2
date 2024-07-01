@@ -76,7 +76,7 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS user_package (
     category VARCHAR(255) DEFAULT 'Fiber',
     period VARCHAR(255),
     variant VARCHAR(255) DEFAULT 'false',
-    is_active VARCHAR(255) DEFAULT 'true',
+    is_active VARCHAR(255) DEFAULT 'false',
     due_date VARCHAR(255),
     status VARCHAR(255) DEFAULT 'Unpaid',
     process_status VARCHAR(255) DEFAULT 'Pending',
