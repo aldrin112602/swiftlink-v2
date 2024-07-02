@@ -3,16 +3,16 @@ require_once '../config.php';
 require_once '../global.php';
 
 if (isset($_SESSION['role'])) {
-    switch($_SESSION['role']) {
+    switch ($_SESSION['role']) {
         case 'admin':
             // header('location: ../admin/');
-        break;
+            break;
         case 'user':
             header('location: ../user/');
-        break;
+            break;
         case 'lineman':
             header('location: ../lineman/');
-        break;
+            break;
     }
 } else {
     header('location: ../index.php');
@@ -270,8 +270,8 @@ $email = $row['email'] ?? null;
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="text-success">Swiftlink</h3>
                             <div>
-                            <button data-bs-target="#announcementModal" data-bs-toggle="modal" class="btn btn-sm btn-primary" style="border-radius: 15px;">Make announcement</button>
-                            <button data-bs-target="#viewAnnouncementModal" data-bs-toggle="modal" class="btn btn-sm btn-success" style="border-radius: 15px;">Announcements</button>
+                                <button data-bs-target="#announcementModal" data-bs-toggle="modal" class="btn btn-sm btn-primary" style="border-radius: 15px;">Make announcement</button>
+                                <button data-bs-target="#viewAnnouncementModal" data-bs-toggle="modal" class="btn btn-sm btn-success" style="border-radius: 15px;">Announcements</button>
                             </div>
                         </div>
                         <div class="d-lg-flex d-block justify-content-between container mx-auto">
@@ -620,13 +620,47 @@ $email = $row['email'] ?? null;
                             });
                         </script>
 
+                        <div class="p-2 px-lg-4 mt-3">
+                            <div class="p-3 bg-white shadow-lg" style="border-radius: 15px;">
+                            <h3 class="fw-bold">Filter Subscriber</h3>
+                            <div class="d-flex gap-3">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Start date</span>
+                                    <input type="date" class="form-control form-control-sm" style="font-size: small;" aria-label="startDate" name="startDate">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">End date</span>
+                                    <input type="date" class="form-control form-control-sm" style="font-size: small;" aria-label="endDate" name="endDate">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Package</span>
+                                    <select style="font-size: small;" name="packageType" class="form-select">
+                                        <option value="" disabled selected class="d-none">-- Select package --</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Filter</span>
+                                    <select style="font-size: small;" name="filter" class="form-select">
+                                        <option value="" disabled selected class="d-none">-- Select Filter --</option>
+                                        <option value="today">Today</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
 
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <!-- ============================================================== -->
     <!-- end wrapper  -->
