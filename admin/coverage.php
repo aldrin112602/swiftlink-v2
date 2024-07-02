@@ -3,16 +3,16 @@ require_once '../config.php';
 require_once '../global.php';
 
 if (isset($_SESSION['role'])) {
-    switch($_SESSION['role']) {
+    switch ($_SESSION['role']) {
         case 'admin':
             // header('location: ../admin/');
-        break;
+            break;
         case 'user':
             header('location: ../user/');
-        break;
+            break;
         case 'lineman':
             header('location: ../lineman/');
-        break;
+            break;
     }
 } else {
     header('location: ../index.php');
@@ -206,9 +206,9 @@ $email = $row['email'] ?? null;
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="help.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">help</span>
-                                    Help
+                                <a href="ticket.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">confirmation_number</span>
+                                    Ticket
                                 </a>
                             </li>
                             <li class="nav-item my-1">

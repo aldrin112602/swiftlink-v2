@@ -32,7 +32,7 @@ $email = $row['email'] ?? null;
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Help</title>
+    <title>Ticket</title>
     <link rel="stylesheet" href="../src/bootstrap.min.css" />
     <link rel="icon" href="../src/img/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="../src/img/favicon.ico" type="image/x-icon" />
@@ -211,9 +211,9 @@ $email = $row['email'] ?? null;
                                 </a>
                             </li>
                             <li class="nav-item my-1 current-page">
-                                <a href="help.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">help</span>
-                                    Help
+                                <a href="ticket.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">confirmation_number</span>
+                                    Ticket
                                 </a>
                             </li>
                             <li class="nav-item my-1">
@@ -257,7 +257,7 @@ $email = $row['email'] ?? null;
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="" class="breadcrumb-link">Pages</a>
                                             </li>
-                                            <li class="breadcrumb-item active" aria-current="page">Help</li>
+                                            <li class="breadcrumb-item active" aria-current="page">Ticket</li>
                                         </ol>
                                     </nav>
                                 </div>

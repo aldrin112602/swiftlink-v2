@@ -13,8 +13,6 @@
 - help (ililipat na yung laman ng ticket at gagawing FAQs) 
 Ticket dun ilalagay ang ticket history at iaalis ang billing history since for ticket lang dapat sya
 
-- ticket ( pwedwng mag add ticket yung mga sumbong or reklamo dito nakalagay)
-
 
 Reports - running total nung ipiprint na bill, nakaindicate din dapat kung from what billing period yung nakalagay ) 
 
