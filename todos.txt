@@ -23,8 +23,4 @@ Reports - running total nung ipiprint na bill, nakaindicate din dapat kung from 
 - billing can view the previous bill, current bill and total balance also when printing needs to be visible like meralco bill)
 
 
-- sa bill/invoice din kailangan naka indicate previous bill, current bill also the total balance 
-
-
-
 - dashboard ( kailangan nakikita kung ilan subscriber and najoin sa date na nakaset, mafifilter kung ilan nagjoin sa specific package at mafifilterkung ilan nag activate by today, weekly and monthly

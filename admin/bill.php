@@ -427,6 +427,7 @@ $email = $row['email'] ?? null;
                                     <tr>
                                         <th>No</th>
                                         <th>Items</th>
+                                        <th>Previous bill</th>
                                         <th>Qty</th>
                                         <th>Price</th>
                                         <!-- <th>Discount</th> -->
@@ -437,6 +438,7 @@ $email = $row['email'] ?? null;
                                     <tr>
                                         <td>1</td>
                                         <td><?= $invoice['package'] ?></td>
+                                        <td><?= $invoice['total'] ?></td>
                                         <td>1</td>
                                         <td><?= $invoice['total'] ?></td>
                                         <td><?= $invoice['total'] ?></td>
