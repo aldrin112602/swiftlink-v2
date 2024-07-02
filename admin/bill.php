@@ -795,7 +795,7 @@ $email = $row['email'] ?? null;
                                                     <tbody>
                                                         <?php
 
-                                                        $sql = "SELECT DISTINCT acccount_no,period, status, process_status FROM user_package WHERE variant='false' AND status='Unpaid'";
+                                                        $sql = "SELECT DISTINCT account_no,period, status, process_status FROM user_package WHERE variant='false' AND status='Unpaid'";
 
                                                         $result = $conn->query($sql);
                                                         

@@ -622,35 +622,35 @@ $email = $row['email'] ?? null;
 
                         <div class="p-2 px-lg-4 mt-3">
                             <div class="p-3 bg-white shadow-lg" style="border-radius: 15px;">
-                            <h3 class="fw-bold">Filter Subscriber</h3>
-                            <div class="d-flex gap-3">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">Start date</span>
-                                    <input type="date" class="form-control form-control-sm" style="font-size: small;" aria-label="startDate" name="startDate">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">End date</span>
-                                    <input type="date" class="form-control form-control-sm" style="font-size: small;" aria-label="endDate" name="endDate">
-                                </div>
+                                <h3 class="fw-bold">Filter Subscriber</h3>
+                                <div class="d-flex gap-3">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Start date</span>
+                                        <input type="date" class="form-control form-control-sm" style="font-size: small;" aria-label="startDate" name="startDate">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">End date</span>
+                                        <input type="date" class="form-control form-control-sm" style="font-size: small;" aria-label="endDate" name="endDate">
+                                    </div>
 
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">Package</span>
-                                    <select style="font-size: small;" name="packageType" class="form-select">
-                                        <option value="" disabled selected class="d-none">-- Select package --</option>
-                                    </select>
-                                </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Package</span>
+                                        <select style="font-size: small;" name="packageType" class="form-select">
+                                            <option value="" disabled selected class="d-none">-- Select package --</option>
+                                        </select>
+                                    </div>
 
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">Filter</span>
-                                    <select style="font-size: small;" name="filter" class="form-select">
-                                        <option value="" disabled selected class="d-none">-- Select Filter --</option>
-                                        <option value="today">Today</option>
-                                        <option value="weekly">Weekly</option>
-                                        <option value="monthly">Monthly</option>
-                                    </select>
-                                </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Filter</span>
+                                        <select style="font-size: small;" name="filter" class="form-select">
+                                            <option value="" disabled selected class="d-none">-- Select Filter --</option>
+                                            <option value="today">Today</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
 
-                            </div>
+                                </div>
                             </div>
 
                         </div>
@@ -669,8 +669,36 @@ $email = $row['email'] ?? null;
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
     <!-- ============================================================== -->
+    <script>
+        $(document).ready(function() {
+            let searchParams = {};
 
+            function updateSearchParams() {
+                searchParams = {};
+                $('input[name="startDate"], input[name="endDate"], select[name="packageType"], select[name="filter"]').each(function() {
+                    let value = $(this).val();
+                    if (value) {
+                        searchParams[$(this).attr('name')] = value;
+                    }
+                });
+            }
 
+            $('input[name="startDate"], input[name="endDate"], select[name="packageType"], select[name="filter"]').on('change', updateSearchParams);
+        });
+
+        function sendParamsToServer() {
+            fetch('your-server-endpoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(searchParams),
+                })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data))
+                .catch((error) => console.error('Error:', error));
+        }
+    </script>
 </body>
 
 </html>
