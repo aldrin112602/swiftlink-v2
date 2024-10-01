@@ -39,7 +39,7 @@
     function setLog($type, $data): bool
     {
         global $conn;
-        $sql = "INSERT INTO " . $type . "_log_activity(account_no, category, " . (($type == 'admin') ? "remark)" : "activity)");
+        $sql = "INSERT INTO " . $type . "_log_activity(account_no, category, " . (($type == 'admin' || $type == 'lineman') ? "remark)" : "activity)");
 
         $sql .= " VALUES(";
         $i = 0;

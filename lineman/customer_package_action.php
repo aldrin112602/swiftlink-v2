@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
                 if (SendMail($email, $bodytemplate, $subject)) {
 
-                    setLog('admin', [
+                    setLog('lineman', [
                         'account_no' => $_SESSION['account_no'],
                         'category' => 'Activity',
                         'remark' => 'Updated data'
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
             if (SendMail($email, $bodytemplate, $subject)) {
-                setLog('admin', [
+                setLog('lineman', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'
@@ -128,9 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
         case 'active':
-            $currentTimestamp = time();
-            $currentDate = date('Y-m-d H:i:s', $currentTimestamp);
-            $sql = "UPDATE $tablename SET is_active='true', lineman_installed='{$_SESSION['account_no']}', process_status='Done', installation_date='$currentDate' WHERE id='$id'";
+            $sql = "UPDATE $tablename SET is_active='true' WHERE id='$id'";
             $response = [
                 'message' => 'Customer package updated successfully',
                 'status' => 'success'
@@ -145,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
             if (SendMail($email, $bodytemplate, $subject)) {
-                setLog('admin', [
+                setLog('lineman', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'
@@ -182,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
             if (SendMail($email, $bodytemplate, $subject)) {
-                setLog('admin', [
+                setLog('lineman', [
                     'account_no' => $_SESSION['account_no'],
                     'category' => 'Activity',
                     'remark' => 'Updated data'

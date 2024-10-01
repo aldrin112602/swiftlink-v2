@@ -208,6 +208,25 @@ if (!$conn->query($queryCreateTable)) {
 }
 
 
+
+
+
+$queryCreateTable = "CREATE TABLE IF NOT EXISTS lineman_log_activity (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_no VARCHAR(255),
+    category VARCHAR(255) DEFAULT 'Activity',
+    remark VARCHAR(1000),
+    level VARCHAR(100) DEFAULT 'Lineman',
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+
+
+if (!$conn->query($queryCreateTable)) {
+    die("Error creating table: " . $conn->error);
+}
+
+
 $queryCreateTable = "CREATE TABLE IF NOT EXISTS announcement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     announcement VARCHAR(255),
