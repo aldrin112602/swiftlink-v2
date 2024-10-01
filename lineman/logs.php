@@ -248,7 +248,7 @@ $email = $row['email'] ?? null;
                                     <tbody>
                                         <!-- contents -->
                                         <?php
-                                        $data = array_reverse(getRows(null, "admin_log_activity"));
+                                        $data = array_reverse(getRows(null, "lineman_log_activity"));
                                         // Pagination parameters
                                         $totalItems = count($data);
                                         $itemsPerPage = 10;
